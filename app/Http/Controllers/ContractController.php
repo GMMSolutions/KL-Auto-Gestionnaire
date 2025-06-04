@@ -34,35 +34,60 @@ class ContractController extends Controller
             // Build URL
             $url = "$apiPrefix/$apiKey/$controlSum/decode/$vin.json";
             
-            // Make API request
-            $response = Http::get($url);
+            // Log the URL for debugging
+            Log::info('VIN API Request URL: ' . $url);
             
-            if ($response->successful()) {
-                $data = $response->json();
+            // Make API request
+            try {
+                $response = Http::get($url);
                 
-                // Extract brand and type from the decode array
-                $brand = '';
-                $type = '';
-                
-                foreach ($data['decode'] as $item) {
-                    if ($item['label'] === 'Make') {
-                        $brand = $item['value'];
-                    } elseif ($item['label'] === 'Model') {
-                        $type = $item['value'];
+                if ($response->successful()) {
+                    $data = $response->json();
+                    
+                    // Log the API response
+                    Log::info('VIN API Response: ' . json_encode($data));
+                    
+                    // Extract brand and type from the decode array
+                    $brand = '';
+                    $type = '';
+                    
+                    foreach ($data['decode'] as $item) {
+                        if ($item['label'] === 'Make') {
+                            $brand = $item['value'];
+                        } elseif ($item['label'] === 'Model') {
+                            $type = $item['value'];
+                        }
                     }
+                    
+                    return response()->json([
+                        'success' => true,
+                        'data' => [
+                            'brand' => $brand,
+                            'type' => $type
+                        ]
+                    ]);
+                } else {
+                    // Log the error response
+                    Log::error('VIN API Error Response: ' . $response->body());
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'API returned error: ' . $response->status() . ' - ' . $response->body()
+                    ], $response->status());
                 }
-                
-                return response()->json([
-                    'success' => true,
-                    'data' => [
-                        'brand' => $brand,
-                        'type' => $type
-                    ]
-                ]);
+            } catch (\Exception $e) {
+                // Log the error
+                Log::error('VIN API Request Error: ' . $e->getMessage());
+                throw $e;
             }
         } catch (\Exception $e) {
             // Log the error
             Log::error('VIN API Error: ' . $e->getMessage());
+            
+            // Return more specific error message
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de la communication avec le service VIN: ' . $e->getMessage()
+            ], 500);
         }
 
         return response()->json([
