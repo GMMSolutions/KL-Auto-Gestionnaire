@@ -32,15 +32,19 @@ class ContractController extends Controller
             // Generate control sum
             $controlSum = substr(sha1("$vin|$id|$apiKey|$secretKey"), 0, 10);
             
-            // Build URL
+            // Build URL with proper authentication parameters
             $url = "$apiPrefix/$apiKey/$controlSum/decode/$vin.json";
             
             // Log the URL for debugging
             \Log::info('VIN API Request URL: ' . $url);
             
-            // Make API request
+            // Make API request with proper headers
             try {
-                $response = Http::get($url);
+                $response = Http::withHeaders([
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                    'X-API-Key' => $apiKey
+                ])->get($url);
                 
                 if ($response->successful()) {
                     $data = $response->json();
@@ -52,11 +56,14 @@ class ContractController extends Controller
                     $brand = '';
                     $type = '';
                     
-                    foreach ($data['decode'] as $item) {
-                        if ($item['label'] === 'Make') {
-                            $brand = $item['value'];
-                        } elseif ($item['label'] === 'Model') {
-                            $type = $item['value'];
+                    // Check if we have the decode array
+                    if (isset($data['decode']) && is_array($data['decode'])) {
+                        foreach ($data['decode'] as $item) {
+                            if ($item['label'] === 'Make') {
+                                $brand = $item['value'];
+                            } elseif ($item['label'] === 'Model') {
+                                $type = $item['value'];
+                            }
                         }
                     }
                     
@@ -70,15 +77,25 @@ class ContractController extends Controller
                 } else {
                     // Log the error response
                     \Log::error('VIN API Error Response: ' . $response->body());
+                    
+                    // Try to extract error message from response
+                    $errorData = $response->json();
+                    $errorMessage = isset($errorData['message']) ? $errorData['message'] : 'Erreur API non spécifiée';
+                    
                     return response()->json([
                         'success' => false,
-                        'message' => 'API returned error: ' . $response->status() . ' - ' . $response->body()
+                        'message' => 'Erreur API: ' . $errorMessage
                     ], $response->status());
                 }
             } catch (\Exception $e) {
                 // Log the error
                 \Log::error('VIN API Request Error: ' . $e->getMessage());
-                throw $e;
+                
+                // Return a more user-friendly error message
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Erreur lors de la communication avec le service VIN. Vérifiez que le numéro de châssis est correct et que l\'API est accessible.'
+                ], 500);
             }
         } catch (\Exception $e) {
             // Log the error
