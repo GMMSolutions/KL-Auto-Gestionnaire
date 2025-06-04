@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchVehicleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Recherche...';
 
         // Make API request
-        fetch('/api/getVehicleInfo', {
+        fetch('{{ route('contracts.vehicle.info') }}', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
