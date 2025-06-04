@@ -52,9 +52,7 @@ class ContractController extends Controller
                 
                 if ($response->successful()) {
                     $data = $response->json();
-                    
-                    // Log the API response
-                    \Log::info('VIN API Response: ' . json_encode($data));
+                    dd('Success:', $data); // Show success response in console
                     
                     // Extract brand and type from the decode array
                     $brand = '';
@@ -79,16 +77,23 @@ class ContractController extends Controller
                         ]
                     ]);
                 } else {
-                    // Log the error response
-                    \Log::error('VIN API Error Response: ' . $response->body());
+                    dd('Error:', [
+                        'status' => $response->status(),
+                        'headers' => $response->headers(),
+                        'body' => $response->body()
+                    ]); // Show error details in console
                     
                     // Try to extract error message from response
-                    $errorData = $response->json();
-                    $errorMessage = isset($errorData['message']) ? $errorData['message'] : 'Erreur API non spécifiée';
+                    try {
+                        $errorData = $response->json();
+                        $errorMessage = isset($errorData['message']) ? $errorData['message'] : 'Erreur API non spécifiée';
+                    } catch (\Exception $e) {
+                        $errorMessage = $response->body();
+                    }
                     
                     return response()->json([
                         'success' => false,
-                        'message' => 'Erreur API: ' . $errorMessage
+                        'message' => 'Erreur API: ' . $errorMessage . ' (Status: ' . $response->status() . ')'
                     ], $response->status());
                 }
             } catch (\Exception $e) {
