@@ -29,14 +29,22 @@ class ContractController extends Controller
             $id = "decode";
             $vin = mb_strtoupper($request->chassis_number);
             
+            // Log all important values for debugging
+            \Log::info('VIN API Configuration:');
+            \Log::info('API Prefix: ' . $apiPrefix);
+            \Log::info('API Key: ' . $apiKey);
+            \Log::info('Secret Key: ' . $secretKey);
+            \Log::info('VIN: ' . $vin);
+            
             // Generate control sum
             $controlSum = substr(sha1("$vin|$id|$apiKey|$secretKey"), 0, 10);
+            \Log::info('Control Sum: ' . $controlSum);
             
             // Build URL with proper authentication parameters
-            $url = "$apiPrefix/$apiKey/$controlSum/decode/$vin.json";
+            $url = rtrim($apiPrefix, '/') . '/' . $apiKey . '/' . $controlSum . '/decode/' . $vin . '.json';
             
-            // Log the URL for debugging
-            \Log::info('VIN API Request URL: ' . $url);
+            // Log the complete URL for debugging
+            \Log::info('Complete API URL: ' . $url);
             
             // Make API request with proper headers
             try {
