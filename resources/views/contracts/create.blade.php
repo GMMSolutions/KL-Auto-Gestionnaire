@@ -345,23 +345,43 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Here you would make the AJAX call to your vehicle API
-        // For now, we'll just show the vehicle info section
-        vehicleInfoSection.style.display = 'block';
-        nextToStep2Btn.disabled = false;
+        // Show loading state
+        searchVehicleBtn.disabled = true;
+        searchVehicleBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Recherche...';
 
-        // In real implementation:
-        // fetch(`/api/vehicles/${chassisNumber}`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Populate vehicle info fields
-        //         document.getElementById('vehicle_brand').value = data.brand;
-        //         document.getElementById('vehicle_type').value = data.type;
-        //         // etc...
-        //     })
-        //     .catch(error => {
-        //         alert('Erreur lors de la récupération des informations du véhicule.');
-        //     });
+        // Make API request
+        fetch('/api/getVehicleInfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                chassis_number: chassisNumber
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Populate vehicle info fields
+                document.getElementById('vehicle_brand').value = data.data.brand;
+                document.getElementById('vehicle_type').value = data.data.type;
+                
+                // Show vehicle info section and enable next button
+                vehicleInfoSection.style.display = 'block';
+                nextToStep2Btn.disabled = false;
+            } else {
+                alert('Erreur lors de la récupération des informations du véhicule: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Erreur lors de la communication avec le serveur.');
+        })
+        .finally(() => {
+            // Reset button state
+            searchVehicleBtn.disabled = false;
+            searchVehicleBtn.innerHTML = '<i class="fas fa-search"></i> Rechercher';
+        });
     });
 
     // Step navigation
