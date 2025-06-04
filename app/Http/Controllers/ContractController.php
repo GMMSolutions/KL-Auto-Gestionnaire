@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ContractController extends Controller
@@ -26,114 +24,55 @@ class ContractController extends Controller
             $apiPrefix = "https://api.vindecoder.eu/3.2";
             $apiKey = config('app.VIN_API_KEY');
             $secretKey = config('app.VIN_API_SECRET');
-            $id = "decode";
-            $vin = mb_strtoupper($request->chassis_number);
-            
-            // Log all important values for debugging
-            \Log::info('VIN API Configuration:');
-            \Log::info('API Prefix: ' . $apiPrefix);
-            \Log::info('API Key: ' . $apiKey);
-            \Log::info('Secret Key: ' . $secretKey);
-            \Log::info('VIN: ' . $vin);
-            
-            // Generate control sum
-            $controlSum = substr(sha1("{$vin}|{$id}|{$apiKey}|{$secretKey}"), 0, 10);
-            \Log::info('Control Sum: ' . $controlSum);
-            
-            // Build URL with proper authentication parameters
+            $vin = strtoupper($request->chassis_number);
+            $controlSum = substr(sha1("{$vin}|decode|{$apiKey}|{$secretKey}"), 0, 10);
             $url = "{$apiPrefix}/{$apiKey}/{$controlSum}/decode/{$vin}.json";
-            
-            // Log the complete URL for debugging
-            \Log::info('Complete API URL: ' . $url);
-            
-            // Make API request exactly like the working example
-            try {
-                $response = Http::get($url);
-                
-                // Log response headers
-                \Log::info('API Response Headers: ' . json_encode($response->headers()));
-                \Log::info('API Response Status: ' . $response->status());
-                
-                if ($response->successful()) {
-                    $data = $response->json();
-                    
-                    // Log success response to browser console
-                    echo '<script>console.log("API Success Response:", ' . json_encode($data) . ');</script>';
-                    
-                    // Extract brand and type from the decode array
-                    $brand = '';
-                    $type = '';
-                    
-                    // Check if we have the decode array
-                    if (isset($data['decode']) && is_array($data['decode'])) {
-                        foreach ($data['decode'] as $item) {
-                            if ($item['label'] === 'Make') {
-                                $brand = $item['value'];
-                            } elseif ($item['label'] === 'Model') {
-                                $type = $item['value'];
-                            }
-                        }
-                    }
-                    
-                    return response()->json([
-                        'success' => true,
-                        'data' => [
-                            'brand' => $brand,
-                            'type' => $type
-                        ]
-                    ]);
-                } else {
-                    // Log error details to browser console
-                    echo '<script>console.error("API Error:", {
-                        status: ' . $response->status() . ',
-                        headers: ' . json_encode($response->headers()) . ',
-                        body: ' . json_encode($response->body()) . '
-                    });</script>';
-                    
-                    // Try to extract error message from response
-                    try {
-                        $errorData = $response->json();
-                        $errorMessage = isset($errorData['message']) ? $errorData['message'] : 'Erreur API non spécifiée';
-                    } catch (\Exception $e) {
-                        $errorMessage = $response->body();
-                    }
-                    
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'Erreur API: ' . $errorMessage . ' (Status: ' . $response->status() . ')'
-                    ], $response->status());
-                }
-            } catch (\Exception $e) {
-                // Log the error
-                \Log::error('VIN API Request Error: ' . $e->getMessage());
-                
-                // Return a more user-friendly error message
+
+            Log::info('VIN API URL: ' . $url);
+
+            $response = Http::get($url);
+
+            Log::info('API Response Status: ' . $response->status());
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                $brand = collect($data['decode'] ?? [])
+                    ->firstWhere('label', 'Make')['value'] ?? '';
+                $type = collect($data['decode'] ?? [])
+                    ->firstWhere('label', 'Model')['value'] ?? '';
+
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Erreur lors de la communication avec le service VIN. Vérifiez que le numéro de châssis est correct et que l\'API est accessible.'
-                ], 500);
+                    'success' => true,
+                    'data' => [
+                        'brand' => $brand,
+                        'type' => $type
+                    ]
+                ]);
             }
-        } catch (\Exception $e) {
-            // Log the error
-            \Log::error('VIN API Error: ' . $e->getMessage());
-            
-            // Return more specific error message
+
+            $errorData = $response->json();
+            $errorMessage = $errorData['message'] ?? 'Erreur API non spécifiée';
+
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de la communication avec le service VIN: ' . $e->getMessage()
+                'message' => "Erreur API: {$errorMessage} (Status: {$response->status()})"
+            ], $response->status());
+
+        } catch (\Exception $e) {
+            Log::error('VIN API Error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur lors de la communication avec le service VIN : ' . $e->getMessage()
             ], 500);
         }
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Could not retrieve vehicle information. Please check the chassis number.'
-        ], 400);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Buyer Information
+            // Buyer
             'buyer_name' => 'required|string|max:255',
             'buyer_surname' => 'required|string|max:255',
             'buyer_birth_date' => 'required|date',
@@ -142,8 +81,8 @@ class ContractController extends Controller
             'buyer_city' => 'required|string|max:100',
             'buyer_phone' => 'required|string|max:20',
             'buyer_email' => 'required|email|max:255',
-            
-            // Vehicle Information
+
+            // Vehicle
             'vehicle_brand' => 'required|string|max:100',
             'vehicle_type' => 'required|string|max:100',
             'first_registration_date' => 'required|date',
@@ -152,8 +91,8 @@ class ContractController extends Controller
             'color' => 'required|string|max:50',
             'plate_number' => 'required|string|max:20',
             'has_accident' => 'boolean',
-            
-            // Sale Information
+
+            // Sale
             'sale_price' => 'nullable|numeric|min:0',
             'expertise_date' => 'nullable|date',
             'deposit' => 'nullable|numeric|min:0',
@@ -163,7 +102,7 @@ class ContractController extends Controller
             'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
         ]);
 
-        // Calculate remaining amount if not provided
+        // Calcul automatique du restant dû
         if (!isset($validated['remaining_amount']) && isset($validated['sale_price'], $validated['deposit'])) {
             $validated['remaining_amount'] = $validated['sale_price'] - $validated['deposit'];
         }
@@ -171,7 +110,7 @@ class ContractController extends Controller
         $contract = Contract::create($validated);
 
         return redirect()->route('contracts.show', $contract->id)
-            ->with('success', 'Contract created successfully.');
+            ->with('success', 'Contrat créé avec succès.');
     }
 
     public function show(Contract $contract)
