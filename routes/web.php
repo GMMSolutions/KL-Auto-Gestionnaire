@@ -20,6 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
+    // Contract routes
+    Route::get('/contracts/create', [ContractController::class, 'create'])->name('contracts.create');
+    Route::post('/contracts/vehicle-info', [ContractController::class, 'getVehicleInfo'])->name('contracts.vehicle.info');
+    Route::post('/contracts', [ContractController::class, 'store'])->name('contracts.store');
+    
     // Ajoutez ici vos autres routes protégées
     // Exemple : Route::resource('clients', ClientController::class);
 });
