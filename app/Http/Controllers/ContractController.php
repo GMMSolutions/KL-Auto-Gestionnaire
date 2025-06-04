@@ -25,8 +25,7 @@ class ContractController extends Controller
             $apiKey = config('app.VIN_API_KEY');
             $secretKey = config('app.VIN_API_SECRET');
             $vin = strtoupper($request->chassis_number);
-            $controlSum = substr(sha1("{$vin}|decode|{$apiKey}|{$secretKey}"), 0, 10);
-            $url = "{$apiPrefix}/{$apiKey}/{$controlSum}/decode/{$vin}.json";
+            $url = "{$apiPrefix}/{$apiKey}/decode/{$vin}.json";
 
             Log::info('VIN API URL: ' . $url);
 
