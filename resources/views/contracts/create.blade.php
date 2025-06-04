@@ -432,11 +432,50 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showStep(stepNumber) {
-        const sections = document.querySelectorAll('.form-section');
-        sections.forEach(section => {
+        // Validate required fields before proceeding
+        if (stepNumber === 2) {
+            // Validate vehicle info
+            const brand = document.getElementById('vehicle_brand').value.trim();
+            const type = document.getElementById('vehicle_type').value.trim();
+            
+            if (!brand || !type) {
+                alert('Veuillez remplir les champs Marque et Type du véhicule.');
+                return;
+            }
+        }
+
+        // Validate buyer info before proceeding to sale info
+        if (stepNumber === 3) {
+            // Validate buyer info
+            const buyerName = document.getElementById('buyer_name').value.trim();
+            const buyerSurname = document.getElementById('buyer_surname').value.trim();
+            const buyerBirthDate = document.getElementById('buyer_birth_date').value.trim();
+            const buyerAddress = document.getElementById('buyer_address').value.trim();
+            const buyerZip = document.getElementById('buyer_zip').value.trim();
+            const buyerCity = document.getElementById('buyer_city').value.trim();
+            const buyerPhone = document.getElementById('buyer_phone').value.trim();
+            const buyerEmail = document.getElementById('buyer_email').value.trim();
+            
+            if (!buyerName || !buyerSurname || !buyerBirthDate || !buyerAddress || !buyerZip || !buyerCity || !buyerPhone || !buyerEmail) {
+                alert('Veuillez remplir tous les champs du formulaire acheteur.');
+                return;
+            }
+        }
+
+        // Hide all steps
+        document.querySelectorAll('.form-section').forEach(section => {
             section.classList.remove('active');
+            section.style.display = 'none';
         });
-        document.getElementById(`step${stepNumber}`).classList.add('active');
+
+        // Show selected step
+        const step = document.getElementById('step' + stepNumber);
+        if (step) {
+            step.classList.add('active');
+            step.style.display = 'block';
+        }
+
+        // Update step indicator
         updateStepIndicator(stepNumber - 1);
     }
 
