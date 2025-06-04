@@ -27,7 +27,8 @@ class ContractController extends Controller
             $vin = strtoupper($request->chassis_number);
             $url = "{$apiPrefix}/{$apiKey}/decode/{$vin}.json";
 
-            Log::info('VIN API URL: ' . $url);
+            //alert the url on the console
+            echo $url;
 
             $response = Http::get($url);
 
