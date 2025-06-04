@@ -365,42 +365,37 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         })
         .then(response => {
-            // Convert headers to a readable format
-            const headers = {};
-            response.headers.forEach((value, key) => {
-                headers[key] = value;
-            });
-            console.log('API Response Headers:', headers);
+            console.log('API Response Headers:', response.headers);
             console.log('API Response Status:', response.status);
-            
-            // Log raw response
-            response.text().then(text => {
-                console.log('API Raw Response:', text);
-            });
-            
             return response.json();
         })
         .then(data => {
             console.log('API Response Data:', data);
             
-            if (data.success) {
+            // Find brand and model in the decode array
+            let brand = '';
+            let type = '';
+            
+            if (data.decode && Array.isArray(data.decode)) {
+                data.decode.forEach(item => {
+                    if (item.label === 'Make') {
+                        brand = item.value;
+                    } else if (item.label === 'Model') {
+                        type = item.value;
+                    }
+                });
+            }
+            
+            if (brand && type) {
                 // Populate vehicle info fields
-                document.getElementById('vehicle_brand').value = data.data.brand;
-                document.getElementById('vehicle_type').value = data.data.type;
+                document.getElementById('vehicle_brand').value = brand;
+                document.getElementById('vehicle_type').value = type;
                 
                 // Show vehicle info section and enable next button
                 vehicleInfoSection.style.display = 'block';
                 nextToStep2Btn.disabled = false;
             } else {
-                // Create a detailed error message with API configuration
-                const errorMessage = `
-                    URL REACHED: ${response.url}\n
-                    API KEY: ${document.querySelector('meta[name="vin-api-key"]').content}\n
-                    API SECRET: ${document.querySelector('meta[name="vin-api-secret"]').content}\n
-                    Error: ${data.message}
-                `;
-                console.error('API Error:', errorMessage);
-                alert(errorMessage);
+                alert('Erreur: Impossible de récupérer la marque et le modèle du véhicule.');
             }
         })
         .catch(error => {
