@@ -3,6 +3,10 @@
 @section('title', 'Nouveau Contrat')
 
 @push('styles')
+    <!-- Add meta tags for API configuration -->
+    <meta name="vin-api-key" content="{{ config('app.VIN_API_KEY') }}">
+    <meta name="vin-api-secret" content="{{ config('app.VIN_API_SECRET') }}">
+
 <style>
     .form-section {
         display: none;
@@ -371,7 +375,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 vehicleInfoSection.style.display = 'block';
                 nextToStep2Btn.disabled = false;
             } else {
-                alert('Erreur lors de la récupération des informations du véhicule: ' + data.message);
+                // Create a detailed error message with API configuration
+                const errorMessage = `
+                    URL REACHED: ${response.url}\n
+                    API KEY: ${document.querySelector('meta[name="vin-api-key"]').content}\n
+                    API SECRET: ${document.querySelector('meta[name="vin-api-secret"]').content}\n
+                    Error: ${data.message}
+                `;
+                alert(errorMessage);
             }
         })
         .catch(error => {
