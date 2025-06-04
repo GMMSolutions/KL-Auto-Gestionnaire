@@ -386,16 +386,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
             
-            if (brand && type) {
-                // Populate vehicle info fields
-                document.getElementById('vehicle_brand').value = brand;
-                document.getElementById('vehicle_type').value = type;
+            // Populate fields based on what we found
+            if (data.decode && Array.isArray(data.decode)) {
+                data.decode.forEach(item => {
+                    if (item.label === 'Make') {
+                        document.getElementById('vehicle_brand').value = item.value;
+                    } else if (item.label === 'Model') {
+                        document.getElementById('vehicle_type').value = item.value;
+                    }
+                });
                 
                 // Show vehicle info section and enable next button
                 vehicleInfoSection.style.display = 'block';
                 nextToStep2Btn.disabled = false;
             } else {
-                alert('Erreur: Impossible de récupérer la marque et le modèle du véhicule.');
+                alert('Erreur: Impossible de récupérer les informations du véhicule.');
             }
         })
         .catch(error => {
