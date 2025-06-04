@@ -21,26 +21,53 @@ class ContractController extends Controller
             'chassis_number' => 'required|string|size:17'
         ]);
 
-        // This is a placeholder for the actual API call
-        // The client will need to implement the actual API integration
-        $response = Http::get('https://api.vehicle-info.example.com/vehicles', [
-            'chassis' => $request->chassis_number,
-            // Add any required API keys or parameters here
-        ]);
-
-        if ($response->successful()) {
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'brand' => $response->json('brand', ''),
-                    'type' => $response->json('type', '')
-                ]
-            ]);
+        try {
+            $apiPrefix = "https://api.vindecoder.eu/3.2";
+            $apiKey = config('app.VIN_API_KEY');
+            $secretKey = config('app.VIN_API_SECRET');
+            $id = "decode";
+            $vin = mb_strtoupper($request->chassis_number);
+            
+            // Generate control sum
+            $controlSum = substr(sha1("$vin|$id|$apiKey|$secretKey"), 0, 10);
+            
+            // Build URL
+            $url = "$apiPrefix/$apiKey/$controlSum/decode/$vin.json";
+            
+            // Make API request
+            $response = Http::get($url);
+            
+            if ($response->successful()) {
+                $data = $response->json();
+                
+                // Extract brand and type from the decode array
+                $brand = '';
+                $type = '';
+                
+                foreach ($data['decode'] as $item) {
+                    if ($item['label'] === 'Make') {
+                        $brand = $item['value'];
+                    } elseif ($item['label'] === 'Model') {
+                        $type = $item['value'];
+                    }
+                }
+                
+                return response()->json([
+                    'success' => true,
+                    'data' => [
+                        'brand' => $brand,
+                        'type' => $type
+                    ]
+                ]);
+            }
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('VIN API Error: ' . $e->getMessage());
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Could not retrieve vehicle information.'
+            'message' => 'Could not retrieve vehicle information. Please check the chassis number.'
         ], 400);
     }
 
