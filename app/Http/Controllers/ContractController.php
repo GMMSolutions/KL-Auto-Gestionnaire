@@ -20,55 +20,31 @@ class ContractController extends Controller
             'chassis_number' => 'required|string|size:17'
         ]);
 
+        $vin = mb_strtoupper($request->input('chassis_number'));
+
+        $apiPrefix = "https://api.vindecoder.eu/3.2";
+        $apiKey = "49cc4c9b0533";
+        $secretKey = "df90e9ea6c";
+        $id = "decode";
+
+        $controlSum = substr(sha1("{$vin}|{$id}|{$apiKey}|{$secretKey}"), 0, 10);
+
         try {
-            $apiPrefix = "https://api.vindecoder.eu/3.2";
-            $apiKey = config('app.VIN_API_KEY');
-            $secretKey = config('app.VIN_API_SECRET');
-            $vin = strtoupper($request->chassis_number);
-            
-            // URL corrigée avec apiKey et secretKey
-            $url = "{$apiPrefix}/{$apiKey}/{$secretKey}/decode/{$vin}.json";
-
-            Log::info("VIN API URL: {$url}");
-
-            $response = Http::get($url);
-
-            Log::info('API Response Status: ' . $response->status());
+            $response = Http::get("{$apiPrefix}/{$apiKey}/{$controlSum}/decode/{$vin}.json");
 
             if ($response->successful()) {
-                $data = $response->json();
-
-                $brand = collect($data['decode'] ?? [])
-                    ->firstWhere('label', 'Make')['value'] ?? '';
-                $type = collect($data['decode'] ?? [])
-                    ->firstWhere('label', 'Model')['value'] ?? '';
-
-                return response()->json([
-                    'success' => true,
-                    'data' => [
-                        'brand' => $brand,
-                        'type' => $type
-                    ]
-                ]);
+                $result = $response->json();
+                return response()->json($result);
+            } else {
+                Log::error("Erreur API Vincario : " . $response->body());
+                return response()->json(['error' => 'Erreur lors de la récupération des infos véhicule.'], 500);
             }
-
-            $errorData = $response->json();
-            $errorMessage = $errorData['message'] ?? 'Erreur API non spécifiée';
-
-            return response()->json([
-                'success' => false,
-                'message' => "Erreur API: {$errorMessage} (Status: {$response->status()})"
-            ], $response->status());
-
         } catch (\Exception $e) {
-            Log::error('VIN API Error: ' . $e->getMessage());
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Erreur lors de la communication avec le service VIN : ' . $e->getMessage()
-            ], 500);
+            Log::error("Exception API Vincario : " . $e->getMessage());
+            return response()->json(['error' => 'Service temporairement indisponible.'], 500);
         }
     }
+
 
 
     public function store(Request $request)
