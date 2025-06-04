@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ContractController extends Controller
 {
@@ -35,7 +36,7 @@ class ContractController extends Controller
             $url = "$apiPrefix/$apiKey/$controlSum/decode/$vin.json";
             
             // Log the URL for debugging
-            Log::info('VIN API Request URL: ' . $url);
+            \Log::info('VIN API Request URL: ' . $url);
             
             // Make API request
             try {
@@ -45,7 +46,7 @@ class ContractController extends Controller
                     $data = $response->json();
                     
                     // Log the API response
-                    Log::info('VIN API Response: ' . json_encode($data));
+                    \Log::info('VIN API Response: ' . json_encode($data));
                     
                     // Extract brand and type from the decode array
                     $brand = '';
@@ -68,7 +69,7 @@ class ContractController extends Controller
                     ]);
                 } else {
                     // Log the error response
-                    Log::error('VIN API Error Response: ' . $response->body());
+                    \Log::error('VIN API Error Response: ' . $response->body());
                     return response()->json([
                         'success' => false,
                         'message' => 'API returned error: ' . $response->status() . ' - ' . $response->body()
@@ -76,12 +77,12 @@ class ContractController extends Controller
                 }
             } catch (\Exception $e) {
                 // Log the error
-                Log::error('VIN API Request Error: ' . $e->getMessage());
+                \Log::error('VIN API Request Error: ' . $e->getMessage());
                 throw $e;
             }
         } catch (\Exception $e) {
             // Log the error
-            Log::error('VIN API Error: ' . $e->getMessage());
+            \Log::error('VIN API Error: ' . $e->getMessage());
             
             // Return more specific error message
             return response()->json([
