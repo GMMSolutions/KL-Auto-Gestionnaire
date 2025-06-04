@@ -25,10 +25,11 @@ class ContractController extends Controller
             $apiKey = config('app.VIN_API_KEY');
             $secretKey = config('app.VIN_API_SECRET');
             $vin = strtoupper($request->chassis_number);
-            $url = "{$apiPrefix}/{$apiKey}/decode/{$vin}.json";
+            
+            // URL corrigée avec apiKey et secretKey
+            $url = "{$apiPrefix}/{$apiKey}/{$secretKey}/decode/{$vin}.json";
 
-            //alert the url on the console
-            echo $url;
+            Log::info("VIN API URL: {$url}");
 
             $response = Http::get($url);
 
@@ -68,6 +69,7 @@ class ContractController extends Controller
             ], 500);
         }
     }
+
 
     public function store(Request $request)
     {
