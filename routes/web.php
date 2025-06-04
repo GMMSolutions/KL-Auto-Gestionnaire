@@ -6,7 +6,7 @@ use App\Http\Controllers\DashboardController;
 
 // Page d'accueil publique
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 })->name('home');
 
 // Routes d'authentification
