@@ -37,11 +37,11 @@ class ContractController extends Controller
             \Log::info('VIN: ' . $vin);
             
             // Generate control sum
-            $controlSum = substr(sha1("$vin|$id|$apiKey|$secretKey"), 0, 10);
+            $controlSum = substr(sha1("{$vin}|{$id}|{$apiKey}|{$secretKey}"), 0, 10);
             \Log::info('Control Sum: ' . $controlSum);
             
             // Build URL with proper authentication parameters
-            $url = rtrim($apiPrefix, '/') . '/' . $apiKey . '/' . $controlSum . '/decode/' . $vin . '.json';
+            $url = "{$apiPrefix}/{$apiKey}/{$controlSum}/decode/{$vin}.json";
             
             // Log the complete URL for debugging
             \Log::info('Complete API URL: ' . $url);
