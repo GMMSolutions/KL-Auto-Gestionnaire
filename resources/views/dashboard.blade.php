@@ -1,37 +1,63 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord - KL Auto Gestionnaire</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">KL Auto Gestionnaire</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                            {{ auth()->user()->name }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Déconnexion</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+@extends('layouts.app')
+
+@section('title', 'Tableau de bord')
+
+@section('content')
+<div class="container py-4">
+    @guest
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">Bienvenue sur KL Auto Gestionnaire</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <p class="lead">Connectez-vous pour accéder à votre espace de gestion.</p>
+                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Connexion
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+    @else
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">Tableau de bord</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Existing dashboard content -->
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        <p>Bienvenue, {{ auth()->user()->name }} !</p>
+                        <p>Vous êtes connecté avec l'adresse email : {{ auth()->user()->email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endguest
+</div>
+
+@push('styles')
+<style>
+    .card {
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+@endpush
+
+@endsection
 
     <div class="container mt-4">
         <div class="row justify-content-center">

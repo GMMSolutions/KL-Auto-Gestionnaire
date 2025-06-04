@@ -5,10 +5,13 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContractController;
 
-// Page d'accueil publique
-Route::get('/', function () {
+// Page d'accueil (dashboard)
+Route::get('/', [DashboardController::class, 'index'])->name('home');
+
+// Public welcome page (if needed)
+Route::get('/welcome', function () {
     return view('welcome');
-})->name('home');
+});
 
 // Routes d'authentification
 Route::middleware('guest')->group(function () {
