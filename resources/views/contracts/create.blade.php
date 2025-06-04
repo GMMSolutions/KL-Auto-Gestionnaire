@@ -364,8 +364,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 chassis_number: chassisNumber
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('API Response Headers:', response.headers);
+            console.log('API Response Status:', response.status);
+            return response.json();
+        })
         .then(data => {
+            console.log('API Response Data:', data);
+            
             if (data.success) {
                 // Populate vehicle info fields
                 document.getElementById('vehicle_brand').value = data.data.brand;
@@ -382,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     API SECRET: ${document.querySelector('meta[name="vin-api-secret"]').content}\n
                     Error: ${data.message}
                 `;
+                console.error('API Error:', errorMessage);
                 alert(errorMessage);
             }
         })

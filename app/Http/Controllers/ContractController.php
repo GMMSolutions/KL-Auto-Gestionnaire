@@ -52,7 +52,9 @@ class ContractController extends Controller
                 
                 if ($response->successful()) {
                     $data = $response->json();
-                    dd('Success:', $data); // Show success response in console
+                    
+                    // Log success response to browser console
+                    echo '<script>console.log("API Success Response:", ' . json_encode($data) . ');</script>';
                     
                     // Extract brand and type from the decode array
                     $brand = '';
@@ -77,11 +79,12 @@ class ContractController extends Controller
                         ]
                     ]);
                 } else {
-                    dd('Error:', [
-                        'status' => $response->status(),
-                        'headers' => $response->headers(),
-                        'body' => $response->body()
-                    ]); // Show error details in console
+                    // Log error details to browser console
+                    echo '<script>console.error("API Error:", {
+                        status: ' . $response->status() . ',
+                        headers: ' . json_encode($response->headers()) . ',
+                        body: ' . json_encode($response->body()) . '
+                    });</script>';
                     
                     // Try to extract error message from response
                     try {
