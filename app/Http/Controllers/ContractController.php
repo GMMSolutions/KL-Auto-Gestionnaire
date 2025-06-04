@@ -46,13 +46,9 @@ class ContractController extends Controller
             // Log the complete URL for debugging
             \Log::info('Complete API URL: ' . $url);
             
-            // Make API request with proper headers
+            // Make API request exactly like the working example
             try {
-                $response = Http::withHeaders([
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'X-API-Key' => $apiKey
-                ])->get($url);
+                $response = Http::get($url);
                 
                 if ($response->successful()) {
                     $data = $response->json();
