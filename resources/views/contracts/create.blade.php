@@ -344,6 +344,10 @@ document.addEventListener('DOMContentLoaded', function() {
     searchVehicleBtn.addEventListener('click', function() {
         const chassisNumber = chassisNumberInput.value;
         
+        // Reset marque and type fields
+        document.getElementById('vehicle_brand').value = '';
+        document.getElementById('vehicle_type').value = '';
+        
         if (chassisNumber.length !== 17) {
             alert('Le numéro de châssis doit contenir exactement 17 caractères.');
             return;
