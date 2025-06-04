@@ -6,12 +6,11 @@ use App\Http\Controllers\DashboardController;
 
 // Page d'accueil publique
 Route::get('/', function () {
-    return view('dashboard');
+    return view('welcome');
 })->name('home');
 
 // Routes d'authentification
 Route::middleware('guest')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
 });
