@@ -50,6 +50,10 @@ class ContractController extends Controller
             try {
                 $response = Http::get($url);
                 
+                // Log response headers
+                \Log::info('API Response Headers: ' . json_encode($response->headers()));
+                \Log::info('API Response Status: ' . $response->status());
+                
                 if ($response->successful()) {
                     $data = $response->json();
                     

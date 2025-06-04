@@ -365,8 +365,19 @@ document.addEventListener('DOMContentLoaded', function() {
             })
         })
         .then(response => {
-            console.log('API Response Headers:', response.headers);
+            // Convert headers to a readable format
+            const headers = {};
+            response.headers.forEach((value, key) => {
+                headers[key] = value;
+            });
+            console.log('API Response Headers:', headers);
             console.log('API Response Status:', response.status);
+            
+            // Log raw response
+            response.text().then(text => {
+                console.log('API Raw Response:', text);
+            });
+            
             return response.json();
         })
         .then(data => {
