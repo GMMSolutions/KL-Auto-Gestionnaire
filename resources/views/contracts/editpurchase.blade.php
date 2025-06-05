@@ -163,7 +163,7 @@
                                                id="has_accident" 
                                                name="has_accident" 
                                                value="1"
-                                               {{ old('has_accident', $contract->has_accident) ? 'checked' : '' }}>
+                                               {{ old('has_accident', $contract->has_accident) == 1 ? 'checked' : '' }}>
                                         <label class="form-check-label" for="has_accident">
                                             Véhicule accidenté
                                         </label>
@@ -210,7 +210,8 @@
                                                class="form-control {{ $errors->has('buyer_birth_date') ? 'is-invalid' : '' }}" 
                                                id="buyer_birth_date" 
                                                name="buyer_birth_date"
-                                               value="{{ old('buyer_birth_date', $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('Y-m-d') : '') }}">
+                                               value="{{ old('buyer_birth_date', $contract->buyer_birth_date) }}">
+                                        <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
                                         @error('buyer_birth_date')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
