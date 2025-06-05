@@ -249,7 +249,7 @@
 
     <div class="declaration">
         Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est ni investi,
-        ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété
+        ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété.
     </div>
 
     <div class="text-center" style="margin-top: 30px;">
