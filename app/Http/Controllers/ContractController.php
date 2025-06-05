@@ -17,8 +17,8 @@ class ContractController extends Controller
 
     public function create()
     {
-        // Redirect to create-sale for backward compatibility
-        return redirect()->route('contracts.create-sale');
+        // Redirect to createsale for backward compatibility
+        return redirect()->route('contracts.createsale');
     }
 
     public function createSale()

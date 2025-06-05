@@ -30,10 +30,10 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="mb-0">Liste des Contrats</h1>
                 <div class="btn-group">
-                    <a href="{{ route('contracts.create-purchase') }}" class="btn btn-primary">
+                    <a href="{{ route('contracts.createpurchase') }}" class="btn btn-primary">
                         <i class="fas fa-plus me-1"></i> Nouvel Achat
                     </a>
-                    <a href="{{ route('contracts.create-sale') }}" class="btn btn-success">
+                    <a href="{{ route('contracts.createsale') }}" class="btn btn-success">
                         <i class="fas fa-plus me-1"></i> Nouvelle Vente
                     </a>
                 </div>
