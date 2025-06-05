@@ -210,7 +210,7 @@
                                            class="form-control {{ $errors->has('buyer_birth_date') ? 'is-invalid' : '' }}" 
                                            id="buyer_birth_date" 
                                            name="buyer_birth_date"
-                                           value="{{ old('buyer_birth_date', $contract->buyer_birth_date) }}">
+                                           value="{{ old('buyer_birth_date', \Carbon\Carbon::parse($contract->buyer_birth_date)->format('Y-m-d')) }}">
                                         @error('buyer_birth_date')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -314,7 +314,7 @@
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date" 
-                                           value="{{ old('expertise_date', $contract->expertise_date) }}">
+                                           value="{{ old('expertise_date', $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d') : '') }}">
                                     @error('expertise_date')
                                         <div class="invalid-feedback">
                                             {{ $message }}
