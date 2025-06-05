@@ -129,7 +129,7 @@
 
     <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
     
-    <h4>Acheteur :</h4>
+    <h2>Acheteur :</h2>
     <table style="width: 100%;">
         <tr>
             <td>Nom, Prénom</td>
