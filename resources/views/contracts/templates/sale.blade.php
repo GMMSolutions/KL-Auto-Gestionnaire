@@ -92,7 +92,7 @@
         }
 
         .declaration {
-            font-size: 12px;
+            font-size: 11px;
             margin: 15px 0;
             line-height: 1.3;
         }
