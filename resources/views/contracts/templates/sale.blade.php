@@ -162,7 +162,7 @@
 
     <div class="contract-title">OBJET DU CONTRAT</div>
 
-    <table>
+    <table style="width: 100%;">
         <tr>
             <td>Marque et Type :</td>
             <td style="font-weight: bold;">{{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</td>
