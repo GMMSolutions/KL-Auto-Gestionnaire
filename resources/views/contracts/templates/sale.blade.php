@@ -165,7 +165,7 @@
     <table>
         <tr>
             <td>Marque et Type :</td>
-            <td>{{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</td>
+            <td style="font-weight: bold;">{{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</td>
         </tr>
         <tr>
             <td>1ère Immatriculation :</td>
@@ -193,7 +193,7 @@
         </tr>
         <tr>
             <td>Prix de vente TVA inclus:</td>
-            <td>CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
+            <td style="font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
         </tr>
         <tr>
             <td>Expertisée le :</td>
@@ -205,7 +205,7 @@
         </tr>
         <tr>
             <td>Reste à payer :</td>
-            <td>CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
+            <td style="font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
         </tr>
         <tr>
             <td>Conditions de paiement :</td>
