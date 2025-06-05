@@ -204,7 +204,7 @@
             <td style="padding: 4px 8px;">{{ $contract->has_accident ? 'Oui' : 'Non' }}</td>
         </tr>
         <tr>
-            <td style="padding: 4px 8px;">Prix de vente TVA inclus</td>
+            <td style="padding: 4px 8px;">Prix de vente TVA incluse</td>
             <td style="padding: 4px 8px; font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
         </tr>
         <tr>
