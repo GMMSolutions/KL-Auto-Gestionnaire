@@ -251,6 +251,10 @@
         ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété
     </div>
 
+    <div class="text-center" style="margin-top: 30px;">
+        <strong>{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</strong>
+    </div>
+
     <div class="signature-section">
         <div class="signature-left">
             <div class="signature-date">
@@ -266,8 +270,5 @@
         </div>
     </div>
 
-    <div class="text-center" style="margin-top: 30px;">
-        <strong>{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</strong>
-    </div>
 </body>
 </html>
