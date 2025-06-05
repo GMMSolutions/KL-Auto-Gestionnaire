@@ -26,7 +26,7 @@ class ContractController extends Controller
             abort(404, 'Type de contrat non valide');
         }
 
-        $template = 'contracts.templates.' . $contract->contract_type;
+        $template = 'contracts.templates.' . ($contract->contract_type === 'vente' ? 'sale' : 'purchase');
         $pdf = PDF::loadView($template, compact('contract'));
         
         // Set paper size and orientation
@@ -50,7 +50,7 @@ class ContractController extends Controller
             abort(404, 'Type de contrat non valide');
         }
 
-        $template = 'contracts.templates.' . $contract->contract_type;
+        $template = 'contracts.templates.' . ($contract->contract_type === 'vente' ? 'sale' : 'purchase');
         $pdf = PDF::loadView($template, compact('contract'));
         
         // Set paper size and orientation
