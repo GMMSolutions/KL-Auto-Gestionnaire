@@ -29,8 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/contracts/createpurchase', [ContractController::class, 'createPurchase'])->name('contracts.createpurchase');
     Route::post('/api/getVehicleInfo', [ContractController::class, 'getVehicleInfo'])->name('contracts.vehicle.info');
 
+    // Edit routes
+    Route::get('/contracts/{contract}/editsale', [ContractController::class, 'editSale'])->name('contracts.editsale');
+    Route::get('/contracts/{contract}/editpurchase', [ContractController::class, 'editPurchase'])->name('contracts.editpurchase');
+
     // Resource route ensuite
     Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update']);
+    
+    // Update route
+    Route::put('/contracts/{contract}', [ContractController::class, 'update'])->name('contracts.update');
     
     // Specific delete route for better confirmation handling
     Route::delete('/contracts/{contract}/delete', [ContractController::class, 'destroy'])->name('contracts.destroy');

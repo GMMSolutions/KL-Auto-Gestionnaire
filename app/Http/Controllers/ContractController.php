@@ -135,6 +135,85 @@ class ContractController extends Controller
     /**
      * Remove the specified contract from storage.
      */
+    public function editSale(Contract $contract)
+    {
+        if ($contract->contract_type !== 'vente') {
+            abort(404);
+        }
+        return view('contracts.editsales', compact('contract'));
+    }
+
+    public function editPurchase(Contract $contract)
+    {
+        if ($contract->contract_type !== 'achat') {
+            abort(404);
+        }
+        return view('contracts.editpurchase', compact('contract'));
+    }
+
+    public function update(Request $request, Contract $contract)
+    {
+        $rules = [
+            // Contract type
+            'contract_type' => 'required|in:vente,achat',
+            
+            // Buyer - Required fields
+            'buyer_name' => 'required|string|max:255',
+            'buyer_surname' => 'required|string|max:255',
+            'buyer_address' => 'required|string|max:255',
+            'buyer_zip' => 'required|string|max:10',
+            'buyer_city' => 'required|string|max:100',
+            'buyer_phone' => 'required|string|max:20',
+            
+            // Buyer - Optional fields
+            'buyer_birth_date' => 'nullable|date',
+            'buyer_email' => 'nullable|email|max:255',
+
+            // Vehicle - Required fields
+            'vehicle_brand' => 'required|string|max:100',
+            'vehicle_type' => 'required|string|max:100',
+            'first_registration_date' => 'required|date',
+            'mileage' => 'required|integer|min:0',
+            'chassis_number' => 'required|string|size:17',
+            'color' => 'required|string|max:50',
+            
+            // Vehicle - Optional fields
+            'plate_number' => 'nullable|string|max:20',
+            'has_accident' => 'boolean',
+
+            // Sale - Required fields
+            'sale_price' => 'required|numeric|min:0',
+            'payment_condition' => 'nullable|required_if:contract_type,vente|in:cash,leasing,credit',
+            'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
+            
+            // Sale - Optional fields
+            'expertise_date' => 'nullable|date',
+            'deposit' => 'nullable|numeric|min:0',
+            'remaining_amount' => 'nullable|numeric|min:0',
+            'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
+        ];
+
+        $validated = $request->validate($rules);
+
+        // Set default values for purchase contracts
+        if ($validated['contract_type'] === 'achat') {
+            $validated['payment_condition'] = null;
+            $validated['warranty'] = null;
+            $validated['warranty_amount'] = null;
+        }
+
+        // Calculate remaining amount if not provided
+        if (!isset($validated['remaining_amount']) && isset($validated['sale_price'], $validated['deposit'])) {
+            $validated['remaining_amount'] = $validated['sale_price'] - $validated['deposit'];
+        }
+
+        // Update the contract with all validated data
+        $contract->update($validated);
+
+        return redirect()->route('contracts.show', $contract)
+            ->with('success', 'Contrat mis à jour avec succès.');
+    }
+
     public function destroy(Contract $contract)
     {
         try {
