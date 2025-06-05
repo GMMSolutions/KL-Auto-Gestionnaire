@@ -43,9 +43,10 @@
             margin-bottom: 8px;
             margin-top: 20px;
             background-color: #e6e6e6;
-            padding: 2px;
+            padding: 2px 8px;
             border-bottom: 2px solid #000;
             border-top: 1px solid #000;
+            text-align: left;
             text-align: center;
         }
 
@@ -110,8 +111,10 @@
             margin-bottom: 20px;
         }
 
-        td{
+        td {
             font-size: 14px;
+            padding: 4px 8px;
+            vertical-align: top;
         }
 
     </style>
@@ -129,87 +132,95 @@
 
     <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
     
-    <table style="width: 100%;">
+    <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+        <colgroup>
+            <col style="width: 35%;">
+            <col style="width: 65%;">
+        </colgroup>
         <tr>
-            <td style="font-weight: bold; text-decoration: underline;">Acheteur</td>
-            <td></td>
+            <td style="font-weight: bold; text-decoration: underline; padding: 4px 8px;">Acheteur</td>
+            <td style="padding: 4px 8px;"></td>
         </tr>
         <tr>
-            <td>Nom, Prénom</td>
-            <td>{{ $contract->buyer_surname ?? '' }}, {{ $contract->buyer_name ?? '' }}</td>
+            <td style="padding: 4px 8px;">Nom, Prénom</td>
+            <td style="padding: 4px 8px;">{{ $contract->buyer_surname ?? '' }}, {{ $contract->buyer_name ?? '' }}</td>
         </tr>
         <tr>
-            <td>Date de naissance</td>
-            <td>{{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}</td>
+            <td style="padding: 4px 8px;">Date de naissance</td>
+            <td style="padding: 4px 8px;">{{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
-            <td>Adresse (Rue, Numéro)</td>
-            <td>{{ $contract->buyer_address ?? '' }}</td>
+            <td style="padding: 4px 8px;">Adresse (Rue, Numéro)</td>
+            <td style="padding: 4px 8px;">{{ $contract->buyer_address ?? '' }}</td>
         </tr>
         <tr>
-            <td>Code Postal / Ville</td>
-            <td>{{ $contract->buyer_zip ?? '' }} {{ $contract->buyer_city ?? '' }}</td>
+            <td style="padding: 4px 8px;">Code Postal / Ville</td>
+            <td style="padding: 4px 8px;">{{ $contract->buyer_zip ?? '' }} {{ $contract->buyer_city ?? '' }}</td>
         </tr>
         <tr>
-            <td>N° de Téléphone</td>
-            <td>{{ $contract->buyer_phone ?? '' }}</td>
+            <td style="padding: 4px 8px;">N° de Téléphone</td>
+            <td style="padding: 4px 8px;">{{ $contract->buyer_phone ?? '' }}</td>
         </tr>
         <tr>
-            <td>Email</td>
-            <td>{{ $contract->buyer_email ?? '' }}</td>
+            <td style="padding: 4px 8px;">Email</td>
+            <td style="padding: 4px 8px;">{{ $contract->buyer_email ?? '' }}</td>
         </tr>
     </table>
 
     <div class="contract-title">OBJET DU CONTRAT</div>
 
-    <table style="width: 100%;">
+    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 10px;">
+        <colgroup>
+            <col style="width: 35%;">
+            <col style="width: 65%;">
+        </colgroup>
         <tr>
-            <td>Marque et Type :</td>
+            <td style="padding: 4px 8px;">Marque et Type :</td>
             <td style="font-weight: bold;">{{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</td>
         </tr>
         <tr>
-            <td>1ère Immatriculation :</td>
-            <td>{{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '' }}</td>
+            <td style="padding: 4px 8px;">1ère Immatriculation :</td>
+            <td style="padding: 4px 8px;">{{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
-            <td>Kilométrage :</td>
-            <td>{{ $contract->mileage ?? '' }}</td>
+            <td style="padding: 4px 8px;">Kilométrage :</td>
+            <td style="padding: 4px 8px;">{{ $contract->mileage ?? '' }}</td>
         </tr>
         <tr>
-            <td>Numéro de chassis :</td>
-            <td>{{ $contract->chassis_number ?? '' }}</td>
+            <td style="padding: 4px 8px;">Numéro de chassis :</td>
+            <td style="padding: 4px 8px;">{{ $contract->chassis_number ?? '' }}</td>
         </tr>
         <tr>
-            <td>Couleur :</td>
-            <td>{{ $contract->color ?? '' }}</td>
+            <td style="padding: 4px 8px;">Couleur :</td>
+            <td style="padding: 4px 8px;">{{ $contract->color ?? '' }}</td>
         </tr>
         <tr>
-            <td>N° de plaques :</td>
-            <td>{{ $contract->plate_number ?? '' }}</td>
+            <td style="padding: 4px 8px;">N° de plaques :</td>
+            <td style="padding: 4px 8px;">{{ $contract->plate_number ?? '' }}</td>
         </tr>
         <tr>
-            <td>Accidenté :</td>
-            <td>{{ $contract->has_accident ? 'Oui' : 'Non' }}</td>
+            <td style="padding: 4px 8px;">Accidenté :</td>
+            <td style="padding: 4px 8px;">{{ $contract->has_accident ? 'Oui' : 'Non' }}</td>
         </tr>
         <tr>
-            <td>Prix de vente TVA inclus:</td>
-            <td style="font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
+            <td style="padding: 4px 8px;">Prix de vente TVA inclus:</td>
+            <td style="padding: 4px 8px; font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
         </tr>
         <tr>
-            <td>Expertisée le :</td>
-            <td>{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
+            <td style="padding: 4px 8px;">Expertisée le :</td>
+            <td style="padding: 4px 8px;">{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
-            <td>Acompte ou reprise :</td>
-            <td>CHF {{ number_format($contract->deposit, 2, ',', ' ') }}</td>
+            <td style="padding: 4px 8px;">Acompte ou reprise :</td>
+            <td style="padding: 4px 8px;">CHF {{ number_format($contract->deposit, 2, ',', ' ') }}</td>
         </tr>
         <tr>
-            <td>Reste à payer :</td>
-            <td style="font-weight: bold;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
+            <td style="padding: 4px 8px;">Reste à payer :</td>
+            <td style="padding: 4px 8px; font-weight: bold;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
         </tr>
         <tr>
-            <td>Conditions de paiement :</td>
-            <td>{{ $contract->payment_condition ?? '' }}</td>
+            <td style="padding: 4px 8px;">Conditions de paiement :</td>
+            <td style="padding: 4px 8px;">{{ $contract->payment_condition ?? '' }}</td>
         </tr>
     </table>
 
