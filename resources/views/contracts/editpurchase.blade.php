@@ -314,7 +314,7 @@
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date" 
-                                           value="{{ old('expertise_date', $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d') : '') }}">
+                                           value="{{ old('expertise_date', $contract->expertise_date) }}">
                                     @error('expertise_date')
                                         <div class="invalid-feedback">
                                             {{ $message }}
