@@ -6,6 +6,26 @@
     <!-- Add meta tags for API configuration -->
     <meta name="vin-api-key" content="{{ config('app.VIN_API_KEY') }}">
     <meta name="vin-api-secret" content="{{ config('app.VIN_API_SECRET') }}">
+    <style>
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border: 1px solid #e9ecef;
+            border-radius: 0.5rem;
+            background: #fff;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .form-section h5 {
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f8f9fa;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .form-section:last-child {
+            margin-bottom: 1rem;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -17,39 +37,16 @@
                     <h4 class="mb-0">Nouveau Contrat de Vente</h4>
                 </div>
 
-                <!-- Step Indicator -->
                 <div class="card-body">
-                    <div class="d-flex justify-content-between mb-4 position-relative">
-                        <div class="position-absolute w-100" style="top: 20px; z-index: -1;">
-                            <hr class="m-0">
-                        </div>
-                        <div class="d-flex flex-column align-items-center" id="step1-indicator">
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">1</div>
-                            <div>Véhicule</div>
-                        </div>
-                        <div class="d-flex flex-column align-items-center" id="step2-indicator">
-                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">2</div>
-                            <div>Acheteur</div>
-                        </div>
-                        <div class="d-flex flex-column align-items-center" id="step3-indicator">
-                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">3</div>
-                            <div>Vente</div>
-                        </div>
-                    </div>
-
-                    <!-- Step 1: Vehicle Information -->
                     <form id="contractForm" action="{{ route('contracts.store') }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         
-                        <div id="step1" class="active">
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">1. Informations du véhicule</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="alert alert-info">
-                                        <i class="fas fa-info-circle me-2"></i> Commencez par entrer le numéro de châssis pour récupérer les informations du véhicule.
-                                    </div>
+                        <!-- Vehicle Information Section -->
+                        <div class="form-section">
+                            <h5><i class="fas fa-car me-2"></i>Informations du véhicule</h5>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i> Commencez par entrer le numéro de châssis pour récupérer les informations du véhicule.
+                            </div>
                                     
                                     <div class="row mb-3">
                                         <div class="col-md-8">
@@ -110,22 +107,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-footer text-end">
-                                    <button type="button" class="btn btn-primary" id="nextToStep2" data-step="2" disabled>
-                                        Suivant <i class="fas fa-arrow-right ms-2"></i>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
 
-                        <!-- Step 2: Buyer Information -->
-                        <div id="step2" class="d-none">
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">2. Informations de l'acheteur</h5>
-                                </div>
-                                <div class="card-body">
+                        <!-- Buyer Information Section -->
+                        <div class="form-section">
+                            <h5><i class="fas fa-user me-2"></i>Informations de l'acheteur</h5>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="buyer_lastname" class="form-label">Nom</label>
@@ -169,25 +155,11 @@
                                             <input type="email" class="form-control" id="buyer_email" name="buyer_email" required>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-footer text-end">
-                                    <button type="button" class="btn btn-secondary me-2" data-step="1">
-                                        <i class="fas fa-arrow-left me-2"></i>Précédent
-                                    </button>
-                                    <button type="button" class="btn btn-primary" data-step="3">
-                                        Suivant <i class="fas fa-arrow-right ms-2"></i>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
 
-                        <!-- Step 3: Sale Information -->
-                        <div id="step3" class="d-none">
-                            <div class="card mb-4">
-                                <div class="card-header bg-light">
-                                    <h5 class="mb-0">3. Informations de vente</h5>
-                                </div>
-                                <div class="card-body">
+                        <!-- Sale Information Section -->
+                        <div class="form-section">
+                            <h5><i class="fas fa-euro-sign me-2"></i>Informations de vente</h5>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="sale_price" class="form-label">Prix de vente (TTC)</label>
@@ -247,16 +219,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-footer text-end">
-                                    <button type="button" class="btn btn-secondary me-2" data-step="2">
-                                        <i class="fas fa-arrow-left me-2"></i>Précédent
-                                    </button>
-                                    <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save me-2"></i>Enregistrer le contrat
-                                    </button>
-                                </div>
-                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-save me-2"></i>Enregistrer le contrat
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -272,6 +240,19 @@ document.addEventListener('DOMContentLoaded', function() {
     flatpickr('.datepicker', {
         locale: 'fr',
         dateFormat: 'Y-m-d'
+    });
+
+    // Form validation
+    const form = document.getElementById('contractForm');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    }
     });
 
     // Vehicle search functionality
@@ -356,99 +337,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Step navigation
-    function updateStepIndicator(currentStep) {
-        const steps = document.querySelectorAll('.step');
-        steps.forEach((step, index) => {
-            if (index < currentStep) {
-                step.classList.add('completed');
-            } else if (index === currentStep) {
-                step.classList.add('active');
-            } else {
-                step.classList.remove('active', 'completed');
-            }
-        });
+    // Show vehicle info when data is loaded
+    function showVehicleInfo() {
+        const vehicleInfo = document.getElementById('vehicleInfo');
+        if (vehicleInfo) {
+            vehicleInfo.classList.remove('d-none');
+            // Scroll to the vehicle info section
+            vehicleInfo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
 
-    function showStep(stepNumber) {
-        // Validate required fields before proceeding
-        if (stepNumber === 2) {
-            // Validate vehicle info
-            const brand = document.getElementById('vehicle_brand').value.trim();
-            const type = document.getElementById('vehicle_type').value.trim();
-            
-            if (!brand || !type) {
-                alert('Veuillez remplir les champs Marque et Type du véhicule.');
-                return;
-            }
-        }
-
-        // Validate buyer info before proceeding to sale info
-        if (stepNumber === 3) {
-            // Validate buyer info
-            const buyerName = document.getElementById('buyer_name').value.trim();
-            const buyerSurname = document.getElementById('buyer_surname').value.trim();
-            const buyerBirthDate = document.getElementById('buyer_birth_date').value.trim();
-            const buyerAddress = document.getElementById('buyer_address').value.trim();
-            const buyerZip = document.getElementById('buyer_zip').value.trim();
-            const buyerCity = document.getElementById('buyer_city').value.trim();
-            const buyerPhone = document.getElementById('buyer_phone').value.trim();
-            const buyerEmail = document.getElementById('buyer_email').value.trim();
-            
-            if (!buyerName || !buyerSurname || !buyerBirthDate || !buyerAddress || !buyerZip || !buyerCity || !buyerPhone || !buyerEmail) {
-                alert('Veuillez remplir tous les champs du formulaire acheteur.');
-                return;
-            }
-        }
-
-        // Hide all steps
-        document.querySelectorAll('.form-section').forEach(section => {
-            section.classList.remove('active');
-            section.style.display = 'none';
-        });
-
-        // Show selected step
-        const step = document.getElementById('step' + stepNumber);
-        if (step) {
-            step.classList.add('active');
-            step.style.display = 'block';
-        }
-
-        // Update step indicator
-        updateStepIndicator(stepNumber - 1);
-    }
-
-    // Navigation buttons event listeners
-    document.querySelectorAll('[data-step]').forEach(button => {
-        button.addEventListener('click', function() {
-            const targetStep = parseInt(this.getAttribute('data-step'));
-            showStep(targetStep);
-        });
-    });
     
-    // Initialize first step
-    updateStepIndicator(1);
-
     // Calculate remaining amount when deposit changes
     const salePriceInput = document.getElementById('sale_price');
     const depositInput = document.getElementById('deposit');
     const remainingAmountInput = document.getElementById('remaining_amount');
 
-    function calculateRemainingAmount() {
-        const salePrice = parseFloat(salePriceInput.value) || 0;
-        const deposit = parseFloat(depositInput.value) || 0;
-        remainingAmountInput.value = (salePrice - deposit).toFixed(2);
-    }
+    if (salePriceInput && depositInput && remainingAmountInput) {
+        function calculateRemainingAmount() {
+            const salePrice = parseFloat(salePriceInput.value) || 0;
+            const deposit = parseFloat(depositInput.value) || 0;
+            // Calculate and format the remaining amount with 2 decimal places
+            remainingAmountInput.value = (salePrice - deposit).toFixed(2);
+        }
 
-    salePriceInput.addEventListener('input', calculateRemainingAmount);
-    depositInput.addEventListener('input', calculateRemainingAmount);
+        // Add event listeners for real-time calculation
+        salePriceInput.addEventListener('input', calculateRemainingAmount);
+        depositInput.addEventListener('input', calculateRemainingAmount);
+    }
 
     // Warranty amount section visibility
     const warrantySelect = document.getElementById('warranty');
     const warrantyAmountSection = document.getElementById('warrantyAmountSection');
-    warrantySelect.addEventListener('change', function() {
-        warrantyAmountSection.style.display = this.value === 'quality_1_q5' ? 'block' : 'none';
-    });
+    
+    if (warrantySelect && warrantyAmountSection) {
+        warrantySelect.addEventListener('change', function() {
+            warrantyAmountSection.style.display = this.value === 'quality_1_q5' ? 'block' : 'none';
+        });
+        // Initialize warranty section visibility
+        warrantyAmountSection.style.display = warrantySelect.value === 'quality_1_q5' ? 'block' : 'none';
+    }
 });
 </script>
 @endpush
