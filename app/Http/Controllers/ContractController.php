@@ -23,12 +23,12 @@ class ContractController extends Controller
 
     public function createSale()
     {
-        return view('contracts.create');
+        return view('contracts.create-sales');
     }
 
     public function createPurchase()
     {
-        return view('contracts.create-achat');
+        return view('contracts.create-purchase');
     }
 
     public function getVehicleInfo(Request $request)
