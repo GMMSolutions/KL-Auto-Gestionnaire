@@ -30,12 +30,13 @@
         <div class="col-12 col-lg-10">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Nouveau Contrat d'Achat</h4>
+                    <h4 class="mb-0">Modifier le Contrat d'Achat</h4>
                 </div>
 
                 <div class="card-body">
-                    <form id="contractForm" action="{{ route('contracts.store') }}" method="POST">
+                    <form id="contractForm" action="{{ route('contracts.update', $contract) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" name="contract_type" value="achat">
                         
                         <!-- Vehicle Information -->
@@ -56,7 +57,7 @@
                                                class="form-control {{ $errors->has('chassis_number') ? 'is-invalid' : '' }}" 
                                                id="chassis_number" 
                                                name="chassis_number"
-                                               value="{{ old('chassis_number') }}"
+                                               value="{{ old('chassis_number', $contract->chassis_number) }}"
                                                placeholder="Ex: WBA8E5G50JNU12345" 
                                                maxlength="17"
                                                required>
@@ -79,7 +80,7 @@
                                            class="form-control {{ $errors->has('vehicle_brand') ? 'is-invalid' : '' }}" 
                                            id="vehicle_brand" 
                                            name="vehicle_brand" 
-                                           value="{{ old('vehicle_brand') }}" 
+                                           value="{{ old('vehicle_brand', $contract->vehicle_brand) }}" 
                                            required>
                                     @error('vehicle_brand')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -91,7 +92,7 @@
                                            class="form-control {{ $errors->has('vehicle_type') ? 'is-invalid' : '' }}" 
                                            id="vehicle_type" 
                                            name="vehicle_type" 
-                                           value="{{ old('vehicle_type') }}" 
+                                           value="{{ old('vehicle_type', $contract->vehicle_type) }}" 
                                            required>
                                     @error('vehicle_type')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -106,7 +107,7 @@
                                            class="form-control {{ $errors->has('first_registration_date') ? 'is-invalid' : '' }}" 
                                            id="first_registration_date" 
                                            name="first_registration_date" 
-                                           value="{{ old('first_registration_date') }}" 
+                                           value="{{ old('first_registration_date', $contract->first_registration_date) }}" 
                                            required>
                                     @error('first_registration_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -120,7 +121,7 @@
                                                id="mileage" 
                                                name="mileage" 
                                                min="0" 
-                                               value="{{ old('mileage') }}" 
+                                               value="{{ old('mileage', $contract->mileage) }}" 
                                                required>
                                         <span class="input-group-text">km</span>
                                     </div>
@@ -134,7 +135,7 @@
                                            class="form-control {{ $errors->has('color') ? 'is-invalid' : '' }}" 
                                            id="color" 
                                            name="color" 
-                                           value="{{ old('color') }}" 
+                                           value="{{ old('color', $contract->color) }}" 
                                            required>
                                     @error('color')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -149,7 +150,7 @@
                                            class="form-control {{ $errors->has('plate_number') ? 'is-invalid' : '' }}" 
                                            id="plate_number" 
                                            name="plate_number"
-                                           value="{{ old('plate_number') }}">
+                                           value="{{ old('plate_number', $contract->plate_number) }}">
                                     @error('plate_number')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -182,7 +183,7 @@
                                            class="form-control {{ $errors->has('buyer_surname') ? 'is-invalid' : '' }}" 
                                            id="buyer_surname" 
                                            name="buyer_surname" 
-                                           value="{{ old('buyer_surname') }}" 
+                                           value="{{ old('buyer_surname', $contract->buyer_surname) }}" 
                                            required>
                                     @error('buyer_surname')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -194,7 +195,7 @@
                                            class="form-control {{ $errors->has('buyer_name') ? 'is-invalid' : '' }}" 
                                            id="buyer_name" 
                                            name="buyer_name" 
-                                           value="{{ old('buyer_name') }}" 
+                                           value="{{ old('buyer_name', $contract->buyer_name) }}" 
                                            required>
                                     @error('buyer_name')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -220,7 +221,7 @@
                                            class="form-control {{ $errors->has('buyer_address') ? 'is-invalid' : '' }}" 
                                            id="buyer_address" 
                                            name="buyer_address" 
-                                           value="{{ old('buyer_address') }}" 
+                                           value="{{ old('buyer_address', $contract->buyer_address) }}" 
                                            required>
                                     @error('buyer_address')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -235,7 +236,7 @@
                                            class="form-control {{ $errors->has('buyer_zip') ? 'is-invalid' : '' }}" 
                                            id="buyer_zip" 
                                            name="buyer_zip" 
-                                           value="{{ old('buyer_zip') }}" 
+                                           value="{{ old('buyer_zip', $contract->buyer_zip) }}" 
                                            required>
                                     @error('buyer_zip')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -247,7 +248,7 @@
                                            class="form-control {{ $errors->has('buyer_city') ? 'is-invalid' : '' }}" 
                                            id="buyer_city" 
                                            name="buyer_city" 
-                                           value="{{ old('buyer_city') }}" 
+                                           value="{{ old('buyer_city', $contract->buyer_city) }}" 
                                            required>
                                     @error('buyer_city')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -262,7 +263,7 @@
                                            class="form-control {{ $errors->has('buyer_phone') ? 'is-invalid' : '' }}" 
                                            id="buyer_phone" 
                                            name="buyer_phone" 
-                                           value="{{ old('buyer_phone') }}" 
+                                           value="{{ old('buyer_phone', $contract->buyer_phone) }}" 
                                            required>
                                     @error('buyer_phone')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -274,7 +275,7 @@
                                            class="form-control {{ $errors->has('buyer_email') ? 'is-invalid' : '' }}" 
                                            id="buyer_email" 
                                            name="buyer_email"
-                                           value="{{ old('buyer_email') }}">
+                                           value="{{ old('buyer_email', $contract->buyer_email) }}">
                                     @error('buyer_email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -295,7 +296,7 @@
                                                class="form-control {{ $errors->has('sale_price') ? 'is-invalid' : '' }}" 
                                                id="sale_price" 
                                                name="sale_price" 
-                                               value="{{ old('sale_price') }}" 
+                                               value="{{ old('sale_price', $contract->sale_price) }}" 
                                                min="0" 
                                                step="0.01"
                                                required>
