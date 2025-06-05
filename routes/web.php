@@ -23,13 +23,13 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // Contract routes
-    Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update', 'destroy']);
+
+    // Contract custom routes — placer AVANT le resource
     Route::get('/contracts/createsale', [ContractController::class, 'createSale'])->name('contracts.createsale');
     Route::get('/contracts/createpurchase', [ContractController::class, 'createPurchase'])->name('contracts.createpurchase');
     Route::post('/api/getVehicleInfo', [ContractController::class, 'getVehicleInfo'])->name('contracts.vehicle.info');
-    
-    // Ajoutez ici vos autres routes protégées
-    // Exemple : Route::resource('clients', ClientController::class);
+
+    // Resource route ensuite
+    Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update', 'destroy']);
 });
+
