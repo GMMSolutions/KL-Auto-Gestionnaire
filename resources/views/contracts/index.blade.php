@@ -72,9 +72,9 @@
                                     <button type="button" class="btn btn-sm btn-outline-primary btn-action" title="Imprimer">
                                         <i class="fas fa-print"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
+                                    <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
                                         <i class="fas fa-edit"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
                                             title="Supprimer" 
                                             data-id="{{ $contract->id }}"
