@@ -18,7 +18,7 @@
         }
         
         .company-name {
-            font-size: 24px;
+            font-size: 36px;
             font-weight: bold;
             color: #c41e3a;
             letter-spacing: 2px;
@@ -26,15 +26,26 @@
         }
         
         .company-details {
-            font-size: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .company-details-underline {
+            font-size: 14px;
             margin-bottom: 5px;
+            margin-top : 15px;
         }
         
         .contract-title {
-            font-size: 12px;
+            font-size: 16px;
             font-weight: bold;
-            text-decoration: underline;
-            margin: 15px 0 10px 0;
+            margin-bottom: 8px;
+            margin-top : 20px;
+            background-color: #e6e6e6;
+            padding: 2px;
+            border-bottom: 2px solid #000;
+            border-top: 1px solid #000;
+            text-align: center;
         }
         
         .section {
@@ -205,111 +216,94 @@
     <div class="header">
         <div class="company-name">{{ config('app.name', 'KL AUTOMOBILES SA') }}</div>
         <div class="company-details">
-            {{ config('app.address', 'Rte de Bussigny 22 - 1023 Crissier') }} - {{ config('app.phone', '+4179 500 67 67') }}<br>
-            TVA {{ config('app.vat', '.109.519.355') }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            IBAN {{ config('app.iban', 'CH90 0900 0000 1770 9550 0') }}
+            Route de Bussigny 22 - 1023 Crissier - +41 79 500 67 67<br>
         </div>
-        <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
-    </div>
-
-    <div class="section">
-        <div class="section-header">Acheteur</div>
-        <div class="buyer-info">
-            <div class="info-row">
-                <div class="info-label">Nom, Prénom</div>
-                <div class="info-value">{{ $contract->buyer_surname ?? 'Treur, Elodie' }}, {{ $contract->buyer_name ?? '' }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Date de naissance</div>
-                <div class="info-value">{{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Adresse (Rue, Numéro)</div>
-                <div class="info-value">{{ $contract->buyer_address ?? 'Chemin de Bellevue 8' }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Code Postal / Ville</div>
-                <div class="info-value">{{ $contract->buyer_zip ?? '1033' }} {{ $contract->buyer_city ?? 'Cheseaux-Sur-Lausanne' }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">N° de Téléphone</div>
-                <div class="info-value">{{ $contract->buyer_phone ?? '.077.470.39.14.' }}</div>
-            </div>
-            <div class="info-row">
-                <div class="info-label">Email</div>
-                <div class="info-value">{{ $contract->buyer_email ?? '' }}</div>
-            </div>
+        <div class="company-details-underline">
+            <span style="float: left;">TVA .109.519.355</span> <span style="float: right;">IBAN CH90 0900 0000 1770 9550 0</span>
         </div>
     </div>
 
-    <div class="vehicle-section">
-        <div class="vehicle-header">OBJET DU CONTRAT</div>
-        <div class="vehicle-info">
-            <div class="vehicle-row">
-                <div class="vehicle-label">Marque et Type :</div>
-                <div class="vehicle-value">{{ $contract->vehicle_brand ?? 'Kia' }} {{ $contract->vehicle_type ?? 'Soul' }}</div>
-            </div>
-            <div class="vehicle-row">
-                <div class="vehicle-label">1ère Immatriculation</div>
-                <div class="vehicle-value">{{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '04.04.2017' }}</div>
-            </div>
-            <div class="vehicle-row">
-                <div class="vehicle-label">Kilométrage :</div>
-                <div class="vehicle-value">{{ number_format($contract->mileage ?? 100000, 0, ' ', ' ') }}</div>
-            </div>
-            <div class="vehicle-row">
-                <div class="vehicle-label">Numéro de Chassis :</div>
-                <div class="vehicle-value">{{ $contract->chassis_number ?? 'KNAJX81FFG7012073' }}</div>
-            </div>
-            <div class="vehicle-row">
-                <div class="vehicle-label">Couleur:</div>
-                <div class="vehicle-value">{{ $contract->color ?? 'Blanc' }}</div>
-            </div>
-            <div class="vehicle-row">
-                <div class="vehicle-label">N° de plaques:</div>
-                <div class="vehicle-value">{{ $contract->plate_number ?? '' }}</div>
-            </div>
-            
-            <div class="checkbox-section">
-                <div style="margin-bottom: 5px;">
-                    <span>Accidenté</span>
-                    <span class="checkbox {{ ($contract->has_accident ?? false) ? 'checked' : '' }}"></span> OUI
-                    <span class="checkbox {{ !($contract->has_accident ?? false) ? 'checked' : '' }}"></span> NON
-                </div>
-            </div>
-            
-            <div class="price-section">
-                <div class="price-row">
-                    <div class="price-label"><span class="underline">Prix de vente TVA inclus:</span></div>
-                    <div class="price-value"><span class="underline">{{ number_format($contract->sale_price ?? 6900, 2, '.', ' ') }} CHF</span></div>
-                </div>
-                <div class="price-row">
-                    <div class="price-label">Expertisée le</div>
-                    <div class="price-value">{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</div>
-                </div>
-                <div style="margin: 8px 0;">
-                    <span class="checkbox {{ ($contract->expertise_same_day ?? true) ? 'checked' : '' }}"></span> Du jour
-                </div>
-                
-                <div class="price-row">
-                    <div class="price-label">Acompte ou Reprise:</div>
-                    <div class="price-value">{{ number_format($contract->deposit ?? 0, 2, '.', ' ') }} CHF</div>
-                </div>
-                <div class="price-row">
-                    <div class="price-label">Reste à Payer:</div>
-                    <div class="price-value">{{ number_format(($contract->sale_price ?? 6900) - ($contract->deposit ?? 0), 2, '.', ' ') }} CHF</div>
-                </div>
-                
-                <div style="margin: 8px 0;">
-                    <div>Conditions de paiement:</div>
-                    <div style="margin-top: 5px;">
-                        <span class="checkbox {{ ($contract->payment_condition ?? 'cash') === 'cash' ? 'checked' : '' }}"></span> CASH<br>
-                        <span class="checkbox {{ ($contract->payment_condition ?? '') === 'leasing' ? 'checked' : '' }}"></span> Leasing ou Crédit selon contrat séparé
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
+    
+    <table>
+        <tr>
+            <td>Nom, Prénom</td>
+            <td>{{ $contract->buyer_surname ?? '' }}, {{ $contract->buyer_name ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Date de naissance</td>
+            <td>{{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}</td>
+        </tr>
+        <tr>
+            <td>Adresse (Rue, Numéro)</td>
+            <td>{{ $contract->buyer_address ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Code Postal / Ville</td>
+            <td>{{ $contract->buyer_zip ?? '' }} {{ $contract->buyer_city ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>N° de Téléphone</td>
+            <td>{{ $contract->buyer_phone ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ $contract->buyer_email ?? '' }}</td>
+        </tr>
+    </table>
+
+    <div class="contract-title">OBJET DU CONTRAT</div>
+
+    <table>
+        <tr>
+            <td>Marque et Type :</td>
+            <td>{{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>1ère Immatriculation :</td>
+            <td>{{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '' }}</td>
+        </tr>
+        <tr>
+            <td>Kilométrage :</td>
+            <td>{{ $contract->mileage ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Numéro de chassis :</td>
+            <td>{{ $contract->chassis_number ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Couleur :</td>
+            <td>{{ $contract->color ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>N° de plaques :</td>
+            <td>{{ $contract->plate_number ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Accidenté :</td>
+            <td>{{ $contract->has_accident ? 'Oui' : 'Non' }}</td>
+        </tr>
+        <tr>
+            <td>Prix de vente TVA inclus:</td>
+            <td>CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
+        </tr>
+        <tr>
+            <td>Expertisée le :</td>
+            <td>{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
+        </tr>
+        <tr>
+            <td>Acompte ou reprise :</td>
+            <td>CHF {{ number_format($contract->deposit, 2, ',', ' ') }}</td>
+        </tr>
+        <tr>
+            <td>Reste à payer :</td>
+            <td>CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
+        </tr>
+        <tr>
+            <td>Conditions de paiement :</td>
+            <td>{{ $contract->payment_condition ?? '' }}</td>
+        </tr>
+    </table>
 
     <div class="warranty-section">
         <div class="warranty-header">Conditions de garantie:</div>
