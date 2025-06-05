@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Modifier Contrat d\'Achat')
+@section('title', 'Nouveau Contrat d\'Achat')
 
 @push('styles')
 <meta name="vin-api-key" content="{{ config('app.VIN_API_KEY') }}">
@@ -22,6 +22,7 @@
         min-width: 120px;
     }
 </style>
+@endpush
 
 @section('content')
 <div class="container py-4">
@@ -335,8 +336,7 @@
     </div>
 </div>
 
-@section('scripts')
-@parent
+@push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Get form elements

@@ -84,26 +84,5 @@
 
 @stack('scripts')
 
-<script>
-// Initialize Bootstrap 5 dropdowns
-document.addEventListener('DOMContentLoaded', function() {
-    // Enable all dropdowns
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-        return new bootstrap.Dropdown(dropdownToggleEl);
-    });
-
-    // Make sure dropdowns close when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!event.target.matches('.dropdown-toggle') && !event.target.closest('.dropdown-menu')) {
-            var dropdowns = document.querySelectorAll('.dropdown-menu.show');
-            dropdowns.forEach(function(dropdown) {
-                dropdown.classList.remove('show');
-            });
-        }
-    });
-});
-</script>
-
 </body>
 </html>
