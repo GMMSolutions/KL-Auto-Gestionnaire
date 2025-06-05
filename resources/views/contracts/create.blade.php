@@ -418,27 +418,16 @@ document.addEventListener('DOMContentLoaded', function() {
         updateStepIndicator(stepNumber - 1);
     }
 
-    // Step 1 to Step 2
-    nextToStep2Btn.addEventListener('click', function() {
-        showStep(2);
+    // Navigation buttons event listeners
+    document.querySelectorAll('[data-step]').forEach(button => {
+        button.addEventListener('click', function() {
+            const targetStep = parseInt(this.getAttribute('data-step'));
+            showStep(targetStep);
+        });
     });
-
-    // Step 2 to Step 3
-    const nextToStep3Btn = document.getElementById('nextToStep3');
-    nextToStep3Btn.addEventListener('click', function() {
-        showStep(3);
-    });
-
-    // Back buttons
-    const backToStep1Btn = document.getElementById('backToStep1');
-    backToStep1Btn.addEventListener('click', function() {
-        showStep(1);
-    });
-
-    const backToStep2Btn = document.getElementById('backToStep2');
-    backToStep2Btn.addEventListener('click', function() {
-        showStep(2);
-    });
+    
+    // Initialize first step
+    updateStepIndicator(1);
 
     // Calculate remaining amount when deposit changes
     const salePriceInput = document.getElementById('sale_price');
