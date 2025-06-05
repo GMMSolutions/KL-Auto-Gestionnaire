@@ -11,12 +11,12 @@
             margin: 20px;
             color: #000;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 15px;
         }
-        
+
         .company-name {
             font-size: 36px;
             font-weight: bold;
@@ -24,100 +24,54 @@
             letter-spacing: 2px;
             margin-bottom: 8px;
         }
-        
+
         .company-details {
             font-size: 14px;
             margin-bottom: 10px;
             font-weight: bold;
         }
+
         .company-details-underline {
             font-size: 14px;
             margin-bottom: 5px;
-            margin-top : 15px;
+            margin-top: 15px;
         }
-        
+
         .contract-title {
             font-size: 16px;
             font-weight: bold;
             margin-bottom: 8px;
-            margin-top : 20px;
+            margin-top: 20px;
             background-color: #e6e6e6;
             padding: 2px;
             border-bottom: 2px solid #000;
             border-top: 1px solid #000;
             text-align: center;
         }
-        
-        .section {
-            margin-bottom: 15px;
+
+        .warranty-section {
+            border: 2px solid #c41e3a;
+            margin: 15px 0;
         }
-        
-        .section-header {
-            background-color: #e6e6e6;
+
+        .warranty-header {
+            background-color: #f0f0f0;
             padding: 4px 8px;
             font-weight: bold;
-            font-size: 11px;
-            text-align: center;
-            border: 1px solid #000;
-            margin-bottom: 0;
+            color: #c41e3a;
+            border-bottom: 1px solid #c41e3a;
         }
-        
-        .buyer-info {
-            border: 1px solid #000;
-            border-top: none;
+
+        .warranty-content {
             padding: 8px;
         }
-        
-        .info-row {
+
+        .warranty-option {
+            margin: 3px 0;
             display: flex;
-            margin-bottom: 3px;
+            align-items: center;
         }
-        
-        .info-label {
-            width: 35%;
-            font-weight: normal;
-        }
-        
-        .info-value {
-            flex: 1;
-            font-weight: bold;
-        }
-        
-        .vehicle-section {
-            border: 1px solid #000;
-            margin-top: 15px;
-        }
-        
-        .vehicle-header {
-            background-color: #e6e6e6;
-            padding: 4px 8px;
-            font-weight: bold;
-            text-align: center;
-            border-bottom: 1px solid #000;
-        }
-        
-        .vehicle-info {
-            padding: 8px;
-        }
-        
-        .vehicle-row {
-            display: flex;
-            margin-bottom: 3px;
-        }
-        
-        .vehicle-label {
-            width: 40%;
-        }
-        
-        .vehicle-value {
-            flex: 1;
-            font-weight: bold;
-        }
-        
-        .checkbox-section {
-            margin: 8px 0;
-        }
-        
+
         .checkbox {
             width: 12px;
             height: 12px;
@@ -126,7 +80,7 @@
             margin-right: 5px;
             vertical-align: middle;
         }
-        
+
         .checkbox.checked::after {
             content: "✓";
             font-size: 10px;
@@ -135,81 +89,31 @@
             text-align: center;
             line-height: 10px;
         }
-        
-        .price-section {
-            margin: 15px 0;
-        }
-        
-        .price-row {
-            display: flex;
-            margin-bottom: 3px;
-        }
-        
-        .price-label {
-            width: 40%;
-        }
-        
-        .price-value {
-            flex: 1;
-            font-weight: bold;
-        }
-        
-        .warranty-section {
-            border: 2px solid #c41e3a;
-            margin: 15px 0;
-        }
-        
-        .warranty-header {
-            background-color: #f0f0f0;
-            padding: 4px 8px;
-            font-weight: bold;
-            color: #c41e3a;
-            border-bottom: 1px solid #c41e3a;
-        }
-        
-        .warranty-content {
-            padding: 8px;
-        }
-        
-        .warranty-option {
-            margin: 3px 0;
-            display: flex;
-            align-items: center;
-        }
-        
+
         .declaration {
             font-size: 9px;
             margin: 15px 0;
             line-height: 1.3;
         }
-        
+
         .signature-section {
             display: flex;
             justify-content: space-between;
             margin-top: 30px;
         }
-        
+
         .signature-left, .signature-right {
             width: 45%;
         }
-        
+
         .signature-date {
             margin-bottom: 20px;
         }
-        
-        .signature-line {
-            border-bottom: 1px solid #000;
-            height: 40px;
-            margin: 10px 0;
+
+        td{
+            font-size: 12px;
         }
-        
-        .underline {
-            text-decoration: underline;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
+
     </style>
 </head>
 <body>
@@ -225,7 +129,7 @@
 
     <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
     
-    <table>
+    <table style="width: 100%;">
         <tr>
             <td>Nom, Prénom</td>
             <td>{{ $contract->buyer_surname ?? '' }}, {{ $contract->buyer_name ?? '' }}</td>
