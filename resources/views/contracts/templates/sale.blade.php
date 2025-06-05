@@ -262,7 +262,7 @@
             <col style="width: 45%;">
         </colgroup>
         <tr>
-            <td style="font-weight: bold;">Pour {{ config('app.name', 'KL AUTOMOBILES') }}:</td>
+            <td style="font-weight: bold;">Pour {{ config('app.name', '') }}:</td>
             <td style="font-weight: bold;">Acheteur:</td>
         </tr>
     </table>
