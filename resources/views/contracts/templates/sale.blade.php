@@ -241,7 +241,7 @@
             </div>
             <div class="warranty-option">
                 <span class="checkbox {{ ($contract->warranty ?? '') === 'quality_1_q5' ? 'checked' : '' }}"></span>
-                <span style="color: #c41e3a; font-weight: bold;">Quality1 Q5 Contre supplément de</span> ___________
+                <span style="color: #c41e3a; font-weight: bold;">Quality1 Q5 Contre supplément de</span> <span>{{ $contract->warranty_amount ?? '' }}</span>
             </div>
         </div>
     </div>
