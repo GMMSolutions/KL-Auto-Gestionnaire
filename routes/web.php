@@ -2,11 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContractController;
 
-// Page d'accueil (dashboard)
-Route::get('/', [DashboardController::class, 'index'])->name('home');
+// Page d'accueil (contrats)
+Route::get('/', [ContractController::class, 'index'])->name('home');
 
 // Public welcome page (if needed)
 Route::get('/welcome', function () {
@@ -22,8 +21,6 @@ Route::middleware('guest')->group(function () {
 // Routes protégées
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     // Contract custom routes — placer AVANT le resource
     Route::get('/contracts/createsale', [ContractController::class, 'createSale'])->name('contracts.createsale');
     Route::get('/contracts/createpurchase', [ContractController::class, 'createPurchase'])->name('contracts.createpurchase');
