@@ -339,6 +339,14 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Get form elements
+    const form = document.getElementById('contractForm');
+    const chassisInput = document.getElementById('chassis_number');
+    const searchBtn = document.getElementById('searchVehicle');
+
+    // Only proceed if the form and required elements exist
+    if (!form || !chassisInput) return;
+
     // Remove validation errors when user starts typing
     document.querySelectorAll('input, select').forEach(function(element) {
         element.addEventListener('input', function() {
@@ -350,57 +358,71 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Vehicle search functionality
-    const searchBtn = document.getElementById('searchVehicle');
-    const chassisInput = document.getElementById('chassis_number');
-
-    searchBtn.addEventListener('click', function() {
-        const chassisNumber = chassisInput.value.trim();
-        
-        if (!chassisNumber || chassisNumber.length !== 17) {
-            showFieldError(chassisInput, 'Le numéro de châssis doit contenir exactement 17 caractères.');
-            return;
+    // Add input validation for VIN
+    chassisInput.addEventListener('input', function() {
+        // Remove any non-alphanumeric characters and convert to uppercase
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+        // Limit to 17 characters
+        if (this.value.length > 17) {
+            this.value = this.value.substring(0, 17);
         }
-
-        // Show loading
-        searchBtn.disabled = true;
-        searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Recherche...';
-
-        // API call
-        fetch('{{ route('contracts.vehicle.info') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ chassis_number: chassisNumber })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.decode && Array.isArray(data.decode)) {
-                data.decode.forEach(item => {
-                    if (item.label === 'Make') {
-                        document.getElementById('vehicle_brand').value = item.value || '';
-                    } else if (item.label === 'Model') {
-                        document.getElementById('vehicle_type').value = item.value || '';
-                    }
-                });
-            } else {
-                throw new Error('Aucune information trouvée');
-            }
-        })
-        .catch(error => {
-            showFieldError(chassisInput, 'Impossible de récupérer les informations du véhicule.');
-        })
-        .finally(() => {
-            searchBtn.disabled = false;
-            searchBtn.innerHTML = '<i class="fas fa-search"></i> Rechercher';
-        });
     });
+
+    // Vehicle search functionality
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function() {
+            const chassisNumber = chassisInput.value.trim();
+            
+            if (!chassisNumber || chassisNumber.length !== 17) {
+                showFieldError(chassisInput, 'Le numéro de châssis doit contenir exactement 17 caractères.');
+                return;
+            }
+
+            // Show loading
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Recherche...';
+
+
+            // API call
+            fetch('{{ route('contracts.vehicle.info') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ chassis_number: chassisNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.decode && Array.isArray(data.decode)) {
+                    data.decode.forEach(item => {
+                        if (item.label === 'Make') {
+                            const brandInput = document.getElementById('vehicle_brand');
+                            if (brandInput) brandInput.value = item.value || '';
+                        } else if (item.label === 'Model') {
+                            const typeInput = document.getElementById('vehicle_type');
+                            if (typeInput) typeInput.value = item.value || '';
+                        }
+                    });
+                } else {
+                    throw new Error('Aucune information trouvée');
+                }
+            })
+            .catch(error => {
+                showFieldError(chassisInput, 'Impossible de récupérer les informations du véhicule.');
+            })
+            .finally(() => {
+                searchBtn.disabled = false;
+                searchBtn.innerHTML = '<i class="fas fa-search"></i> Rechercher';
+            });
+        });
+    }
 
     // Helper function to show field errors
     function showFieldError(input, message) {
+        if (!input) return;
+        
         input.classList.add('is-invalid');
         let feedback = input.parentNode.querySelector('.invalid-feedback');
         if (!feedback) {
@@ -413,18 +435,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Clear birth date button
-    document.getElementById('clearBirthDate').addEventListener('click', function() {
-        const birthDateInput = document.getElementById('buyer_birth_date');
-        birthDateInput.value = '';
-        birthDateInput.classList.remove('is-invalid');
-        const feedback = birthDateInput.parentNode.querySelector('.invalid-feedback');
-        if (feedback) {
-            feedback.style.display = 'none';
-        }
-    });
+    const clearBirthDateBtn = document.getElementById('clearBirthDate');
+    if (clearBirthDateBtn) {
+        clearBirthDateBtn.addEventListener('click', function() {
+            const birthDateInput = document.getElementById('buyer_birth_date');
+            if (birthDateInput) {
+                birthDateInput.value = '';
+                birthDateInput.classList.remove('is-invalid');
+                const feedback = birthDateInput.parentNode.querySelector('.invalid-feedback');
+                if (feedback) {
+                    feedback.style.display = 'none';
+                }
+            }
+        });
+    }
 
-    // Prevent form submission if there are invalid fields
-    const form = document.getElementById('contractForm');
+    // Form submission
     form.addEventListener('submit', function(event) {
         // Clear empty date fields to prevent NULL submission
         const birthDateInput = document.getElementById('buyer_birth_date');
@@ -433,10 +459,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Manually validate VIN
-        const chassisNumber = document.getElementById('chassis_number').value.trim();
+        const chassisNumber = chassisInput.value.trim();
         if (chassisNumber.length !== 17) {
             event.preventDefault();
-            showFieldError(document.getElementById('chassis_number'), 'Le numéro de châssis doit contenir exactement 17 caractères.');
+            showFieldError(chassisInput, 'Le numéro de châssis doit contenir exactement 17 caractères.');
+            // Scroll to the error
+            chassisInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
     
