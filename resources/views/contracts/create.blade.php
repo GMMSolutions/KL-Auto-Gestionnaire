@@ -372,14 +372,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const chassisNumberInput = document.getElementById('chassis_number');
 
     searchVehicleBtn.addEventListener('click', function() {
-        const chassisNumber = chassisNumberInput.value;
+        const chassisNumber = chassisNumberInput.value.trim();
+        
+        // Reset error state
+        chassisNumberInput.classList.remove('is-invalid');
+        const existingError = chassisNumberInput.nextElementSibling;
+        if (existingError && existingError.classList.contains('invalid-feedback')) {
+            existingError.remove();
+        }
         
         // Reset marque and type fields
         document.getElementById('vehicle_brand').value = '';
         document.getElementById('vehicle_type').value = '';
         
+        if (!chassisNumber) {
+            showError(chassisNumberInput, 'Veuillez entrer un numéro de châssis.');
+            return;
+        }
+        
         if (chassisNumber.length !== 17) {
-            alert('Le numéro de châssis doit contenir exactement 17 caractères.');
+            showError(chassisNumberInput, 'Le numéro de châssis doit contenir exactement 17 caractères.');
             return;
         }
 
@@ -392,49 +404,36 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                 chassis_number: chassisNumber
             })
         })
         .then(response => {
-            console.log('API Response Headers:', response.headers);
-            console.log('API Response Status:', response.status);
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des informations du véhicule');
+            }
             return response.json();
         })
         .then(data => {
-            console.log('API Response Data:', data);
-            
-            // Find brand and model in the decode array
-            let brand = '';
-            let type = '';
-            
             if (data.decode && Array.isArray(data.decode)) {
+                // Process the response data and fill the form
                 data.decode.forEach(item => {
                     if (item.label === 'Make') {
-                        brand = item.value;
+                        document.getElementById('vehicle_brand').value = item.value || '';
                     } else if (item.label === 'Model') {
-                        type = item.value;
-                    }
-                });
-            }
-            
-            // Populate fields based on what we found
-            if (data.decode && Array.isArray(data.decode)) {
-                data.decode.forEach(item => {
-                    if (item.label === 'Make') {
-                        document.getElementById('vehicle_brand').value = item.value;
-                    } else if (item.label === 'Model') {
-                        document.getElementById('vehicle_type').value = item.value;
+                        document.getElementById('vehicle_type').value = item.value || '';
                     }
                 });
             } else {
-                alert('Erreur: Impossible de récupérer les informations du véhicule.');
+                throw new Error('Aucune information de véhicule trouvée');
             }
         })
         .catch(error => {
-            alert('Erreur lors de la communication avec le serveur.');
+            console.error('Error:', error);
+            showError(chassisNumberInput, 'Impossible de récupérer les informations du véhicule. Vérifiez le numéro de châssis.');
         })
         .finally(() => {
             // Reset button state
@@ -442,6 +441,15 @@ document.addEventListener('DOMContentLoaded', function() {
             searchVehicleBtn.innerHTML = '<i class="fas fa-search"></i> Rechercher';
         });
     });
+    
+    // Helper function to show error messages
+    function showError(input, message) {
+        input.classList.add('is-invalid');
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'invalid-feedback';
+        errorDiv.textContent = message;
+        input.parentNode.insertBefore(errorDiv, input.nextSibling);
+    }
 
     // Calculate remaining amount when deposit changes
     const salePriceInput = document.getElementById('sale_price');
