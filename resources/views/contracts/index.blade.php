@@ -180,9 +180,16 @@
                         $(this).remove();
                     });
                     
-                    // Hide the modal
+                    // Hide the modal and remove backdrop
                     const modal = bootstrap.Modal.getInstance(deleteModal);
-                    modal.hide();
+                    if (modal) {
+                        modal.hide();
+                        // Remove backdrop manually if needed
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
+                    }
                     
                     // Remove toast after 3 seconds
                     setTimeout(() => {
@@ -209,9 +216,16 @@
                     `;
                     document.body.appendChild(toast);
                     
-                    // Hide the modal
+                    // Hide the modal and remove backdrop
                     const modal = bootstrap.Modal.getInstance(deleteModal);
-                    modal.hide();
+                    if (modal) {
+                        modal.hide();
+                        // Remove backdrop manually if needed
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
+                    }
                     
                     // Remove toast after 5 seconds
                     setTimeout(() => {
