@@ -309,16 +309,15 @@
                                 </div>
                                 
                                 <div class="col-md-6 mb-3">
-                                    <label for="expertise_date" class="form-label">Date d'expertise</label>
+                                    <label for="expertise_date" class="form-label">Date d'expertise <span class="text-danger">*</span></label>
                                     <input type="date" 
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date" 
-                                           value="{{ old('expertise_date', $contract->expertise_date) }}">
+                                           value="{{ old('expertise_date', \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d')) }}" 
+                                           required>
                                     @error('expertise_date')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
