@@ -207,11 +207,10 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="buyer_birth_date" class="form-label">Date de naissance</label>
                                         <input type="date" 
-                                               class="form-control {{ $errors->has('buyer_birth_date') ? 'is-invalid' : '' }}" 
-                                               id="buyer_birth_date" 
-                                               name="buyer_birth_date"
-                                               value="{{ old('buyer_birth_date', $contract->buyer_birth_date) }}">
-                                        <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
+                                           class="form-control {{ $errors->has('buyer_birth_date') ? 'is-invalid' : '' }}" 
+                                           id="buyer_birth_date" 
+                                           name="buyer_birth_date"
+                                           value="{{ old('buyer_birth_date', $contract->buyer_birth_date) }}">
                                         @error('buyer_birth_date')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
@@ -316,7 +315,6 @@
                                            id="expertise_date" 
                                            name="expertise_date" 
                                            value="{{ old('expertise_date', $contract->expertise_date) }}">
-                                    <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
                                     @error('expertise_date')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -457,16 +455,8 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         let formIsValid = true;
         
-        // Don't clear date fields to prevent losing existing values
+            // Keep existing date handling
         const birthDateInput = document.getElementById('buyer_birth_date');
-        // Ensure the date is in the correct format
-        if (birthDateInput && birthDateInput.value) {
-            const date = new Date(birthDateInput.value);
-            if (!isNaN(date.getTime())) {
-                const formattedDate = date.toISOString().split('T')[0];
-                birthDateInput.value = formattedDate;
-            }
-        }
         if (birthDateInput && !birthDateInput.value) {
             birthDateInput.disabled = true; // This prevents empty string from being sent
         }
