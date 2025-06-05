@@ -184,7 +184,7 @@
         </tr>
         <tr>
             <td style="padding: 4px 8px;">Kilométrage</td>
-            <td style="padding: 4px 8px;">{{ $contract->mileage ?? '' }}</td>
+            <td style="padding: 4px 8px;">{{ $contract->mileage ? number_format($contract->mileage, 0, '.', ' ') : '' }}</td>
         </tr>
         <tr>
             <td style="padding: 4px 8px;">Numéro de chassis</td>
