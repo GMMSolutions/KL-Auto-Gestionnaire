@@ -13,10 +13,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 class ContractController extends Controller
 {
     use AuthorizesRequests, ValidatesRequests;
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     
     /**
      * Generate a PDF for the specified contract.
