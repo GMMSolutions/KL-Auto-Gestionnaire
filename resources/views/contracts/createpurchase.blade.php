@@ -440,8 +440,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Add input validation for VIN
-    const chassisInput = document.getElementById('chassis_number');
+    // Add input validation for VIN (using the existing chassisInput variable from above)
     if (chassisInput) {
         chassisInput.addEventListener('input', function() {
             // Remove any non-alphanumeric characters and convert to uppercase
