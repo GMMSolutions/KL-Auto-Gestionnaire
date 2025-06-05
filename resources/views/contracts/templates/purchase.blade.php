@@ -212,7 +212,7 @@
             <td style="padding: 4px 8px;">{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
         </tr>
     </table>
-    
+
     <hr>
 
     <div class="declaration">
@@ -221,7 +221,7 @@
     </div>
 
     <div class="text-center" style="margin-top: 30px;">
-        <span style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</span>
+        <span style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le {{ \Carbon\Carbon::now()->format('d.m.Y') }}</span>
     </div>
 
 
@@ -231,8 +231,8 @@
             <col style="width: 45%;">
         </colgroup>
         <tr>
-            <td style="font-weight: bold;">Pour {{ config('app.name', '') }}:</td>
-            <td style="font-weight: bold;">Acheteur:</td>
+            <td style="font-weight: bold;">Pour {{ config('app.name', '') }} :</td>
+            <td style="font-weight: bold;">Acheteur :</td>
         </tr>
     </table>
 </body>
