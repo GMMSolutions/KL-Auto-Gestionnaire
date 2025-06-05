@@ -50,9 +50,8 @@
                             <th>Type</th>
                             <th>Nom & Prénom</th>
                             <th>Véhicule</th>
+                            <th>N° de châssis</th>
                             <th class="text-end">Prix de vente TVA</th>
-                            <th class="text-end">Accompte</th>
-                            <th class="text-end">Reste à payer</th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </thead>
@@ -66,9 +65,8 @@
                             </td>
                             <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
                             <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
+                            <td>{{ $contract->chassis_number }}</td>
                             <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
-                            <td class="text-end">{{ number_format($contract->deposit, 2, ',', ' ') }} €</td>
-                            <td class="text-end">{{ number_format($contract->remaining_amount, 2, ',', ' ') }} €</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-sm btn-outline-primary btn-action" title="Imprimer">
