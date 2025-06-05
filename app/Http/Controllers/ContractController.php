@@ -267,11 +267,38 @@ class ContractController extends Controller
 
         $validated = $request->validate($rules);
 
+        // Get all nullable fields from the rules
+        $nullableFields = [
+            'buyer_birth_date', 'buyer_email', 'plate_number', 'expertise_date',
+            'deposit', 'remaining_amount', 'warranty_amount', 'has_accident'
+        ];
+
+        // Set empty optional fields to null
+        foreach ($nullableFields as $field) {
+            if (!array_key_exists($field, $validated)) {
+                $validated[$field] = null;
+            } elseif ($validated[$field] === '') {
+                $validated[$field] = null;
+            }
+        }
+
+        // Handle has_accident as boolean
+        $validated['has_accident'] = $validated['has_accident'] ?? false;
+
         // Set default values for purchase contracts
         if ($validated['contract_type'] === 'achat') {
             $validated['payment_condition'] = null;
             $validated['warranty'] = null;
             $validated['warranty_amount'] = null;
+        } else {
+            // For sale contracts, ensure payment_condition and warranty are handled
+            if (!isset($validated['payment_condition'])) {
+                $validated['payment_condition'] = null;
+            }
+            if (!isset($validated['warranty'])) {
+                $validated['warranty'] = null;
+                $validated['warranty_amount'] = null;
+            }
         }
 
         // Calculate remaining amount if not provided
