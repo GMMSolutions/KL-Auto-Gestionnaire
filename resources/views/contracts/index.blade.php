@@ -98,13 +98,18 @@
     $(document).ready(function() {
         $('#contracts-table').DataTable({
             language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
+                emptyTable: 'Aucune donnée disponible dans le tableau',
+                zeroRecords: 'Aucun enregistrement correspondant trouvé'
             },
             order: [],
             pageLength: 25,
             responsive: true,
             columnDefs: [
-                { orderable: false, targets: [6] } // Disable sorting on actions column
+                { orderable: false, targets: [5] }, // Disable sorting on actions column
+                { className: 'text-end', targets: [4] }, // Right-align price column
+                { responsivePriority: 1, targets: 0 }, // Type column
+                { responsivePriority: 2, targets: 5 }  // Actions column
             ]
         });
     });
