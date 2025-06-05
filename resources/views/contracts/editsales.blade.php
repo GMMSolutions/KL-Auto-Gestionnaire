@@ -107,9 +107,8 @@
                                            class="form-control {{ $errors->has('first_registration_date') ? 'is-invalid' : '' }}" 
                                            id="first_registration_date" 
                                            name="first_registration_date" 
-                                           value="{{ old('first_registration_date', $contract->first_registration_date) }}" 
+                                           value="{{ old('first_registration_date', \Carbon\Carbon::parse($contract->first_registration_date)->format('Y-m-d')) }}" 
                                            required>
-                                    <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
                                     @error('first_registration_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -311,8 +310,7 @@
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date"
-                                           value="{{ old('expertise_date', $contract->expertise_date) }}">
-                                    <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
+                                           value="{{ old('expertise_date', $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d') : '') }}">
                                     @error('expertise_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
