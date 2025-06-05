@@ -129,8 +129,11 @@
 
     <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
     
-    <h2>Acheteur :</h2>
     <table style="width: 100%;">
+        <tr>
+            <td>Acheteur :</td>
+            <td></td>
+        </tr>
         <tr>
             <td>Nom, Prénom</td>
             <td>{{ $contract->buyer_surname ?? '' }}, {{ $contract->buyer_name ?? '' }}</td>
