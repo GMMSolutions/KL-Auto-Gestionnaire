@@ -205,7 +205,7 @@
         </tr>
         <tr>
             <td>Reste à payer :</td>
-            <td style="font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
+            <td style="font-weight: bold;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
         </tr>
         <tr>
             <td>Conditions de paiement :</td>
