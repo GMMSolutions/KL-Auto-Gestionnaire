@@ -131,7 +131,7 @@
     
     <table style="width: 100%;">
         <tr>
-            <td>Acheteur :</td>
+            <td style="font-weight: bold; text-decoration: underline;">Acheteur</td>
             <td></td>
         </tr>
         <tr>
