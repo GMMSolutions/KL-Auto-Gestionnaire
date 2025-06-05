@@ -107,7 +107,7 @@
                                            class="form-control {{ $errors->has('first_registration_date') ? 'is-invalid' : '' }}" 
                                            id="first_registration_date" 
                                            name="first_registration_date" 
-                                           value="{{ old('first_registration_date', $contract->first_registration_date) }}" 
+                                           value="{{ old('first_registration_date', \Carbon\Carbon::parse($contract->first_registration_date)->format('Y-m-d')) }}" 
                                            required>
                                     @error('first_registration_date')
                                         <div class="invalid-feedback">{{ $message }}</div>

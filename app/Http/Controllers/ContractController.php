@@ -127,11 +127,6 @@ class ContractController extends Controller
             ->with('success', 'Contrat créé avec succès.');
     }
 
-    public function show(Contract $contract)
-    {
-        return view('contracts.show', compact('contract'));
-    }
-
     /**
      * Remove the specified contract from storage.
      */
@@ -210,7 +205,7 @@ class ContractController extends Controller
         // Update the contract with all validated data
         $contract->update($validated);
 
-        return redirect()->route('contracts.show', $contract)
+        return redirect()->route('contracts.index')
             ->with('success', 'Contrat mis à jour avec succès.');
     }
 
