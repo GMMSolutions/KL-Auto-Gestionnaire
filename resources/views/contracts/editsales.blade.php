@@ -107,8 +107,9 @@
                                            class="form-control {{ $errors->has('first_registration_date') ? 'is-invalid' : '' }}" 
                                            id="first_registration_date" 
                                            name="first_registration_date" 
-                                           value="{{ old('first_registration_date', \Carbon\Carbon::parse($contract->first_registration_date)->format('Y-m-d')) }}" 
+                                           value="{{ old('first_registration_date', $contract->first_registration_date) }}" 
                                            required>
+                                    <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
                                     @error('first_registration_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -163,7 +164,7 @@
                                                id="has_accident" 
                                                name="has_accident" 
                                                value="1"
-                                               {{ old('has_accident') ? 'checked' : '' }}>
+                                               {{ old('has_accident', $contract->has_accident) == 1 ? 'checked' : '' }}>
                                         <label class="form-check-label" for="has_accident">
                                             Véhicule accidenté
                                         </label>
@@ -310,7 +311,8 @@
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date"
-                                           value="{{ old('expertise_date', $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d') : '') }}">
+                                           value="{{ old('expertise_date', $contract->expertise_date) }}">
+                                    <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
                                     @error('expertise_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
