@@ -150,7 +150,7 @@
         $('#confirmDelete').on('click', function() {
             if (!contractIdToDelete) return;
             
-            const deleteUrl = `{{ route('contracts.destroy', '') }}/${contractIdToDelete}`;
+            const deleteUrl = `{{ url('contracts') }}/${contractIdToDelete}/delete`;
             
             $.ajax({
                 url: deleteUrl,
