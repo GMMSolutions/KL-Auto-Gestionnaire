@@ -315,7 +315,8 @@
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date" 
-                                           value="{{ old('expertise_date') }}">
+                                           value="{{ old('expertise_date', $contract->expertise_date) }}">
+                                    <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
                                     @error('expertise_date')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -456,8 +457,16 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         let formIsValid = true;
         
-        // Clear empty date fields to prevent NULL submission
+        // Don't clear date fields to prevent losing existing values
         const birthDateInput = document.getElementById('buyer_birth_date');
+        // Ensure the date is in the correct format
+        if (birthDateInput && birthDateInput.value) {
+            const date = new Date(birthDateInput.value);
+            if (!isNaN(date.getTime())) {
+                const formattedDate = date.toISOString().split('T')[0];
+                birthDateInput.value = formattedDate;
+            }
+        }
         if (birthDateInput && !birthDateInput.value) {
             birthDateInput.disabled = true; // This prevents empty string from being sent
         }
