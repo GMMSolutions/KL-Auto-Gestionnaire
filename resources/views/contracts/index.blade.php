@@ -28,10 +28,15 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h1>Liste des Contrats</h1>
-                <a href="{{ route('contracts.create') }}" class="btn btn-primary">
-                    <i class="fas fa-plus me-2"></i>Nouveau Contrat
-                </a>
+                <h1 class="mb-0">Liste des Contrats</h1>
+                <div class="btn-group">
+                    <a href="{{ route('contracts.create-purchase') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Nouvel Achat
+                    </a>
+                    <a href="{{ route('contracts.create-sale') }}" class="btn btn-success">
+                        <i class="fas fa-plus me-1"></i> Nouvelle Vente
+                    </a>
+                </div>
             </div>
         </div>
     </div>

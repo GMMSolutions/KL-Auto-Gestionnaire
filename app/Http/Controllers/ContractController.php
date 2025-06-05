@@ -17,7 +17,18 @@ class ContractController extends Controller
 
     public function create()
     {
+        // Redirect to create-sale for backward compatibility
+        return redirect()->route('contracts.create-sale');
+    }
+
+    public function createSale()
+    {
         return view('contracts.create');
+    }
+
+    public function createPurchase()
+    {
+        return view('contracts.create-achat');
     }
 
     public function getVehicleInfo(Request $request)
