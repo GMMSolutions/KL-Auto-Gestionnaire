@@ -252,7 +252,7 @@
     </div>
 
     <div class="text-center" style="margin-top: 30px;">
-        <strong>{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</strong>
+        <strong style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</strong>
     </div>
 
     <div class="signature-section">
