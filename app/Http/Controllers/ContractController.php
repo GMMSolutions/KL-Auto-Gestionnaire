@@ -84,7 +84,7 @@ class ContractController extends Controller
             'vehicle_type' => 'required|string|max:100',
             'first_registration_date' => 'required|date',
             'mileage' => 'required|integer|min:0',
-            'chassis_number' => 'required|string|size:17|unique:contracts,chassis_number',
+            'chassis_number' => 'required|string|size:17',
             'color' => 'required|string|max:50',
             
             // Vehicle - Optional fields
