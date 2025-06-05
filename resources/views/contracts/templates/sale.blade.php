@@ -83,7 +83,7 @@
         }
 
         .checkbox.checked::after {
-            content: "X";
+            content: "╳";
             font-size: 10px;
             font-weight: bold;
             display: block;
