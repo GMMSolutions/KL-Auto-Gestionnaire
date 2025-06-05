@@ -255,20 +255,16 @@
         <strong style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</strong>
     </div>
 
-    <div class="signature-section">
-        <div class="signature-left">
-            <div class="signature-date">
-                <strong>Pour {{ config('app.name', 'KL AUTOMOBILES') }}:</strong>
-            </div>
-            <div class="signature-line"></div>
-        </div>
-        <div class="signature-right">
-            <div class="signature-date">
-                <strong>Acheteur:</strong>
-            </div>
-            <div class="signature-line"></div>
-        </div>
-    </div>
 
+    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 10px;">
+        <colgroup>
+            <col style="width: 35%;">
+            <col style="width: 65%;">
+        </colgroup>
+        <tr>
+            <td style="padding: 4px 8px;">Pour {{ config('app.name', 'KL AUTOMOBILES') }}:</td>
+            <td style="font-weight: bold;">Acheteur:</td>
+        </tr>
+    </table>
 </body>
 </html>
