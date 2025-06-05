@@ -6,9 +6,63 @@ use App\Models\Contract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContractController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
+     * Generate a PDF for the specified contract.
+     *
+     * @param  \App\Models\Contract  $contract
+     * @return \Barryvdh\DomPDF\PDF
+     */
+    public function generatePdf(Contract $contract)
+    {
+        if (!in_array($contract->contract_type, ['vente', 'achat'])) {
+            abort(404, 'Type de contrat non valide');
+        }
+
+        $template = 'contracts.templates.' . $contract->contract_type;
+        $pdf = PDF::loadView($template, compact('contract'));
+        
+        // Set paper size and orientation
+        $pdf->setPaper('a4', 'portrait');
+        
+        // Set the filename
+        $filename = 'contrat-' . $contract->contract_type . '-' . $contract->id . '.pdf';
+        
+        return $pdf->stream($filename);
+    }
+    
+    /**
+     * Download the PDF for the specified contract.
+     *
+     * @param  \App\Models\Contract  $contract
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function downloadPdf(Contract $contract)
+    {
+        if (!in_array($contract->contract_type, ['vente', 'achat'])) {
+            abort(404, 'Type de contrat non valide');
+        }
+
+        $template = 'contracts.templates.' . $contract->contract_type;
+        $pdf = PDF::loadView($template, compact('contract'));
+        
+        // Set paper size and orientation
+        $pdf->setPaper('a4', 'portrait');
+        
+        // Set the filename
+        $filename = 'contrat-' . $contract->contract_type . '-' . $contract->id . '.pdf';
+        
+        return $pdf->download($filename);
+    }
+
     public function index()
     {
         $contracts = Contract::latest()->paginate(10);

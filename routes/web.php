@@ -41,5 +41,9 @@ Route::middleware('auth')->group(function () {
     
     // Specific delete route for better confirmation handling
     Route::delete('/contracts/{contract}/delete', [ContractController::class, 'destroy'])->name('contracts.destroy');
+    
+    // PDF Generation Routes
+    Route::get('/contracts/{contract}/pdf', [ContractController::class, 'generatePdf'])->name('contracts.pdf');
+    Route::get('/contracts/{contract}/download', [ContractController::class, 'downloadPdf'])->name('contracts.download');
 });
 

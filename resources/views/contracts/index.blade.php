@@ -69,9 +69,12 @@
                             <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-sm btn-outline-primary btn-action" title="Imprimer">
-                                        <i class="fas fa-print"></i>
-                                    </button>
+                                    <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success btn-action" title="Télécharger le PDF">
+                                        <i class="fas fa-download"></i>
+                                    </a>
                                     <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
                                         <i class="fas fa-edit"></i>
                                     </a>
