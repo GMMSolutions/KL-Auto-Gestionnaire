@@ -50,33 +50,39 @@ class ContractController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // Buyer
+            // Buyer - Required fields
             'buyer_name' => 'required|string|max:255',
             'buyer_surname' => 'required|string|max:255',
-            'buyer_birth_date' => 'required|date',
             'buyer_address' => 'required|string|max:255',
             'buyer_zip' => 'required|string|max:10',
             'buyer_city' => 'required|string|max:100',
             'buyer_phone' => 'required|string|max:20',
-            'buyer_email' => 'required|email|max:255',
+            
+            // Buyer - Optional fields
+            'buyer_birth_date' => 'nullable|date',
+            'buyer_email' => 'nullable|email|max:255',
 
-            // Vehicle
+            // Vehicle - Required fields
             'vehicle_brand' => 'required|string|max:100',
             'vehicle_type' => 'required|string|max:100',
             'first_registration_date' => 'required|date',
             'mileage' => 'required|integer|min:0',
             'chassis_number' => 'required|string|size:17|unique:contracts,chassis_number',
             'color' => 'required|string|max:50',
-            'plate_number' => 'required|string|max:20',
+            
+            // Vehicle - Optional fields
+            'plate_number' => 'nullable|string|max:20',
             'has_accident' => 'boolean',
 
-            // Sale
-            'sale_price' => 'nullable|numeric|min:0',
+            // Sale - Required fields
+            'sale_price' => 'required|numeric|min:0',
+            'payment_condition' => 'required|in:cash,leasing,credit',
+            'warranty' => 'required|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
+            
+            // Sale - Optional fields
             'expertise_date' => 'nullable|date',
             'deposit' => 'nullable|numeric|min:0',
             'remaining_amount' => 'nullable|numeric|min:0',
-            'payment_condition' => 'nullable|in:cash,leasing,credit',
-            'warranty' => 'nullable|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
             'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
         ]);
 

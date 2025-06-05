@@ -48,29 +48,29 @@
                                 <div id="vehicleInfo">
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="vehicle_brand" class="form-label">Marque</label>
+                                            <label for="vehicle_brand" class="form-label">Marque <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="vehicle_brand" name="vehicle_brand" required>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="vehicle_type" class="form-label">Type</label>
+                                            <label for="vehicle_type" class="form-label">Type <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="vehicle_type" name="vehicle_type" required>
                                         </div>
                                     </div>
                                     
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <label for="first_registration_date" class="form-label">Première immatriculation</label>
+                                            <label for="first_registration_date" class="form-label">Première immatriculation <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" id="first_registration_date" name="first_registration_date" required>
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="mileage" class="form-label">Kilométrage</label>
+                                            <label for="mileage" class="form-label">Kilométrage <span class="text-danger">*</span></label>
                                             <div class="input-group">
                                                 <input type="number" class="form-control" id="mileage" name="mileage" min="0" required>
                                                 <span class="input-group-text">km</span>
                                             </div>
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="color" class="form-label">Couleur</label>
+                                            <label for="color" class="form-label">Couleur <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="color" name="color" required>
                                         </div>
                                     </div>
@@ -78,11 +78,12 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <label for="plate_number" class="form-label">Plaques d'immatriculation</label>
-                                            <input type="text" class="form-control" id="plate_number" name="plate_number" required>
+                                            <input type="text" class="form-control" id="plate_number" name="plate_number">
                                         </div>
                                         <div class="col-md-6 mb-3 d-flex align-items-end">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="has_accident" name="has_accident">
+                                                <input class="form-check-input" type="hidden" name="has_accident" value="0">
+                                                <input class="form-check-input" type="checkbox" id="has_accident" name="has_accident" value="1">
                                                 <label class="form-check-label" for="has_accident">
                                                     Véhicule accidenté
                                                 </label>
@@ -100,47 +101,47 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="buyer_lastname" class="form-label">Nom</label>
-                                        <input type="text" class="form-control" id="buyer_lastname" name="buyer_lastname" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="buyer_firstname" class="form-label">Prénom</label>
-                                        <input type="text" class="form-control" id="buyer_firstname" name="buyer_firstname" required>
-                                    </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="buyer_surname" class="form-label">Nom <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="buyer_surname" name="buyer_surname" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="buyer_name" class="form-label">Prénom <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
+                                        </div>
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="buyer_birth_date" class="form-label">Date de naissance</label>
-                                        <input type="date" class="form-control" id="buyer_birth_date" name="buyer_birth_date" required>
-                                    </div>
-                                    <div class="col-md-8 mb-3">
-                                        <label for="buyer_address" class="form-label">Adresse</label>
-                                        <input type="text" class="form-control" id="buyer_address" name="buyer_address" required>
-                                    </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="buyer_birth_date" class="form-label">Date de naissance</label>
+                                            <input type="date" class="form-control" id="buyer_birth_date" name="buyer_birth_date">
+                                        </div>
+                                        <div class="col-md-8 mb-3">
+                                            <label for="buyer_address" class="form-label">Adresse <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="buyer_address" name="buyer_address" required>
+                                        </div>
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="buyer_zip" class="form-label">Code postal</label>
-                                        <input type="text" class="form-control" id="buyer_zip" name="buyer_zip" required>
-                                    </div>
-                                    <div class="col-md-8 mb-3">
-                                        <label for="buyer_city" class="form-label">Ville</label>
-                                        <input type="text" class="form-control" id="buyer_city" name="buyer_city" required>
-                                    </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="buyer_zip" class="form-label">Code postal <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="buyer_zip" name="buyer_zip" required>
+                                        </div>
+                                        <div class="col-md-8 mb-3">
+                                            <label for="buyer_city" class="form-label">Ville <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="buyer_city" name="buyer_city" required>
+                                        </div>
                                 </div>
                                 
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="buyer_phone" class="form-label">Téléphone</label>
-                                        <input type="tel" class="form-control" id="buyer_phone" name="buyer_phone" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="buyer_email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="buyer_email" name="buyer_email" required>
-                                    </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="buyer_phone" class="form-label">Téléphone <span class="text-danger">*</span></label>
+                                            <input type="tel" class="form-control" id="buyer_phone" name="buyer_phone" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="buyer_email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="buyer_email" name="buyer_email">
+                                        </div>
                                 </div>
                             </div>
                         </div>
