@@ -352,9 +352,8 @@
                                             name="payment_condition" 
                                             required>
                                         <option value="">Sélectionnez...</option>
-                                        <option value="cash" {{ old('payment_condition') == 'cash' ? 'selected' : '' }}>Comptant</option>
-                                        <option value="leasing" {{ old('payment_condition') == 'leasing' ? 'selected' : '' }}>Leasing</option>
-                                        <option value="credit" {{ old('payment_condition') == 'credit' ? 'selected' : '' }}>Crédit</option>
+                                        <option value="Cash" {{ old('payment_condition') == 'Cash' ? 'selected' : '' }}>Cash</option>
+                                        <option value="Leasing ou Crédit" {{ old('payment_condition') == 'Leasing ou Crédit' ? 'selected' : '' }}>Leasing ou Crédit</option>
                                     </select>
                                     @error('payment_condition')
                                         <div class="invalid-feedback">{{ $message }}</div>
