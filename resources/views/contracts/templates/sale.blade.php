@@ -83,7 +83,7 @@
         }
 
         .checkbox.checked::after {
-            content: "✓";
+            content: "X";
             font-size: 10px;
             font-weight: bold;
             display: block;
@@ -221,10 +221,6 @@
         <tr>
             <td style="padding: 4px 8px;">Conditions de paiement :</td>
             <td style="padding: 4px 8px;">{{ $contract->payment_condition ?? '' }}</td>
-        </tr>
-        <tr>
-            <td style="padding: 4px 8px;">Garantie :</td>
-            <td style="padding: 4px 8px;">{{ $contract->warranty ?? '' }}</td>
         </tr>
     </table>
 
