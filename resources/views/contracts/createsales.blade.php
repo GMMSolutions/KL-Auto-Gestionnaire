@@ -522,7 +522,27 @@ document.addEventListener('DOMContentLoaded', function() {
         if (birthDateInput && !birthDateInput.value) {
             birthDateInput.disabled = true; // This prevents empty string from being sent
         }
+        
+        // Manually validate VIN
+        const chassisNumber = document.getElementById('chassis_number').value.trim();
+        if (chassisNumber.length !== 17) {
+            event.preventDefault();
+            showFieldError(document.getElementById('chassis_number'), 'Le numéro de châssis doit contenir exactement 17 caractères.');
+        }
     });
+    
+    // Add input validation for VIN
+    const chassisInput = document.getElementById('chassis_number');
+    if (chassisInput) {
+        chassisInput.addEventListener('input', function() {
+            // Remove any non-alphanumeric characters and convert to uppercase
+            this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+            // Limit to 17 characters
+            if (this.value.length > 17) {
+                this.value = this.value.substring(0, 17);
+            }
+        });
+    }
 });
 </script>
 @endpush
