@@ -6,68 +6,6 @@
     <!-- Add meta tags for API configuration -->
     <meta name="vin-api-key" content="{{ config('app.VIN_API_KEY') }}">
     <meta name="vin-api-secret" content="{{ config('app.VIN_API_SECRET') }}">
-
-<style>
-    .form-section {
-        display: none;
-    }
-    .form-section.active {
-        display: block;
-    }
-    
-    .step-indicator {
-        display: flex;
-        margin-bottom: 30px;
-        justify-content: space-between;
-    }
-    
-    .step {
-        text-align: center;
-        flex: 1;
-        position: relative;
-    }
-    
-    .step-number {
-        width: 40px;
-        height: 40px;
-        margin: 0 auto 10px;
-        background-color: #e9ecef;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        color: #6c757d;
-    }
-    
-    .step.active .step-number {
-        background-color: #0d6efd;
-        color: white;
-    }
-    
-    .step.completed .step-number {
-        background-color: #198754;
-        color: white;
-    }
-    
-    .step-line {
-        position: absolute;
-        top: 20px;
-        left: -50%;
-        right: 50%;
-        height: 2px;
-        background-color: #e9ecef;
-        z-index: -1;
-    }
-    
-    .step:first-child .step-line {
-        display: none;
-    }
-    
-    .step.completed .step-line {
-        background-color: #198754;
-    }
-</style>
 @endpush
 
 @section('content')
@@ -81,20 +19,21 @@
 
                 <!-- Step Indicator -->
                 <div class="card-body">
-                    <div class="step-indicator">
-                        <div class="step active" id="step1-indicator">
-                            <div class="step-number">1</div>
-                            <div class="step-title">Véhicule</div>
+                    <div class="d-flex justify-content-between mb-4 position-relative">
+                        <div class="position-absolute w-100" style="top: 20px; z-index: -1;">
+                            <hr class="m-0">
                         </div>
-                        <div class="step" id="step2-indicator">
-                            <div class="step-line"></div>
-                            <div class="step-number">2</div>
-                            <div class="step-title">Acheteur</div>
+                        <div class="d-flex flex-column align-items-center" id="step1-indicator">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">1</div>
+                            <div>Véhicule</div>
                         </div>
-                        <div class="step" id="step3-indicator">
-                            <div class="step-line"></div>
-                            <div class="step-number">3</div>
-                            <div class="step-title">Vente</div>
+                        <div class="d-flex flex-column align-items-center" id="step2-indicator">
+                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">2</div>
+                            <div>Acheteur</div>
+                        </div>
+                        <div class="d-flex flex-column align-items-center" id="step3-indicator">
+                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mb-2" style="width: 40px; height: 40px;">3</div>
+                            <div>Vente</div>
                         </div>
                     </div>
 
@@ -102,7 +41,7 @@
                     <form id="contractForm" action="{{ route('contracts.store') }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         
-                        <div id="step1" class="form-section active">
+                        <div id="step1" class="active">
                             <div class="card mb-4">
                                 <div class="card-header bg-light">
                                     <h5 class="mb-0">1. Informations du véhicule</h5>
@@ -126,7 +65,7 @@
                                         </div>
                                     </div>
 
-                                    <div id="vehicleInfo" style="display: none;">
+                                    <div id="vehicleInfo" class="d-none">
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
                                                 <label for="vehicle_brand" class="form-label">Marque</label>
@@ -181,7 +120,7 @@
                         </div>
 
                         <!-- Step 2: Buyer Information -->
-                        <div id="step2" class="form-section">
+                        <div id="step2" class="d-none">
                             <div class="card mb-4">
                                 <div class="card-header bg-light">
                                     <h5 class="mb-0">2. Informations de l'acheteur</h5>
@@ -243,7 +182,7 @@
                         </div>
 
                         <!-- Step 3: Sale Information -->
-                        <div id="step3" class="form-section">
+                        <div id="step3" class="d-none">
                             <div class="card mb-4">
                                 <div class="card-header bg-light">
                                     <h5 class="mb-0">3. Informations de vente</h5>
