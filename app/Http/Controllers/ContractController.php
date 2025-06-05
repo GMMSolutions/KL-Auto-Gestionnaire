@@ -135,6 +135,18 @@ class ContractController extends Controller
         if ($contract->contract_type !== 'vente') {
             abort(404);
         }
+        
+        // Ensure dates are in the correct format for the view
+        if ($contract->buyer_birth_date) {
+            $contract->buyer_birth_date = \Carbon\Carbon::parse($contract->buyer_birth_date)->format('Y-m-d');
+        }
+        if ($contract->expertise_date) {
+            $contract->expertise_date = \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d');
+        }
+        if ($contract->first_registration_date) {
+            $contract->first_registration_date = \Carbon\Carbon::parse($contract->first_registration_date)->format('Y-m-d');
+        }
+        
         return view('contracts.editsales', compact('contract'));
     }
 
@@ -143,6 +155,18 @@ class ContractController extends Controller
         if ($contract->contract_type !== 'achat') {
             abort(404);
         }
+        
+        // Ensure dates are in the correct format for the view
+        if ($contract->buyer_birth_date) {
+            $contract->buyer_birth_date = \Carbon\Carbon::parse($contract->buyer_birth_date)->format('Y-m-d');
+        }
+        if ($contract->expertise_date) {
+            $contract->expertise_date = \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d');
+        }
+        if ($contract->first_registration_date) {
+            $contract->first_registration_date = \Carbon\Carbon::parse($contract->first_registration_date)->format('Y-m-d');
+        }
+        
         return view('contracts.editpurchase', compact('contract'));
     }
 
