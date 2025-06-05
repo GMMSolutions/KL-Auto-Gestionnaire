@@ -551,6 +551,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Form submission
     form.addEventListener('submit', function(event) {
+        let formIsValid = true;
+        
         // Clear empty date fields to prevent NULL submission
         const birthDateInput = document.getElementById('buyer_birth_date');
         if (birthDateInput && !birthDateInput.value) {
@@ -560,10 +562,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Manually validate VIN
         const chassisNumber = chassisInput.value.trim();
         if (chassisNumber.length !== 17) {
-            event.preventDefault();
             showFieldError(chassisInput, 'Le numéro de châssis doit contenir exactement 17 caractères.');
-            // Scroll to the error
-            chassisInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            formIsValid = false;
+        } else {
+            // Remove error state if VIN is valid
+            chassisInput.classList.remove('is-invalid');
+            const feedback = chassisInput.parentNode.querySelector('.invalid-feedback');
+            if (feedback) {
+                feedback.style.display = 'none';
+            }
+        }
+        
+        // Prevent form submission if validation fails
+        if (!formIsValid) {
+            event.preventDefault();
+            // Scroll to the first error
+            const firstError = form.querySelector('.is-invalid');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
     });
 });
