@@ -310,7 +310,7 @@
                                            class="form-control {{ $errors->has('expertise_date') ? 'is-invalid' : '' }}" 
                                            id="expertise_date" 
                                            name="expertise_date"
-                                           value="{{ old('expertise_date') }}">
+                                           value="{{ old('expertise_date', $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('Y-m-d') : '') }}">
                                     @error('expertise_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -353,9 +353,9 @@
                                             name="payment_condition" 
                                             required>
                                         <option value="">Sélectionnez...</option>
-                                        <option value="cash" {{ old('payment_condition') == 'cash' ? 'selected' : '' }}>Comptant</option>
-                                        <option value="leasing" {{ old('payment_condition') == 'leasing' ? 'selected' : '' }}>Leasing</option>
-                                        <option value="credit" {{ old('payment_condition') == 'credit' ? 'selected' : '' }}>Crédit</option>
+                                        <option value="cash" {{ old('payment_condition', $contract->payment_condition) == 'cash' ? 'selected' : '' }}>Comptant</option>
+                                        <option value="leasing" {{ old('payment_condition', $contract->payment_condition) == 'leasing' ? 'selected' : '' }}>Leasing</option>
+                                        <option value="credit" {{ old('payment_condition', $contract->payment_condition) == 'credit' ? 'selected' : '' }}>Crédit</option>
                                     </select>
                                     @error('payment_condition')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -371,10 +371,10 @@
                                             name="warranty" 
                                             required>
                                         <option value="">Sélectionnez...</option>
-                                        <option value="no_warranty" {{ old('warranty') == 'no_warranty' ? 'selected' : '' }}>Sans garantie (export)</option>
-                                        <option value="quality_1_qbase" {{ old('warranty') == 'quality_1_qbase' ? 'selected' : '' }}>Garantie Quality 1 QBase</option>
-                                        <option value="quality_1_q3" {{ old('warranty') == 'quality_1_q3' ? 'selected' : '' }}>Garantie Quality 1 Q3</option>
-                                        <option value="quality_1_q5" {{ old('warranty') == 'quality_1_q5' ? 'selected' : '' }}>Garantie Quality 1 Q5</option>
+                                        <option value="no_warranty" {{ old('warranty', $contract->warranty) == 'no_warranty' ? 'selected' : '' }}>Sans garantie (export)</option>
+                                        <option value="quality_1_qbase" {{ old('warranty', $contract->warranty) == 'quality_1_qbase' ? 'selected' : '' }}>Garantie Quality 1 QBase</option>
+                                        <option value="quality_1_q3" {{ old('warranty', $contract->warranty) == 'quality_1_q3' ? 'selected' : '' }}>Garantie Quality 1 Q3</option>
+                                        <option value="quality_1_q5" {{ old('warranty', $contract->warranty) == 'quality_1_q5' ? 'selected' : '' }}>Garantie Quality 1 Q5</option>
                                     </select>
                                     @error('warranty')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -382,7 +382,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3" 
                                      id="warrantyAmountSection" 
-                                     style="display: {{ old('warranty') == 'quality_1_q5' ? 'block' : 'none' }};">
+                                     style="display: {{ old('warranty', $contract->warranty) == 'quality_1_q5' ? 'block' : 'none' }};">
                                     <label for="warranty_amount" class="form-label">Montant supplémentaire pour Q5</label>
                                     <div class="input-group">
                                         <span class="input-group-text">€</span>
