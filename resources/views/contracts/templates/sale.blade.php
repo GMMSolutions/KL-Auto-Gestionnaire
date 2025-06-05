@@ -256,10 +256,10 @@
     </div>
 
 
-    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 10px;">
+    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 30px;">
         <colgroup>
-            <col style="width: 35%;">
-            <col style="width: 65%;">
+            <col style="width: 55%;">
+            <col style="width: 45%;">
         </colgroup>
         <tr>
             <td style="font-weight: bold;">Pour {{ config('app.name', 'KL AUTOMOBILES') }}:</td>
