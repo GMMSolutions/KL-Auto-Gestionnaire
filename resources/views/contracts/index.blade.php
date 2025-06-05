@@ -20,8 +20,22 @@
             padding: 0.25rem 0.5rem;
             margin: 0 0.125rem;
         }
+        .field-group {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .field-group h5 {
+        color: #495057;
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .btn-search {
+        min-width: 120px;
+    }
     </style>
-@endpush
 
 @section('content')
 <div class="container-fluid">

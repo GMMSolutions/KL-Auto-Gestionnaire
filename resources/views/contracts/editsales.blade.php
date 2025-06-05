@@ -2,7 +2,7 @@
 
 @section('title', 'Modifier Contrat de Vente')
 
-@section('styles')
+@push('styles')
 <meta name="vin-api-key" content="{{ config('app.VIN_API_KEY') }}">
 <meta name="vin-api-secret" content="{{ config('app.VIN_API_SECRET') }}">
 <style>
