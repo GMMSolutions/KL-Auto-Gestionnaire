@@ -92,7 +92,7 @@
         }
 
         .declaration {
-            font-size: 9px;
+            font-size: 11px;
             margin: 15px 0;
             line-height: 1.3;
         }
@@ -247,8 +247,8 @@
     </div>
 
     <div class="declaration">
-        Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est ni investi,<br>
-        ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriete
+        Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est ni investi,
+        ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété
     </div>
 
     <div class="signature-section">
