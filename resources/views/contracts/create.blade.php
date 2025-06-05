@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-end">
-                                    <button type="button" class="btn btn-primary" id="nextToStep2" disabled>
+                                    <button type="button" class="btn btn-primary" id="nextToStep2" data-step="2" disabled>
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -171,10 +171,10 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-end">
-                                    <button type="button" class="btn btn-secondary me-2" id="backToStep1">
+                                    <button type="button" class="btn btn-secondary me-2" data-step="1">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
-                                    <button type="button" class="btn btn-primary" id="nextToStep3">
+                                    <button type="button" class="btn btn-primary" data-step="3">
                                         Suivant <i class="fas fa-arrow-right ms-2"></i>
                                     </button>
                                 </div>
@@ -249,11 +249,11 @@
                                     </div>
                                 </div>
                                 <div class="card-footer text-end">
-                                    <button type="button" class="btn btn-secondary me-2" id="backToStep2">
+                                    <button type="button" class="btn btn-secondary me-2" data-step="2">
                                         <i class="fas fa-arrow-left me-2"></i>Précédent
                                     </button>
                                     <button type="submit" class="btn btn-success">
-                                        <i class="fas fa-save me-2"></i>Créer le contrat
+                                        <i class="fas fa-save me-2"></i>Enregistrer le contrat
                                     </button>
                                 </div>
                             </div>
