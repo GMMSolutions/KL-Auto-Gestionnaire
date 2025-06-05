@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Log;
 
 class ContractController extends Controller
 {
+    public function index()
+    {
+        $contracts = Contract::latest()->paginate(10);
+        return view('contracts.index', compact('contracts'));
+    }
+
     public function create()
     {
         return view('contracts.create');
@@ -91,9 +97,9 @@ class ContractController extends Controller
             $validated['remaining_amount'] = $validated['sale_price'] - $validated['deposit'];
         }
 
-        $contract = Contract::create($validated);
+        Contract::create($validated);
 
-        return redirect()->route('contracts.show', $contract->id)
+        return redirect()->route('contracts.index')
             ->with('success', 'Contrat créé avec succès.');
     }
 

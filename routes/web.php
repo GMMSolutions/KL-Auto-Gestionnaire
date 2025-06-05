@@ -25,9 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Contract routes
-    Route::get('/contracts/create', [ContractController::class, 'create'])->name('contracts.create');
+    Route::resource('contracts', ContractController::class)->except(['edit', 'update', 'destroy']);
     Route::post('/api/getVehicleInfo', [ContractController::class, 'getVehicleInfo'])->name('contracts.vehicle.info');
-    Route::post('/contracts', [ContractController::class, 'store'])->name('contracts.store');
     
     // Ajoutez ici vos autres routes protégées
     // Exemple : Route::resource('clients', ClientController::class);

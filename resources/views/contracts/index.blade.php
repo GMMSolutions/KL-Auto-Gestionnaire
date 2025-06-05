@@ -1,0 +1,103 @@
+@extends('layouts.app')
+
+@section('title', 'Liste des Contrats')
+
+@push('styles')
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.25rem 0.5rem;
+            margin-left: 0.25rem;
+            border-radius: 0.25rem;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background: #0d6efd;
+            color: white !important;
+            border: 1px solid #0d6efd;
+        }
+        .btn-action {
+            padding: 0.25rem 0.5rem;
+            margin: 0 0.125rem;
+        }
+    </style>
+@endpush
+
+@section('content')
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>Liste des Contrats</h1>
+                <a href="{{ route('contracts.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Nouveau Contrat
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="contracts-table" class="table table-striped table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nom & Prénom</th>
+                            <th>Véhicule</th>
+                            <th class="text-end">Prix de vente TVA</th>
+                            <th class="text-end">Accompte</th>
+                            <th class="text-end">Reste à payer</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($contracts as $contract)
+                        <tr>
+                            <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
+                            <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
+                            <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
+                            <td class="text-end">{{ number_format($contract->deposit, 2, ',', ' ') }} €</td>
+                            <td class="text-end">{{ number_format($contract->remaining_amount, 2, ',', ' ') }} €</td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <button type="button" class="btn btn-sm btn-outline-primary btn-action" title="Imprimer">
+                                        <i class="fas fa-print"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger btn-action" title="Supprimer">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#contracts-table').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json'
+            },
+            order: [],
+            pageLength: 25,
+            responsive: true,
+            columnDefs: [
+                { orderable: false, targets: [5] } // Disable sorting on actions column
+            ]
+        });
+    });
+</script>
+@endpush
