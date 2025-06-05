@@ -53,6 +53,7 @@
         .warranty-section {
             border: 2px solid #c41e3a;
             margin: 15px 0;
+            font-size: 14px;
         }
 
         .warranty-header {
@@ -225,7 +226,7 @@
     </table>
 
     <div class="warranty-section">
-        <div class="warranty-header">Conditions de garantie:</div>
+        <div class="warranty-header">Conditions de garantie</div>
         <div class="warranty-content">
             <div class="warranty-option">
                 <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty' ? 'checked' : '' }}"></span>
