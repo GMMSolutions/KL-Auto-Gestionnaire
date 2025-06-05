@@ -87,11 +87,48 @@
     @stack('scripts')
     
     <script>
-        // Initialize Bootstrap dropdowns
+        // Enable Bootstrap 5 dropdowns
         document.addEventListener('DOMContentLoaded', function() {
-            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-                return new bootstrap.Dropdown(dropdownToggleEl);
+            // Initialize all dropdowns
+            var dropdownTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="dropdown"]'));
+            dropdownTriggerList.forEach(function (dropdownTriggerEl) {
+                dropdownTriggerEl.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    var dropdownMenu = dropdownTriggerEl.nextElementSibling;
+                    var isShown = dropdownMenu.classList.contains('show');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+                        if (menu !== dropdownMenu) {
+                            menu.classList.remove('show');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    if (!isShown) {
+                        dropdownMenu.classList.add('show');
+                        
+                        // Close when clicking outside
+                        document.addEventListener('click', function closeDropdown(e) {
+                            if (!dropdownTriggerEl.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                                dropdownMenu.classList.remove('show');
+                                document.removeEventListener('click', closeDropdown);
+                            }
+                        });
+                    } else {
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+            });
+            
+            // Handle logout form submission
+            document.querySelectorAll('.dropdown-item[href="{{ route('logout') }}"]').forEach(function(el) {
+                el.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('logout-form').submit();
+                });
             });
         });
     </script>
