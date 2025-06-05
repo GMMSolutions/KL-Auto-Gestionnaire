@@ -42,6 +42,7 @@
                 <table id="contracts-table" class="table table-striped table-hover">
                     <thead class="table-light">
                         <tr>
+                            <th>Type</th>
                             <th>Nom & Prénom</th>
                             <th>Véhicule</th>
                             <th class="text-end">Prix de vente TVA</th>
@@ -53,6 +54,11 @@
                     <tbody>
                         @foreach($contracts as $contract)
                         <tr>
+                            <td>
+                                <span class="badge {{ $contract->contract_type === 'vente' ? 'bg-success' : 'bg-info' }}">
+                                    {{ ucfirst($contract->contract_type) }}
+                                </span>
+                            </td>
                             <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
                             <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
                             <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
@@ -95,7 +101,7 @@
             pageLength: 25,
             responsive: true,
             columnDefs: [
-                { orderable: false, targets: [5] } // Disable sorting on actions column
+                { orderable: false, targets: [6] } // Disable sorting on actions column
             ]
         });
     });

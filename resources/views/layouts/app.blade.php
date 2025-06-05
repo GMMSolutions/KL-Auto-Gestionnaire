@@ -31,7 +31,7 @@
                     <ul class="navbar-nav me-auto">
                         @auth
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('contracts.create') }}">Nouveau Contrat</a>
+                                <a class="nav-link" href="{{ route('contracts.index') }}">Contrats</a>
                             </li>
                         @endauth
                     </ul>

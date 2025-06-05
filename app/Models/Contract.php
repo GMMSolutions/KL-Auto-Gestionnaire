@@ -10,6 +10,9 @@ class Contract extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        // Contract Information
+        'contract_type',
+        
         // Buyer Information
         'buyer_name',
         'buyer_surname',
