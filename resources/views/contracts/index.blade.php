@@ -145,7 +145,7 @@
         const deleteModal = document.getElementById('deleteContractModal');
         
         // When delete button is clicked, store the contract ID
-        $('.delete-contract').on('click', function() {
+        $('#contracts-table tbody').on('click', '.delete-contract', function() {
             contractIdToDelete = $(this).data('id');
         });
 
