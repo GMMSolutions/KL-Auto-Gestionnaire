@@ -22,7 +22,7 @@
         min-width: 120px;
     }
 </style>
-@endpush
+
 
 @section('content')
 <div class="container py-4">
