@@ -131,4 +131,24 @@ class ContractController extends Controller
     {
         return view('contracts.show', compact('contract'));
     }
+
+    /**
+     * Remove the specified contract from storage.
+     */
+    public function destroy(Contract $contract)
+    {
+        try {
+            $contract->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Le contrat a été supprimé avec succès.'
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la suppression du contrat : ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Une erreur est survenue lors de la suppression du contrat.'
+            ], 500);
+        }
+    }
 }

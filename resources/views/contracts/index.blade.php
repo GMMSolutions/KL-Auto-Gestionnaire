@@ -75,7 +75,11 @@
                                     <button type="button" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger btn-action" title="Supprimer">
+                                    <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
+                                            title="Supprimer" 
+                                            data-id="{{ $contract->id }}"
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteContractModal">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -90,8 +94,28 @@
 </div>
 @endsection
 
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteContractModal" tabindex="-1" aria-labelledby="deleteContractModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteContractModalLabel">Confirmer la suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer ce contrat ? Cette action est irréversible.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Supprimer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
@@ -112,6 +136,97 @@
                 { responsivePriority: 2, targets: 5 }  // Actions column
             ]
         });
+
+        // Handle delete confirmation
+        let contractIdToDelete = null;
+        const deleteModal = document.getElementById('deleteContractModal');
+        
+        // When delete button is clicked, store the contract ID
+        $('.delete-contract').on('click', function() {
+            contractIdToDelete = $(this).data('id');
+        });
+
+        // When confirm delete is clicked
+        $('#confirmDelete').on('click', function() {
+            if (!contractIdToDelete) return;
+            
+            const deleteUrl = `{{ route('contracts.destroy', '') }}/${contractIdToDelete}`;
+            
+            $.ajax({
+                url: deleteUrl,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'position-fixed top-0 end-0 p-3';
+                    toast.innerHTML = `
+                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header bg-success text-white">
+                                <strong class="me-auto">Succès</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${response.message}
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    // Remove the row from the table
+                    $(`button[data-id="${contractIdToDelete}"]`).closest('tr').fadeOut(400, function() {
+                        $(this).remove();
+                    });
+                    
+                    // Hide the modal
+                    const modal = bootstrap.Modal.getInstance(deleteModal);
+                    modal.hide();
+                    
+                    // Remove toast after 3 seconds
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 3000);
+                },
+                error: function(xhr) {
+                    // Show error message
+                    const response = xhr.responseJSON || {};
+                    const message = response.message || 'Une erreur est survenue lors de la suppression du contrat.';
+                    
+                    const toast = document.createElement('div');
+                    toast.className = 'position-fixed top-0 end-0 p-3';
+                    toast.innerHTML = `
+                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header bg-danger text-white">
+                                <strong class="me-auto">Erreur</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${message}
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    // Hide the modal
+                    const modal = bootstrap.Modal.getInstance(deleteModal);
+                    modal.hide();
+                    
+                    // Remove toast after 5 seconds
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 5000);
+                }
+            });
+        });
     });
 </script>
+
+<style>
+.toast {
+    z-index: 1100;
+    min-width: 300px;
+}
+</style>
 @endpush

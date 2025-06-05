@@ -30,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/getVehicleInfo', [ContractController::class, 'getVehicleInfo'])->name('contracts.vehicle.info');
 
     // Resource route ensuite
-    Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update', 'destroy']);
+    Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update']);
+    
+    // Specific delete route for better confirmation handling
+    Route::delete('/contracts/{contract}/delete', [ContractController::class, 'destroy'])->name('contracts.destroy');
 });
 
