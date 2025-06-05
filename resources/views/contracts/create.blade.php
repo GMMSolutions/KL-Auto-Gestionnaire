@@ -204,19 +204,14 @@
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label for="buyer_birth_date" class="form-label">Date de naissance</label>
-                                    <div class="input-group">
-                                        <input type="date" 
-                                               class="form-control {{ $errors->has('buyer_birth_date') ? 'is-invalid' : '' }}" 
-                                               id="buyer_birth_date" 
-                                               name="buyer_birth_date"
-                                               value="{{ old('buyer_birth_date') }}">
-                                        <button class="btn btn-outline-secondary" type="button" id="clearBirthDate">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                        @error('buyer_birth_date')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    <input type="date" 
+                                           class="form-control {{ $errors->has('buyer_birth_date') ? 'is-invalid' : '' }}" 
+                                           id="buyer_birth_date" 
+                                           name="buyer_birth_date"
+                                           value="{{ old('buyer_birth_date') }}">
+                                    @error('buyer_birth_date')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="col-md-8 mb-3">
                                     <label for="buyer_address" class="form-label">Adresse <span class="text-danger">*</span></label>
@@ -507,27 +502,6 @@ document.addEventListener('DOMContentLoaded', function() {
         feedback.textContent = message;
         feedback.style.display = 'block';
     }
-
-    // Clear birth date button
-    document.getElementById('clearBirthDate').addEventListener('click', function() {
-        const birthDateInput = document.getElementById('buyer_birth_date');
-        birthDateInput.value = '';
-        birthDateInput.classList.remove('is-invalid');
-        const feedback = birthDateInput.parentNode.querySelector('.invalid-feedback');
-        if (feedback) {
-            feedback.style.display = 'none';
-        }
-    });
-
-    // Prevent form submission if there are invalid fields
-    const form = document.getElementById('contractForm');
-    form.addEventListener('submit', function(event) {
-        // Clear empty date fields to prevent NULL submission
-        const birthDateInput = document.getElementById('buyer_birth_date');
-        if (birthDateInput && !birthDateInput.value) {
-            birthDateInput.disabled = true; // This prevents empty string from being sent
-        }
-    });
 });
 </script>
 @endpush
