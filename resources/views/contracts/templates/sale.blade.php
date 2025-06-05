@@ -252,7 +252,7 @@
     </div>
 
     <div class="text-center" style="margin-top: 30px;">
-        <strong style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</strong>
+        <span style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le : {{ \Carbon\Carbon::now()->format('d.m.Y') }}</span>
     </div>
 
 
@@ -262,7 +262,7 @@
             <col style="width: 65%;">
         </colgroup>
         <tr>
-            <td style="padding: 4px 8px;">Pour {{ config('app.name', 'KL AUTOMOBILES') }}:</td>
+            <td style="font-weight: bold;">Pour {{ config('app.name', 'KL AUTOMOBILES') }}:</td>
             <td style="font-weight: bold;">Acheteur:</td>
         </tr>
     </table>
