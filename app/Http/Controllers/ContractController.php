@@ -82,8 +82,8 @@ class ContractController extends Controller
 
             // Sale - Required fields
             'sale_price' => 'required|numeric|min:0',
-            'payment_condition' => 'required|in:cash,leasing,credit',
-            'warranty' => 'required|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
+            'payment_condition' => 'nullable|required_if:contract_type,vente|in:cash,leasing,credit',
+            'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
             
             // Sale - Optional fields
             'expertise_date' => 'nullable|date',
