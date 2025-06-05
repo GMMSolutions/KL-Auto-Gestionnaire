@@ -66,7 +66,10 @@ class ContractController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $rules = [
+            // Contract type
+            'contract_type' => 'required|in:vente,achat',
+            
             // Buyer - Required fields
             'buyer_name' => 'required|string|max:255',
             'buyer_surname' => 'required|string|max:255',
@@ -101,13 +104,23 @@ class ContractController extends Controller
             'deposit' => 'nullable|numeric|min:0',
             'remaining_amount' => 'nullable|numeric|min:0',
             'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
-        ]);
+        ];
 
-        // Calcul automatique du restant dû
+        $validated = $request->validate($rules);
+
+        // Set default values for purchase contracts
+        if ($validated['contract_type'] === 'achat') {
+            $validated['payment_condition'] = null;
+            $validated['warranty'] = null;
+            $validated['warranty_amount'] = null;
+        }
+
+        // Calculate remaining amount if not provided
         if (!isset($validated['remaining_amount']) && isset($validated['sale_price'], $validated['deposit'])) {
             $validated['remaining_amount'] = $validated['sale_price'] - $validated['deposit'];
         }
 
+        // Create the contract with all validated data
         Contract::create($validated);
 
         return redirect()->route('contracts.index')

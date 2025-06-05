@@ -36,6 +36,7 @@
                 <div class="card-body">
                     <form id="contractForm" action="{{ route('contracts.store') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="contract_type" value="vente">
                         
                         <!-- Vehicle Information -->
                         <div class="field-group">
