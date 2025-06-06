@@ -29,7 +29,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header bg-success text-white">
                     <h4 class="mb-0">Modifier le Contrat de Vente</h4>
                 </div>
 

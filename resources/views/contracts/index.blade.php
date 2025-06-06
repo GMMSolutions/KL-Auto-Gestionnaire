@@ -42,7 +42,7 @@
     <hr>
     
     <table id="contracts-table" class="table w-100 pb-2">
-        <thead class="pb-0">
+        <thead>
             <tr>
                 <th>Type</th>
                 <th>Nom complet</th>
