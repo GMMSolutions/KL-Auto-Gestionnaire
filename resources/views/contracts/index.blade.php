@@ -141,6 +141,14 @@
             },
             order: [],
             pageLength: 10,
+            pagingType: 'numbers',
+            drawCallback: function() {
+                // Add arrow icons to pagination
+                $('.paginate_button.previous').html('<i class="bi bi-chevron-left"></i>');
+                $('.paginate_button.next').html('<i class="bi bi-chevron-right"></i>');
+                $('.paginate_button.first').html('<i class="bi bi-chevron-double-left"></i>');
+                $('.paginate_button.last').html('<i class="bi bi-chevron-double-right"></i>');
+            },
             responsive: true,
             columnDefs: [
                 { orderable: false, targets: [5] }, // Disable sorting on actions column
