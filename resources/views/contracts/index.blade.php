@@ -51,7 +51,7 @@
                     <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
                     <td>{{ $contract->chassis_number }}</td>
                     <td class="text-end">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
-                    <td>
+                    <td class="text-end">
                         <div class="btn-group" role="group" aria-label="Actions">
                             <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-outline-primary px-3" title="Voir le PDF" target="_blank">
                                 <i class="bi bi-eye"></i>
