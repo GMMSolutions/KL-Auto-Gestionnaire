@@ -31,10 +31,10 @@
             <thead>
                 <tr>
                     <th>Type</th>
-                    <th>Nom & Prénom</th>
+                    <th>Nom complet</th>
                     <th>Véhicule</th>
-                    <th>N° de châssis</th>
-                    <th class="text-end">Prix de vente TVA</th>
+                    <th>N° de châssis (VIN)</th>
+                    <th class="text-end">Prix de vente TVA incluse</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
