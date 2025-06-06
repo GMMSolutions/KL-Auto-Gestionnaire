@@ -42,7 +42,7 @@
                 @foreach($contracts as $contract)
                 <tr>
                     <td>
-                        <span class="badge {{ $contract->contract_type === 'vente' ? 'bg-success' : 'bg-info' }}">
+                        <span class="badge {{ $contract->contract_type === 'vente' ? 'bg-success' : 'bg-primary' }}">
                             {{ ucfirst($contract->contract_type) }}
                         </span>
                     </td>
