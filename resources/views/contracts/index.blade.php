@@ -5,6 +5,10 @@
 @push('styles')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <style>
+        /* Ensure dropdowns appear above DataTables */
+        .dropdown-menu {
+            z-index: 1060 !important;
+        }
         .dataTables_wrapper .dataTables_paginate .paginate_button {
             padding: 0.25rem 0.5rem;
             margin-left: 0.25rem;
@@ -123,7 +127,12 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#contracts-table').DataTable({
+        // Initialize DataTable with proper DOM settings
+        var table = $('#contracts-table').DataTable({
+            // Use Bootstrap 5 styling
+            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
