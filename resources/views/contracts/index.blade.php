@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-<div class="container-fluid">
+<div class="">
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
