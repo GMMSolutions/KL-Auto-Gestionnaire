@@ -135,8 +135,6 @@
             columnDefs: [
                 { orderable: false, targets: [5] }, // Disable sorting on actions column
                 { className: 'text-end', targets: [4] }, // Right-align price column
-                { responsivePriority: 1, targets: 0 }, // Type column
-                { responsivePriority: 2, targets: 5 }  // Actions column
             ]
         });
 
