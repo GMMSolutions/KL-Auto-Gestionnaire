@@ -41,8 +41,8 @@
     </div>
     <hr>
     
-    <table id="contracts-table" class="table w-100">
-        <thead>
+    <table id="contracts-table" class="table w-100 pb-2">
+        <thead class="pb-0">
             <tr>
                 <th>Type</th>
                 <th>Nom complet</th>
@@ -52,7 +52,7 @@
                 <th class="text-end">Actions</th>
             </tr>
         </thead>
-        <tbody class="mb-3 pb-3">
+        <tbody>
             @foreach($contracts as $contract)
             <tr>
                 <td>
