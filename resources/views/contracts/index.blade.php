@@ -28,7 +28,7 @@
     
     <div class="">
         <table id="contracts-table" class="table">
-            <thead class="table-light">
+            <thead>
                 <tr>
                     <th>Type</th>
                     <th>Nom & Prénom</th>
