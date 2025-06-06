@@ -115,7 +115,7 @@
             searching: true,
             ordering: true,
             // Disable features that might interfere
-            colReorder: false,
+            colReorder: true,
             stateSave: false,
             // Responsive settings
             responsive: true,
