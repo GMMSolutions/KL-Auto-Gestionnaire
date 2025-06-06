@@ -124,12 +124,6 @@
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
                 zeroRecords: 'Aucun enregistrement correspondant trouvé',
-                paginate: {
-                    first: '«',
-                    previous: '‹',
-                    next: '›',
-                    last: '»'
-                },
                 aria: {
                     sortAscending: ': activer pour trier la colonne par ordre croissant',
                     sortDescending: ': activer pour trier la colonne par ordre décroissant'
