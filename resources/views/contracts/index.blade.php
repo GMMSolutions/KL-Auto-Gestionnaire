@@ -49,7 +49,7 @@
                     <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
                     <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
                     <td>{{ $contract->chassis_number }}</td>
-                    <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
+                    <td class="text-end">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
