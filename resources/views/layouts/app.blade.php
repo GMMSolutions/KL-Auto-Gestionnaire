@@ -18,7 +18,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-light shadow">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">
                 KL Automobiles
