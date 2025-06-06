@@ -11,12 +11,12 @@
             white-space: nowrap;
         }
         .dataTables_wrapper .dataTables_scroll {
-    overflow-x: auto;
-    margin-bottom: 0;
-}
+            overflow-x: auto;
+            margin-bottom: 0;
+        }
 
-.dataTables_scrollBody {
-    overflow-x: auto !important;
+        .dataTables_scrollBody {
+            overflow-x: auto !important;
 }
 
     </style>
@@ -41,7 +41,7 @@
     </div>
     <hr>
     
-    <table id="contracts-table" class="table">
+    <table id="contracts-table" class="table w-100">
         <thead>
             <tr>
                 <th>Type</th>
