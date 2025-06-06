@@ -64,7 +64,7 @@ class ContractController extends Controller
 
     public function index()
     {
-        $contracts = Contract::latest();
+        $contracts = Contract::latest()->get();
         return view('contracts.index', compact('contracts'));
     }
 
