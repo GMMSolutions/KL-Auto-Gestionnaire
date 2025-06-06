@@ -28,7 +28,7 @@
     </div>
     <hr>
     
-    <div class="table-responsive">
+    <div class="table-responsive mx-2">
         <table id="contracts-table" class="table">
             <thead>
                 <tr>
