@@ -67,7 +67,39 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Data will be loaded by DataTables -->
+                @foreach($contracts as $contract)
+                <tr>
+                    <td>
+                        <span class="badge {{ $contract->contract_type === 'vente' ? 'bg-success' : 'bg-primary' }}">
+                            {{ ucfirst($contract->contract_type) }}
+                        </span>
+                    </td>
+                    <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
+                    <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
+                    <td>{{ $contract->chassis_number }}</td>
+                    <td class="text-end">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-outline-primary px-3" title="Voir le PDF" target="_blank">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{{ route('contracts.download', $contract) }}" class="btn btn-outline-success px-3" title="Télécharger le PDF">
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-outline-secondary px-3" title="Modifier">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button type="button" class="btn btn-outline-danger px-3 delete-contract" 
+                                    title="Supprimer" 
+                                    data-id="{{ $contract->id }}"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#deleteContractModal">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
