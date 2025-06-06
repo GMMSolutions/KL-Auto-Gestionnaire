@@ -5,7 +5,6 @@
 @push('styles')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 @endpush
 
@@ -52,7 +51,7 @@
                     <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
                     <td>{{ $contract->chassis_number }}</td>
                     <td class="text-end">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
-                    <td class="text-center">
+                    <td>
                         <div class="btn-group" role="group" aria-label="Actions">
                             <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-outline-primary px-3" title="Voir le PDF" target="_blank">
                                 <i class="bi bi-eye"></i>
