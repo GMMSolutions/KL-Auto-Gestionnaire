@@ -28,7 +28,7 @@
     </div>
     <hr>
     
-    <div class="">
+    <div class="table-responsive">
         <table id="contracts-table" class="table">
             <thead>
                 <tr>
