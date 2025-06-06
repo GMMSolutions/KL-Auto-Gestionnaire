@@ -325,7 +325,7 @@
 
                         <!-- Submit Button -->
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success btn-lg px-5">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
                                 <i class="fas fa-save me-2"></i>Enregistrer le contrat
                             </button>
                         </div>
