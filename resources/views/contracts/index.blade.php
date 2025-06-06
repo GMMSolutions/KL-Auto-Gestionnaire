@@ -127,7 +127,17 @@
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
-                zeroRecords: 'Aucun enregistrement correspondant trouvé'
+                zeroRecords: 'Aucun enregistrement correspondant trouvé',
+                paginate: {
+                    first: '«',
+                    previous: '‹',
+                    next: '›',
+                    last: '»'
+                },
+                aria: {
+                    sortAscending: ': activer pour trier la colonne par ordre croissant',
+                    sortDescending: ': activer pour trier la colonne par ordre décroissant'
+                }
             },
             order: [],
             pageLength: 10,
@@ -137,7 +147,16 @@
                 { className: 'text-end', targets: [4] }, // Right-align price column
                 { responsivePriority: 1, targets: 0 }, // Type column
                 { responsivePriority: 2, targets: 5 }  // Actions column
-            ]
+            ],
+            // Customize pagination controls
+            pagingType: 'simple_numbers',
+            // Add custom classes to pagination controls
+            drawCallback: function() {
+                $('.paginate_button.previous').html('<i class="bi bi-chevron-left"></i>');
+                $('.paginate_button.next').html('<i class="bi bi-chevron-right"></i>');
+                $('.paginate_button.first').html('<i class="bi bi-chevron-double-left"></i>');
+                $('.paginate_button.last').html('<i class="bi bi-chevron-double-right"></i>');
+            }
         });
 
         // Handle delete confirmation
