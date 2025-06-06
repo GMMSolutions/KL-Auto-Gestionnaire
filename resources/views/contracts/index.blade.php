@@ -4,7 +4,6 @@
 
 @push('styles')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
 @endpush
 
@@ -27,18 +26,8 @@
     </div>
     <hr>
     
-    <!-- Simple Search Bar -->
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher...">
-            </div>
-        </div>
-    </div>
-    
     <div class="table-responsive">
-        <table id="contracts-table" class="table table-striped table-hover">
+        <table id="contracts-table" class="table">
             <thead class="table-light">
                 <tr>
                     <th>Type</th>
@@ -63,16 +52,16 @@
                     <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
                     <td class="text-center">
                         <div class="btn-group" role="group">
-                            <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary" title="Voir le PDF" target="_blank">
+                            <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success" title="Télécharger le PDF">
+                            <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success btn-action" title="Télécharger le PDF">
                                 <i class="fas fa-download"></i>
                             </a>
-                            <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary" title="Modifier">
+                            <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <button type="button" class="btn btn-sm btn-outline-danger delete-contract" 
+                            <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
                                     title="Supprimer" 
                                     data-id="{{ $contract->id }}"
                                     data-bs-toggle="modal" 
@@ -86,14 +75,8 @@
             </tbody>
         </table>
     </div>
-    
-    <!-- Simple pagination info -->
-    <div class="d-flex justify-content-between align-items-center mt-3">
-        <div>
-            <small class="text-muted">Total: {{ count($contracts) }} contrat(s)</small>
-        </div>
-    </div>
 </div>
+@endsection
 
 <!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteContractModal" tabindex="-1" aria-labelledby="deleteContractModalLabel" aria-hidden="true">
@@ -113,109 +96,145 @@
         </div>
     </div>
 </div>
-@endsection
 
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Simple search functionality
-    const searchInput = document.getElementById('searchInput');
-    const table = document.getElementById('contracts-table');
-    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    $(document).ready(function() {
+        // Initialize DataTable with standard settings
+        var table = $('#contracts-table').DataTable({
+            // Standard DOM structure with search and pagination
+            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                 "<'row'<'col-sm-12'tr>>" +
+                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            // Basic features
+            paging: true,
+            searching: true,
+            ordering: true,
+            // Disable features that might interfere
+            colReorder: false,
+            stateSave: false,
+            // Responsive settings
+            responsive: true,
+            // Language settings
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
+                emptyTable: 'Aucune donnée disponible dans le tableau',
+                zeroRecords: 'Aucun enregistrement correspondant trouvé'
+            },
+            order: [],
+            pageLength: 10,
+            responsive: true,
+            columnDefs: [
+                { orderable: false, targets: [5] }, // Disable sorting on actions column
+                { className: 'text-end', targets: [4] }, // Right-align price column
+                { responsivePriority: 1, targets: 0 }, // Type column
+                { responsivePriority: 2, targets: 5 }  // Actions column
+            ]
+        });
 
-    searchInput.addEventListener('keyup', function() {
-        const filter = this.value.toLowerCase();
+        // Handle delete confirmation
+        let contractIdToDelete = null;
+        const deleteModal = document.getElementById('deleteContractModal');
         
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            let found = false;
+        // When delete button is clicked, store the contract ID
+        $('#contracts-table tbody').on('click', '.delete-contract', function() {
+            contractIdToDelete = $(this).data('id');
+        });
+
+        // When confirm delete is clicked
+        $('#confirmDelete').on('click', function() {
+            if (!contractIdToDelete) return;
             
-            for (let j = 0; j < cells.length - 1; j++) { // Exclude actions column
-                if (cells[j].textContent.toLowerCase().includes(filter)) {
-                    found = true;
-                    break;
+            const deleteUrl = `{{ url('contracts') }}/${contractIdToDelete}/delete`;
+            
+            $.ajax({
+                url: deleteUrl,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'position-fixed top-0 end-0 p-3';
+                    toast.innerHTML = `
+                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header bg-success text-white">
+                                <strong class="me-auto">Succès</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${response.message}
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    // Remove the row from the table
+                    $(`button[data-id="${contractIdToDelete}"]`).closest('tr').fadeOut(400, function() {
+                        $(this).remove();
+                    });
+                    
+                    // Hide the modal and remove backdrop
+                    const modal = bootstrap.Modal.getInstance(deleteModal);
+                    if (modal) {
+                        modal.hide();
+                        // Remove backdrop manually if needed
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
+                    }
+                    
+                    // Remove toast after 3 seconds
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 3000);
+                },
+                error: function(xhr) {
+                    // Show error message
+                    const response = xhr.responseJSON || {};
+                    const message = response.message || 'Une erreur est survenue lors de la suppression du contrat.';
+                    
+                    const toast = document.createElement('div');
+                    toast.className = 'position-fixed top-0 end-0 p-3';
+                    toast.innerHTML = `
+                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header bg-danger text-white">
+                                <strong class="me-auto">Erreur</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+                            </div>
+                            <div class="toast-body">
+                                ${message}
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    // Hide the modal and remove backdrop
+                    const modal = bootstrap.Modal.getInstance(deleteModal);
+                    if (modal) {
+                        modal.hide();
+                        // Remove backdrop manually if needed
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
+                    }
+                    
+                    // Remove toast after 5 seconds
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 5000);
                 }
-            }
-            
-            rows[i].style.display = found ? '' : 'none';
-        }
-    });
-
-    // Handle delete confirmation
-    let contractIdToDelete = null;
-    
-    // When delete button is clicked, store the contract ID
-    document.querySelectorAll('.delete-contract').forEach(button => {
-        button.addEventListener('click', function() {
-            contractIdToDelete = this.getAttribute('data-id');
+            });
         });
     });
-
-    // When confirm delete is clicked
-    document.getElementById('confirmDelete').addEventListener('click', function() {
-        if (!contractIdToDelete) return;
-        
-        const deleteUrl = `{{ url('contracts') }}/${contractIdToDelete}/delete`;
-        
-        fetch(deleteUrl, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Show success message
-            showToast('Succès', data.message, 'success');
-            
-            // Remove the row from the table
-            const button = document.querySelector(`button[data-id="${contractIdToDelete}"]`);
-            if (button) {
-                button.closest('tr').remove();
-            }
-            
-            // Hide the modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteContractModal'));
-            if (modal) {
-                modal.hide();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showToast('Erreur', 'Une erreur est survenue lors de la suppression du contrat.', 'danger');
-            
-            // Hide the modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteContractModal'));
-            if (modal) {
-                modal.hide();
-            }
-        });
-    });
-
-    // Simple toast function
-    function showToast(title, message, type) {
-        const toast = document.createElement('div');
-        toast.className = 'position-fixed top-0 end-0 p-3';
-        toast.style.zIndex = '9999';
-        toast.innerHTML = `
-            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header bg-${type} text-white">
-                    <strong class="me-auto">${title}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
-                </div>
-                <div class="toast-body">
-                    ${message}
-                </div>
-            </div>
-        `;
-        document.body.appendChild(toast);
-        
-        // Remove toast after 3 seconds
-        setTimeout(() => {
-            toast.remove();
-        }, 3000);
-    }
-});
 </script>
 @endpush
