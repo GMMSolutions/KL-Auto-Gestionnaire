@@ -4,11 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContractController;
 
-// Public welcome page (if needed)
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
 // Routes d'authentification
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -20,6 +15,7 @@ Route::middleware('auth')->group(function () {
     // Page d'accueil (contrats)
     Route::get('/', [ContractController::class, 'index'])->name('home');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    
     // Contract custom routes — placer AVANT le resource
     Route::get('/contracts/createsale', [ContractController::class, 'createSale'])->name('contracts.createsale');
     Route::get('/contracts/createpurchase', [ContractController::class, 'createPurchase'])->name('contracts.createpurchase');

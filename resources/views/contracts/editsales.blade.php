@@ -530,8 +530,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const warrantySection = document.getElementById('warrantyAmountSection');
     if (warrantySelect && warrantySection) {
         warrantySelect.addEventListener('change', function() {
-            warrantySection.style.display = this.value === 'quality_1_q5' ? 'block' : 'none';
+            const showWarrantyAmount = this.value === 'quality_1_q5';
+            warrantySection.style.display = showWarrantyAmount ? 'block' : 'none';
+            
+            // Clear warranty amount if not needed
+            if (!showWarrantyAmount) {
+                const warrantyAmountInput = document.getElementById('warranty_amount');
+                if (warrantyAmountInput) {
+                    warrantyAmountInput.value = '';
+                }
+            }
         });
+        
+        // Trigger change event on page load to set initial state
+        warrantySelect.dispatchEvent(new Event('change'));
     }
 
     // Clear birth date button
