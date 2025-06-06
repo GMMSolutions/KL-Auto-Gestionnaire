@@ -134,79 +134,33 @@
 
 <script>
     $(document).ready(function() {
-        // Initialize DataTable with server-side processing
+        // Initialize DataTable with standard settings
         var table = $('#contracts-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{{ route("contracts.index") }}',
+            // Standard DOM structure with search and pagination
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                  "<'row'<'col-sm-12'tr>>" +
                  "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            columns: [
-                { data: 'contract_type', name: 'contract_type' },
-                { 
-                    data: null,
-                    name: 'buyer_name',
-                    render: function(data) {
-                        return data.buyer_surname + ' ' + data.buyer_name;
-                    }
-                },
-                { 
-                    data: null,
-                    name: 'vehicle_brand',
-                    render: function(data) {
-                        return data.vehicle_brand + ' ' + data.vehicle_type;
-                    }
-                },
-                { data: 'chassis_number', name: 'chassis_number' },
-                { 
-                    data: 'sale_price', 
-                    name: 'sale_price',
-                    className: 'text-end',
-                    render: function(data) {
-                        return 'CHF ' + parseFloat(data).toLocaleString('fr-CH', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        }).replace(/,/g, ' ');
-                    }
-                },
-                {
-                    data: 'id',
-                    name: 'actions',
-                    orderable: false,
-                    searchable: false,
-                    className: 'text-center',
-                    render: function(data, type, row) {
-                        return `
-                            <div class="btn-group" role="group">
-                                <a href="/contracts/${data}/pdf" class="btn btn-outline-primary px-3" title="Voir le PDF" target="_blank">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a href="/contracts/${data}/download" class="btn btn-outline-success px-3" title="Télécharger le PDF">
-                                    <i class="bi bi-download"></i>
-                                </a>
-                                <a href="/contracts/${row.contract_type === 'vente' ? 'editsale' : 'editpurchase'}/${data}" class="btn btn-outline-secondary px-3" title="Modifier">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <button type="button" class="btn btn-outline-danger px-3 delete-contract" 
-                                        title="Supprimer" 
-                                        data-id="${data}"
-                                        data-bs-toggle="modal" 
-                                        data-bs-target="#deleteContractModal">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>`;
-                    }
-                }
-            ],
+            // Basic features
+            paging: true,
+            searching: true,
+            ordering: true,
+            // Disable features that might interfere
+            colReorder: false,
+            stateSave: false,
+            // Responsive settings
+            responsive: true,
+            // Language settings
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
                 zeroRecords: 'Aucun enregistrement correspondant trouvé'
             },
+            order: [],
             pageLength: 25,
             responsive: true,
             columnDefs: [
+                { orderable: false, targets: [5] }, // Disable sorting on actions column
+                { className: 'text-end', targets: [4] }, // Right-align price column
                 { responsivePriority: 1, targets: 0 }, // Type column
                 { responsivePriority: 2, targets: 5 }  // Actions column
             ]
@@ -217,8 +171,7 @@
         const deleteModal = document.getElementById('deleteContractModal');
         
         // When delete button is clicked, store the contract ID
-        $('#contracts-table').on('click', '.delete-contract', function(e) {
-            e.preventDefault();
+        $('#contracts-table tbody').on('click', '.delete-contract', function() {
             contractIdToDelete = $(this).data('id');
         });
 
@@ -227,7 +180,6 @@
             if (!contractIdToDelete) return;
             
             const deleteUrl = `{{ url('contracts') }}/${contractIdToDelete}/delete`;
-            const $button = $(`button[data-id="${contractIdToDelete}"]`);
             
             $.ajax({
                 url: deleteUrl,
@@ -252,13 +204,20 @@
                     `;
                     document.body.appendChild(toast);
                     
-                    // Reload the table data
-                    table.ajax.reload();
+                    // Remove the row from the table
+                    $(`button[data-id="${contractIdToDelete}"]`).closest('tr').fadeOut(400, function() {
+                        $(this).remove();
+                    });
                     
-                    // Hide the modal
+                    // Hide the modal and remove backdrop
                     const modal = bootstrap.Modal.getInstance(deleteModal);
                     if (modal) {
                         modal.hide();
+                        // Remove backdrop manually if needed
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.overflow = '';
+                        document.body.style.paddingRight = '';
                     }
                     
                     // Remove toast after 3 seconds
