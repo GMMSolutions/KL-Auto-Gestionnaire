@@ -41,7 +41,7 @@
     </div>
     <hr>
     
-    <table id="contracts-table" class="table w-100 pb-3">
+    <table id="contracts-table" class="table w-100 pb-3 mb-3">
         <thead>
             <tr>
                 <th>Type</th>
