@@ -130,8 +130,7 @@
                 zeroRecords: 'Aucun enregistrement correspondant trouvé'
             },
             order: [],
-            pageLength: 25,
-            responsive: true
+            pageLength: 25
         });
 
         // Handle delete confirmation
