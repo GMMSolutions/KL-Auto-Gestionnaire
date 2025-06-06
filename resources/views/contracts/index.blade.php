@@ -49,7 +49,7 @@
                 <th>Véhicule</th>
                 <th>N° de châssis (VIN)</th>
                 <th class="text-end">Prix de vente TVA incluse</th>
-                <th class="text-end">Actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
