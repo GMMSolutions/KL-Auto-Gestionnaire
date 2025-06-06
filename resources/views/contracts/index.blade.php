@@ -3,8 +3,18 @@
 @section('title', 'Contrats')
 
 @push('styles')
-    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="{{ asset('js/datatables/dataTables.bootstrap5.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/datatables/buttons.bootstrap5.css') }}" rel="stylesheet">
+    <style>
+        .dataTables_wrapper .dt-buttons {
+            margin-bottom: 10px;
+        }
+        .dt-button {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -98,43 +108,103 @@
 </div>
 
 @push('scripts')
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+
+<!-- DataTables Core -->
+<script src="{{ asset('js/datatables/dataTables.js') }}"></script>
+<script src="{{ asset('js/datatables/dataTables.bootstrap5.js') }}"></script>
+
+<!-- DataTables Buttons -->
+<script src="{{ asset('js/datatables/dataTables.buttons.js') }}"></script>
+<script src="{{ asset('js/datatables/buttons.bootstrap5.js') }}"></script>
+
+<!-- Buttons HTML5 Export -->
+<script src="{{ asset('js/datatables/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/datatables/buttons.print.min.js') }}"></script>
+<script src="{{ asset('js/datatables/buttons.colVis.min.js') }}"></script>
+
+<!-- PDF Export -->
+<script src="{{ asset('js/datatables/jszip.min.js') }}"></script>
+<script src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
+<script src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
 
 <script>
     $(document).ready(function() {
         // Initialize DataTable with standard settings
         var table = $('#contracts-table').DataTable({
-            // Standard DOM structure with search and pagination
+            // Custom DOM layout with buttons
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                 "<'row'<'col-sm-12 mb-3'B>>" +
                  "<'row'<'col-sm-12'tr>>" +
                  "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            
             // Basic features
             paging: true,
             searching: true,
             ordering: true,
+            
             // Disable features that might interfere
             colReorder: false,
             stateSave: false,
-            // Responsive settings
-            responsive: true,
+            
+            // Buttons configuration
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: 'Exporter',
+                    buttons: [
+                        'copy',
+                        'excel',
+                        'csv',
+                        'pdf',
+                        'print'
+                    ]
+                },
+                'colvis'
+            ],
+            
             // Language settings
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
-                zeroRecords: 'Aucun enregistrement correspondant trouvé'
+                info: 'Affichage de _START_ à _END_ sur _TOTAL_ entrées',
+                infoEmpty: 'Affichage de 0 à 0 sur 0 entrées',
+                infoFiltered: '(filtrées depuis un total de _MAX_ entrées)',
+                lengthMenu: 'Afficher _MENU_ entrées',
+                loadingRecords: 'Chargement...',
+                processing: 'Traitement...',
+                search: 'Rechercher :',
+                zeroRecords: 'Aucun enregistrement correspondant trouvé',
+                buttons: {
+                    copy: 'Copier',
+                    copyTitle: 'Copier dans le presse-papier',
+                    copySuccess: {
+                        _: '%d lignes copiées',
+                        1: '1 ligne copiée'
+                    },
+                    print: 'Imprimer',
+                    pageLength: 'Afficher %d lignes'
+                }
             },
+            
+            // Default ordering
             order: [],
+            
+            // Default page length
             pageLength: 10,
+            
+            // Responsive settings
             responsive: true,
+            
+            // Column definitions
             columnDefs: [
                 { orderable: false, targets: [5] }, // Disable sorting on actions column
-                { className: 'text-end', targets: [4] }, // Right-align price column
-                { responsivePriority: 1, targets: 0 }, // Type column
-                { responsivePriority: 2, targets: 5 }  // Actions column
+                { className: 'dt-nowrap', targets: [0, 1, 2, 3] }, // Add nowrap class to specific columns
+                { responsivePriority: 1, targets: 0 }, // Priority for responsive display
+                { responsivePriority: 2, targets: 5 }  // Actions column should be last to disappear
             ]
         });
 
