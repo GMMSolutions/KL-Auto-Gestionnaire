@@ -8,7 +8,7 @@
 @endpush
 
 @section('content')
-<div class="">
+<div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -26,7 +26,7 @@
     </div>
     <hr>
     
-    <div class="table-responsive">
+    <div class="">
         <table id="contracts-table" class="table">
             <thead class="table-light">
                 <tr>
