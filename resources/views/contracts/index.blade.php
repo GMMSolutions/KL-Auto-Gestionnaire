@@ -29,7 +29,7 @@
     <hr>
     
     <div class="table-responsive p-2">
-        <table id="contracts-table" class="table">
+        <table id="contracts-table" class="table m-3">
             <thead>
                 <tr>
                     <th>Type</th>
