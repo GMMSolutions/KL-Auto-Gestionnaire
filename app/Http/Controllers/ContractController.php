@@ -64,8 +64,12 @@ class ContractController extends Controller
 
     public function index()
     {
-        $contracts = Contract::latest()->paginate(10);
-        return view('contracts.index', compact('contracts'));
+        if (request()->ajax()) {
+            return datatables()->of(Contract::query())
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('contracts.index');
     }
 
     public function create()
