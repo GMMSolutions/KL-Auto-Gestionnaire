@@ -12,17 +12,18 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="mb-0">Liste des Contrats</h1>
-                <a href="{{ route('contracts.createsale') }}" class="btn btn-success">
-                    <i class="fas fa-plus me-1"></i> Nouvelle Vente
-                </a>
-                <a href="{{ route('contracts.createpurchase') }}" class="btn btn-primary">
-                    <i class="fas fa-plus me-1"></i> Nouvel Achat
-                </a>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('contracts.createsale') }}" class="btn btn-success">
+                        <i class="fas fa-plus me-1"></i> Nouvelle Vente
+                    </a>
+                    <a href="{{ route('contracts.createpurchase') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Nouvel Achat
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     <hr>
-
     
     <div class="table-responsive">
         <table id="contracts-table" class="table table-striped table-hover">
