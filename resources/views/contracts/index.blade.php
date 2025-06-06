@@ -131,18 +131,7 @@
             },
             order: [],
             pageLength: 25,
-            responsive: true,
-            columnDefs: [
-    { orderable: false, targets: [5] },
-    { className: 'text-end', targets: [4] },
-    { responsivePriority: 1, targets: 0 }, // Type
-    { responsivePriority: 2, targets: 5 }, // Actions
-    { responsivePriority: 3, targets: 1 }, // Full Name
-    { responsivePriority: 4, targets: 2 }, // Vehicle
-    { responsivePriority: 5, targets: 3 }, // VIN
-    { responsivePriority: 6, targets: 4 }  // Price
-]
-
+            responsive: true
         });
 
         // Handle delete confirmation
