@@ -149,64 +149,11 @@
                     _token: '{{ csrf_token() }}',
                 },
                 success: function(response) {
-                    // Show success message
-                    const toast = document.createElement('div');
-                    toast.className = 'position-fixed top-0 end-0 p-3';
-                    toast.innerHTML = `
-                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header bg-success text-white">
-                                <strong class="me-auto">Succès</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
-                            </div>
-                            <div class="toast-body">
-                                ${response.message}
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(toast);
-                    
-                    // Remove the row from the table
-                    $(`button[data-id="${contractIdToDelete}"]`).closest('tr').fadeOut(400, function() {
-                        $(this).remove();
-                    });
-                    
-                    // Hide the modal and remove backdrop
-                    const modal = bootstrap.Modal.getInstance(deleteModal);
-                    if (modal) {
-                        modal.hide();
-                        // Remove backdrop manually if needed
-                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-                        document.body.classList.remove('modal-open');
-                        document.body.style.overflow = '';
-                        document.body.style.paddingRight = '';
-                    }
-                    
-                    // Remove toast after 3 seconds
-                    setTimeout(() => {
-                        toast.remove();
-                    }, 3000);
+                    // Refresh the page to show updated contract list
+                    window.location.reload();
                 },
                 error: function(xhr) {
-                    // Show error message
-                    const response = xhr.responseJSON || {};
-                    const message = response.message || 'Une erreur est survenue lors de la suppression du contrat.';
-                    
-                    const toast = document.createElement('div');
-                    toast.className = 'position-fixed top-0 end-0 p-3';
-                    toast.innerHTML = `
-                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header bg-danger text-white">
-                                <strong class="me-auto">Erreur</strong>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
-                            </div>
-                            <div class="toast-body">
-                                ${message}
-                            </div>
-                        </div>
-                    `;
-                    document.body.appendChild(toast);
-                    
-                    // Hide the modal and remove backdrop
+                    // Just close the modal on error
                     const modal = bootstrap.Modal.getInstance(deleteModal);
                     if (modal) {
                         modal.hide();
@@ -216,11 +163,6 @@
                         document.body.style.overflow = '';
                         document.body.style.paddingRight = '';
                     }
-                    
-                    // Remove toast after 5 seconds
-                    setTimeout(() => {
-                        toast.remove();
-                    }, 5000);
                 }
             });
         });
