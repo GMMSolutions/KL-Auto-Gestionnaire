@@ -110,10 +110,6 @@
     $(document).ready(function() {
         // Initialize DataTable with standard settings
         var table = $('#contracts-table').DataTable({
-            // Standard DOM structure with search and pagination
-            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                 "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
             // Basic features
             paging: true,
             searching: true,
