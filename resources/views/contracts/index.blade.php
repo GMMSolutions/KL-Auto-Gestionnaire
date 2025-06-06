@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="row mb-4">
         <div class="col-12">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
                 <h1 class="mb-0">Liste des Contrats</h1>
                 <a href="{{ route('contracts.createsale') }}" class="btn btn-success">
                     <i class="fas fa-plus me-1"></i> Nouvelle Vente
@@ -23,58 +23,55 @@
     </div>
     <hr>
 
-    <div class="card shadow">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="contracts-table" class="table table-striped table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Type</th>
-                            <th>Nom & Prénom</th>
-                            <th>Véhicule</th>
-                            <th>N° de châssis</th>
-                            <th class="text-end">Prix de vente TVA</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($contracts as $contract)
-                        <tr>
-                            <td>
-                                <span class="badge {{ $contract->contract_type === 'vente' ? 'bg-success' : 'bg-info' }}">
-                                    {{ ucfirst($contract->contract_type) }}
-                                </span>
-                            </td>
-                            <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
-                            <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
-                            <td>{{ $contract->chassis_number }}</td>
-                            <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
-                            <td class="text-center">
-                                <div class="btn-group" role="group">
-                                    <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success btn-action" title="Télécharger le PDF">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
-                                            title="Supprimer" 
-                                            data-id="{{ $contract->id }}"
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#deleteContractModal">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    
+    <div class="table-responsive">
+        <table id="contracts-table" class="table table-striped table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>Type</th>
+                    <th>Nom & Prénom</th>
+                    <th>Véhicule</th>
+                    <th>N° de châssis</th>
+                    <th class="text-end">Prix de vente TVA</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($contracts as $contract)
+                <tr>
+                    <td>
+                        <span class="badge {{ $contract->contract_type === 'vente' ? 'bg-success' : 'bg-info' }}">
+                            {{ ucfirst($contract->contract_type) }}
+                        </span>
+                    </td>
+                    <td>{{ $contract->buyer_surname }} {{ $contract->buyer_name }}</td>
+                    <td>{{ $contract->vehicle_brand }} {{ $contract->vehicle_type }}</td>
+                    <td>{{ $contract->chassis_number }}</td>
+                    <td class="text-end">{{ number_format($contract->sale_price, 2, ',', ' ') }} €</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success btn-action" title="Télécharger le PDF">
+                                <i class="fas fa-download"></i>
+                            </a>
+                            <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
+                                    title="Supprimer" 
+                                    data-id="{{ $contract->id }}"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#deleteContractModal">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection
