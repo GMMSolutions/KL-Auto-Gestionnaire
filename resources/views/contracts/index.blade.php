@@ -5,6 +5,23 @@
 @push('styles')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .btn-action {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+        .btn-group .btn-action:not(:last-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .btn-group .btn-action:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            margin-left: -1px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -53,20 +70,20 @@
                     <td class="text-center">
                         <div class="btn-group" role="group">
                             <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
-                                <i class="fas fa-eye"></i>
+                                <i class="bi bi-eye"></i>
                             </a>
                             <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success btn-action" title="Télécharger le PDF">
-                                <i class="fas fa-download"></i>
+                                <i class="bi bi-download"></i>
                             </a>
                             <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
-                                <i class="fas fa-edit"></i>
+                                <i class="bi bi-pencil"></i>
                             </a>
                             <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
                                     title="Supprimer" 
                                     data-id="{{ $contract->id }}"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#deleteContractModal">
-                                <i class="fas fa-trash"></i>
+                                <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </td>
