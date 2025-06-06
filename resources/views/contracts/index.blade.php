@@ -156,7 +156,7 @@
                 zeroRecords: 'Aucun enregistrement correspondant trouvé'
             },
             order: [],
-            pageLength: 10,
+            pageLength: 25,
             responsive: true,
             columnDefs: [
                 { orderable: false, targets: [5] }, // Disable sorting on actions column
