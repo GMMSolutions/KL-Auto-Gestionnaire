@@ -26,7 +26,7 @@
     <hr>
     
     <div class="table-responsive">
-        <table id="contracts-table" class="table table-striped table-hover">
+        <table id="contracts-table" class="table">
             <thead class="table-light">
                 <tr>
                     <th>Type</th>
