@@ -4,35 +4,7 @@
 
 @push('styles')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <style>
-        /* Ensure dropdowns appear above DataTables */
-        .dropdown-menu {
-            z-index: 1060 !important;
-        }
-        /* Fix for DataTables and Bootstrap 5 */
-        .dataTables_wrapper .dropdown-menu {
-            position: absolute !important;
-        }
-        /* Ensure dropdowns appear above DataTables */
-        .dropdown-menu {
-            z-index: 1060 !important;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 0.25rem 0.5rem;
-            margin-left: 0.25rem;
-            border-radius: 0.25rem;
-        }
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-            background: #0d6efd;
-            color: white !important;
-            border: 1px solid #0d6efd;
-        }
-        .btn-action {
-            padding: 0.25rem 0.5rem;
-            margin: 0 0.125rem;
-        }
-    </style>
+    
 @endpush
 
 @section('content')
