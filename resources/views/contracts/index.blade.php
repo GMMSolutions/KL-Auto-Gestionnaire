@@ -98,13 +98,27 @@
 </div>
 
 @push('scripts')
+<!-- Load jQuery first -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Then Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables Core -->
 <script src="{{ asset('js/datatables/dataTables.js') }}"></script>
 <script src="{{ asset('js/datatables/dataTables.bootstrap5.js') }}"></script>
-<script src="{{ asset('js/datatables/dataTables.responsive.js') }}"></script>
-<script src="{{ asset('js/datatables/buttons.bootstrap5.js') }}"></script>
+
+<!-- DataTables Buttons -->
 <script src="{{ asset('js/datatables/dataTables.buttons.js') }}"></script>
+<script src="{{ asset('js/datatables/buttons.bootstrap5.js') }}"></script>
+
+<!-- Buttons HTML5 Export -->
+<script src="{{ asset('js/datatables/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('js/datatables/buttons.print.min.js') }}"></script>
+<script src="{{ asset('js/datatables/buttons.colVis.min.js') }}"></script>
+
+<!-- PDF Export -->
+<script src="{{ asset('js/datatables/jszip.min.js') }}"></script>
+<script src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
 
 
