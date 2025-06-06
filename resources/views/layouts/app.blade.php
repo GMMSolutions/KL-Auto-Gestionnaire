@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-md navbar-light">
         <div class="container">
             <a class="navbar-brand fw-bold" href="{{ route('home') }}">
-                KL Auto Gestionnaire
+                KL Automobiles
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent">
