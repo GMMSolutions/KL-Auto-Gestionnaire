@@ -3,8 +3,18 @@
 @section('title', 'Contrats')
 
 @push('styles')
+    <!-- DataTables CSS -->
     <link href="{{ asset('js/datatables/dataTables.bootstrap5.css') }}" rel="stylesheet">
     <link href="{{ asset('js/datatables/buttons.bootstrap5.css') }}" rel="stylesheet">
+    <style>
+        .dataTables_wrapper .dt-buttons {
+            margin-bottom: 10px;
+        }
+        .dt-button {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -98,9 +108,9 @@
 </div>
 
 @push('scripts')
-<!-- Load jQuery first -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Then Bootstrap -->
+<!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables Core -->
@@ -121,40 +131,87 @@
 <script src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
 <script src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
 
-
 <script>
     $(document).ready(function() {
-        // Initialize DataTable with standard settings
-        var table = $('#contracts-table').DataTable({
-            // Standard DOM structure with search and pagination
-            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                 "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            // Basic features
-            paging: true,
-            searching: true,
-            ordering: true,
-            // Disable features that might interfere
-            colReorder: false,
-            stateSave: false,
-            // Responsive settings
-            responsive: true,
-            // Language settings
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
-                emptyTable: 'Aucune donnée disponible dans le tableau',
-                zeroRecords: 'Aucun enregistrement correspondant trouvé'
-            },
-            order: [],
-            pageLength: 10,
-            responsive: true,
-            columnDefs: [
-                { orderable: false, targets: [5] }, // Disable sorting on actions column
-                { className: 'text-end', targets: [4] }, // Right-align price column
-                { responsivePriority: 1, targets: 0 }, // Type column
-                { responsivePriority: 2, targets: 5 }  // Actions column
-            ]
-        });
+        try {
+            // Initialize DataTable with enhanced settings
+            var table = $('#contracts-table').DataTable({
+                // Custom DOM layout with buttons and search
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                     "<'row'<'col-sm-12 mb-3'B>>" +
+                     "<'row'<'col-sm-12'tr>>" +
+                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                
+                // Enable features
+                paging: true,
+                searching: true,
+                ordering: true,
+                responsive: true,
+                
+                // Buttons configuration
+                buttons: [
+                    {
+                        extend: 'collection',
+                        text: 'Exporter',
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv',
+                            'pdf',
+                            'print'
+                        ]
+                    },
+                    'colvis'
+                ],
+                
+                // Language settings
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
+                    emptyTable: 'Aucune donnée disponible dans le tableau',
+                    info: 'Affichage de _START_ à _END_ sur _TOTAL_ entrées',
+                    infoEmpty: 'Affichage de 0 à 0 sur 0 entrées',
+                    infoFiltered: '(filtrées depuis un total de _MAX_ entrées)',
+                    lengthMenu: 'Afficher _MENU_ entrées',
+                    loadingRecords: 'Chargement...',
+                    processing: 'Traitement...',
+                    search: 'Rechercher :',
+                    zeroRecords: 'Aucun enregistrement correspondant trouvé',
+                    buttons: {
+                        copy: 'Copier',
+                        copyTitle: 'Copier dans le presse-papier',
+                        copySuccess: {
+                            _: '%d lignes copiées',
+                            1: '1 ligne copiée'
+                        },
+                        print: 'Imprimer',
+                        pageLength: 'Afficher %d lignes',
+                        collection: 'Exporter <span class=\'ui-button-icon-primary ui-icon ui-icon-triangle-1-s\'/>',
+                        colvis: 'Visibilité des colonnes',
+                        colvisRestore: 'Réinitialiser la visibilité'
+                    }
+                },
+                
+                // Default settings
+                order: [],
+                pageLength: 10,
+                
+                // Column definitions
+                columnDefs: [
+                    { orderable: false, targets: [5] }, // Disable sorting on actions column
+                    { className: 'text-end', targets: [4] }, // Right-align price column
+                    { responsivePriority: 1, targets: 0 }, // Type column
+                    { responsivePriority: 2, targets: 5 }, // Actions column
+                    { width: '10%', targets: 0 }, // Type column width
+                    { width: '15%', targets: 5 }  // Actions column width
+                ],
+                
+                // Styling
+                initComplete: function() {
+                    // Add custom classes to buttons
+                    $('.dt-button').addClass('btn btn-sm btn-light');
+                    $('.buttons-collection').removeClass('btn-light').addClass('btn-primary');
+                }
+            });
 
         // Handle delete confirmation
         let contractIdToDelete = null;
