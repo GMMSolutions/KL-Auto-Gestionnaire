@@ -11,7 +11,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="mb-0">Liste des Contrats</h1>
+                <h1 class="mb-0">Contrats</h1>
                 <div class="d-flex gap-2">
                     <a href="{{ route('contracts.createsale') }}" class="btn btn-success">
                         <i class="fas fa-plus me-1"></i> Nouvelle Vente
