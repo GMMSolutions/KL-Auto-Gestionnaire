@@ -36,7 +36,7 @@
                     <th>Véhicule</th>
                     <th>N° de châssis (VIN)</th>
                     <th class="text-end">Prix de vente TVA incluse</th>
-                    <th class="text-center">Actions</th>
+                    <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -109,24 +109,19 @@
     $(document).ready(function() {
         // Initialize DataTable with standard settings
         var table = $('#contracts-table').DataTable({
-            // Standard DOM structure with search and pagination
-            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                 "<'row'<'col-sm-12'tr>>" +
-                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            // Basic features
             paging: true,
             searching: true,
             ordering: true,
-            // Disable features that might interfere
-            colReorder: false,
-            stateSave: false,
-            // Responsive settings
-            responsive: true,
-            // Language settings
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
-                zeroRecords: 'Aucun enregistrement correspondant trouvé'
+                zeroRecords: 'Aucun enregistrement correspondant trouvé',
+                paginate: {
+                    first: '<<',
+                    last: '>>',
+                    next: '>',
+                    previous: '<'
+                }
             },
             order: [],
             pageLength: 25
