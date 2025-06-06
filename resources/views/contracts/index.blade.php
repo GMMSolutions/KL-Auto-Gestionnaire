@@ -7,6 +7,32 @@
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        /* Responsive buttons */
+        @media (max-width: 768px) {
+            /* Make action buttons smaller */
+            .btn-group .btn {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            /* Adjust spacing between buttons */
+            .btn-group .btn:not(:last-child) {
+                margin-right: 0.15rem;
+            }
+            
+            /* Make new sale/purchase buttons smaller */
+            .d-flex.gap-2 .btn {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+            }
+            
+            /* Adjust button icons */
+            .btn i {
+                margin-right: 0.25rem;
+            }
+        }
+    </style>
 @endpush
 
 @section('content')
