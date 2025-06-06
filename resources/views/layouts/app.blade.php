@@ -79,46 +79,18 @@
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Fix for Bootstrap 5 dropdowns with DataTables
+// Simple fix for dropdowns on DataTables pages
 $(document).ready(function() {
-    // Function to initialize dropdowns
-    function initDropdowns() {
-        $('.dropdown-toggle').each(function() {
-            if (!$(this).data('bs.dropdown')) {
-                new bootstrap.Dropdown(this);
-            }
-        });
-    }
-    
-    // Initialize dropdowns on page load
-    initDropdowns();
-    
-    // Re-initialize dropdowns after DataTables is initialized
+    // Re-initialize dropdowns after DataTables is initialized (if DataTables exists)
     if ($.fn.DataTable) {
         $(document).on('init.dt', function() {
-            initDropdowns();
+            // Re-initialize dropdowns after table is drawn
+            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+            dropdownElementList.forEach(function (dropdownToggleEl) {
+                new bootstrap.Dropdown(dropdownToggleEl);
+            });
         });
     }
-    
-    // Handle dropdown clicks
-    $(document).on('click', '.dropdown-toggle', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var dropdown = bootstrap.Dropdown.getInstance(this);
-        if (dropdown) {
-            dropdown.toggle();
-        }
-    });
-    
-    // Close dropdowns when clicking outside
-    $(document).on('click', function(e) {
-        if (!$(e.target).closest('.dropdown').length) {
-            $('.dropdown-menu.show').each(function() {
-                var dropdown = bootstrap.Dropdown.getInstance(this.previousElementSibling);
-                if (dropdown) dropdown.hide();
-            });
-        }
-    });
 });
 </script>
 <!-- Flatpickr -->

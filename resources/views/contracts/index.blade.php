@@ -135,32 +135,22 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Initialize DataTable with minimal settings
+        // Initialize DataTable with standard settings
         var table = $('#contracts-table').DataTable({
-            // Disable DataTables' built-in DOM manipulation
+            // Standard DOM structure with search and pagination
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                  "<'row'<'col-sm-12'tr>>" +
                  "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-            // Disable features that might interfere with Bootstrap
-            colReorder: false,
-            stateSave: false,
-            processing: false,
-            serverSide: false,
-            // Enable basic features
+            // Basic features
             paging: true,
             searching: true,
             ordering: true,
-            // Fix for dropdowns
-            drawCallback: function() {
-                // Re-initialize dropdowns after table redraw
-                var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-                dropdownElementList.forEach(function (dropdownToggleEl) {
-                    if (!dropdownToggleEl._dropdown) {
-                        new bootstrap.Dropdown(dropdownToggleEl);
-                        dropdownToggleEl._dropdown = true;
-                    }
-                });
-            },
+            // Disable features that might interfere
+            colReorder: false,
+            stateSave: false,
+            // Responsive settings
+            responsive: true,
+            // Language settings
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
