@@ -28,8 +28,8 @@
     </div>
     <hr>
     
-    <div class="table-responsive p-5">
-        <table id="contracts-table" class="table m-2">
+    <div class="table-responsive p-2">
+        <table id="contracts-table" class="table">
             <thead>
                 <tr>
                     <th>Type</th>
