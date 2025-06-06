@@ -114,16 +114,10 @@
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',
-                zeroRecords: 'Aucun enregistrement correspondant trouvé',
-                paginate: {
-                    first: '<<',
-                    last: '>>',
-                    next: '>',
-                    previous: '<'
-                }
+                zeroRecords: 'Aucun enregistrement correspondant trouvé'
             },
             order: [],
-            pageLength: 25
+            pageLength: 10
         });
 
         // Handle delete confirmation
