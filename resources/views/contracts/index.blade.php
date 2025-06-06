@@ -7,21 +7,6 @@
     <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <style>
-        .btn-action {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-        }
-        .btn-group .btn-action:not(:last-child) {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-        .btn-group .btn-action:not(:first-child) {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            margin-left: -1px;
-        }
-    </style>
 @endpush
 
 @section('content')
@@ -68,17 +53,17 @@
                     <td>{{ $contract->chassis_number }}</td>
                     <td class="text-end">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
                     <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-sm btn-outline-primary btn-action" title="Voir le PDF" target="_blank">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+                            <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-outline-primary px-3" title="Voir le PDF" target="_blank">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{ route('contracts.download', $contract) }}" class="btn btn-sm btn-outline-success btn-action" title="Télécharger le PDF">
+                            <a href="{{ route('contracts.download', $contract) }}" class="btn btn-outline-success px-3" title="Télécharger le PDF">
                                 <i class="bi bi-download"></i>
                             </a>
-                            <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-sm btn-outline-secondary btn-action" title="Modifier">
+                            <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-outline-secondary px-3" title="Modifier">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-contract" 
+                            <button type="button" class="btn btn-outline-danger px-3 delete-contract" 
                                     title="Supprimer" 
                                     data-id="{{ $contract->id }}"
                                     data-bs-toggle="modal" 
