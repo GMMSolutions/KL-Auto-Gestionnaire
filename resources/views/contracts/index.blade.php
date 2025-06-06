@@ -4,8 +4,8 @@
 
 @push('styles')
     <!-- DataTables CSS -->
-    <link href="{{ asset('js/datatables/dataTables.bootstrap5.css') }}" rel="stylesheet">
-    <link href="{{ asset('js/datatables/buttons.bootstrap5.css') }}" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
     <style>
         .dataTables_wrapper .dt-buttons {
             margin-bottom: 10px;
@@ -13,6 +13,10 @@
         .dt-button {
             margin-right: 5px;
             margin-bottom: 5px;
+        }
+        .dataTables_wrapper .btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
         }
     </style>
 @endpush
@@ -114,27 +118,27 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- DataTables Core -->
-<script src="{{ asset('js/datatables/dataTables.js') }}"></script>
-<script src="{{ asset('js/datatables/dataTables.bootstrap5.js') }}"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 
 <!-- DataTables Buttons -->
-<script src="{{ asset('js/datatables/dataTables.buttons.js') }}"></script>
-<script src="{{ asset('js/datatables/buttons.bootstrap5.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
 
 <!-- Buttons HTML5 Export -->
-<script src="{{ asset('js/datatables/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('js/datatables/buttons.print.min.js') }}"></script>
-<script src="{{ asset('js/datatables/buttons.colVis.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>
 
 <!-- PDF Export -->
-<script src="{{ asset('js/datatables/jszip.min.js') }}"></script>
-<script src="{{ asset('js/datatables/pdfmake.min.js') }}"></script>
-<script src="{{ asset('js/datatables/vfs_fonts.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 
 <script>
     $(document).ready(function() {
+        // Initialize DataTable with enhanced settings
         try {
-            // Initialize DataTable with enhanced settings
             var table = $('#contracts-table').DataTable({
                 // Custom DOM layout with buttons and search
                 dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
@@ -210,8 +214,16 @@
                     // Add custom classes to buttons
                     $('.dt-button').addClass('btn btn-sm btn-light');
                     $('.buttons-collection').removeClass('btn-light').addClass('btn-primary');
+                },
+                
+                // Error handling
+                error: function(xhr, error, thrown) {
+                    console.error('DataTables error:', error);
                 }
             });
+        } catch (e) {
+            console.error('Error initializing DataTable:', e);
+        }
 
         // Handle delete confirmation
         let contractIdToDelete = null;
