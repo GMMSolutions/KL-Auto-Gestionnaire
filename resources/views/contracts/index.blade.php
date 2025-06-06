@@ -9,6 +9,14 @@
         .dropdown-menu {
             z-index: 1060 !important;
         }
+        /* Fix for DataTables and Bootstrap 5 */
+        .dataTables_wrapper .dropdown-menu {
+            position: absolute !important;
+        }
+        /* Ensure dropdowns appear above DataTables */
+        .dropdown-menu {
+            z-index: 1060 !important;
+        }
         .dataTables_wrapper .dataTables_paginate .paginate_button {
             padding: 0.25rem 0.5rem;
             margin-left: 0.25rem;
@@ -127,12 +135,32 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Initialize DataTable with proper DOM settings
+        // Initialize DataTable with minimal settings
         var table = $('#contracts-table').DataTable({
-            // Use Bootstrap 5 styling
+            // Disable DataTables' built-in DOM manipulation
             dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                  "<'row'<'col-sm-12'tr>>" +
                  "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+            // Disable features that might interfere with Bootstrap
+            colReorder: false,
+            stateSave: false,
+            processing: false,
+            serverSide: false,
+            // Enable basic features
+            paging: true,
+            searching: true,
+            ordering: true,
+            // Fix for dropdowns
+            drawCallback: function() {
+                // Re-initialize dropdowns after table redraw
+                var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+                dropdownElementList.forEach(function (dropdownToggleEl) {
+                    if (!dropdownToggleEl._dropdown) {
+                        new bootstrap.Dropdown(dropdownToggleEl);
+                        dropdownToggleEl._dropdown = true;
+                    }
+                });
+            },
             language: {
                 url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/fr-FR.json',
                 emptyTable: 'Aucune donnée disponible dans le tableau',

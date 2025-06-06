@@ -36,9 +36,9 @@
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                     @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="userDropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
+                               data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
 
@@ -78,14 +78,48 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Initialize all tooltips -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-            return new bootstrap.Dropdown(dropdownToggleEl);
+// Fix for Bootstrap 5 dropdowns with DataTables
+$(document).ready(function() {
+    // Function to initialize dropdowns
+    function initDropdowns() {
+        $('.dropdown-toggle').each(function() {
+            if (!$(this).data('bs.dropdown')) {
+                new bootstrap.Dropdown(this);
+            }
         });
+    }
+    
+    // Initialize dropdowns on page load
+    initDropdowns();
+    
+    // Re-initialize dropdowns after DataTables is initialized
+    if ($.fn.DataTable) {
+        $(document).on('init.dt', function() {
+            initDropdowns();
+        });
+    }
+    
+    // Handle dropdown clicks
+    $(document).on('click', '.dropdown-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var dropdown = bootstrap.Dropdown.getInstance(this);
+        if (dropdown) {
+            dropdown.toggle();
+        }
     });
+    
+    // Close dropdowns when clicking outside
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.dropdown').length) {
+            $('.dropdown-menu.show').each(function() {
+                var dropdown = bootstrap.Dropdown.getInstance(this.previousElementSibling);
+                if (dropdown) dropdown.hide();
+            });
+        }
+    });
+});
 </script>
 <!-- Flatpickr -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
