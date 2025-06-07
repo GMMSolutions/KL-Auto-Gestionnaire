@@ -291,7 +291,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="sale_price" class="form-label">Prix d'achat TTC <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <span class="input-group-text">€</span>
+                                        <span class="input-group-text">CHF</span>
                                         <input type="number" 
                                                class="form-control {{ $errors->has('sale_price') ? 'is-invalid' : '' }}" 
                                                id="sale_price" 

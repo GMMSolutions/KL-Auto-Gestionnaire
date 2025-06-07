@@ -290,7 +290,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="sale_price" class="form-label">Prix de vente (TTC) <span class="text-danger">*</span></label>
                                     <div class="input-group">
-                                        <span class="input-group-text">€</span>
+                                        <span class="input-group-text">CHF</span>
                                         <input type="number" 
                                                step="0.01" 
                                                class="form-control {{ $errors->has('sale_price') ? 'is-invalid' : '' }}" 
@@ -320,7 +320,7 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="deposit" class="form-label">Accompte</label>
                                     <div class="input-group">
-                                        <span class="input-group-text">€</span>
+                                        <span class="input-group-text">CHF</span>
                                         <input type="number" 
                                                step="0.01" 
                                                class="form-control {{ $errors->has('deposit') ? 'is-invalid' : '' }}" 
@@ -335,7 +335,7 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="remaining_amount" class="form-label">Reste à payer</label>
                                     <div class="input-group">
-                                        <span class="input-group-text">€</span>
+                                        <span class="input-group-text">CHF</span>
                                         <input type="number" 
                                                step="0.01" 
                                                class="form-control" 
@@ -383,7 +383,7 @@
                                      style="display: {{ old('warranty') == 'quality_1_q5' ? 'block' : 'none' }};">
                                     <label for="warranty_amount" class="form-label">Montant supplémentaire pour Q5</label>
                                     <div class="input-group">
-                                        <span class="input-group-text">€</span>
+                                        <span class="input-group-text">CHF</span>
                                         <input type="number" 
                                                step="0.01" 
                                                class="form-control {{ $errors->has('warranty_amount') ? 'is-invalid' : '' }}" 
