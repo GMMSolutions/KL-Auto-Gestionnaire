@@ -285,7 +285,7 @@
 
                         <!-- Sale Information -->
                         <div class="field-group">
-                            <h5><i class="fas fa-euro-sign me-2"></i>Informations de vente</h5>
+                            <h5><i class="fas fa-money-bill me-2"></i>Informations de vente</h5>
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
