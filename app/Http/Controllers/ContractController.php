@@ -150,7 +150,7 @@ class ContractController extends Controller
 
             // Sale - Required fields
             'sale_price' => 'required|numeric|min:0',
-            'payment_condition' => 'nullable|required_if:contract_type,vente|in:Cash,Leasing ou Crédit',
+            'payment_condition' => 'nullable|required_if:contract_type,vente|in:Cash,Leasing ou Crédit,Banque',
             'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
             
             // Sale - Optional fields
@@ -256,7 +256,7 @@ class ContractController extends Controller
 
             // Sale - Required fields
             'sale_price' => 'required|numeric|min:0',
-            'payment_condition' => 'nullable|required_if:contract_type,vente|in:Cash,Leasing ou Crédit',
+            'payment_condition' => 'nullable|required_if:contract_type,vente|in:Cash,Leasing ou Crédit,Banque',
             'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
             
             // Sale - Optional fields
