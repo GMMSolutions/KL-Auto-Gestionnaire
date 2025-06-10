@@ -255,7 +255,7 @@
         ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété.
     </div>
 
-    <div class="text-center" style="margin-top: 30px;">
+    <div class="text-center">
         <span style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le {{ \Carbon\Carbon::now()->format('d.m.Y') }}</span>
     </div>
 
