@@ -443,16 +443,23 @@ document.addEventListener('DOMContentLoaded', function() {
         return null;
     }
 
-    // Add event listener for postal code blur
+    // Add event listener for postal code changes
     if (buyerZipInput && buyerCityInput) {
-        buyerZipInput.addEventListener('blur', async function() {
+        let debounceTimer;
+        
+        buyerZipInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
             const postalCode = this.value.trim();
-            if (postalCode && !buyerCityInput.value.trim()) {
-                const city = await fetchCityFromPostalCode(postalCode);
-                if (city) {
-                    buyerCityInput.value = city;
+            
+            // Add a small delay to avoid too many API calls while typing
+            debounceTimer = setTimeout(async () => {
+                if (postalCode && postalCode.length >= 4) {  // Only trigger for valid-looking postal codes
+                    const city = await fetchCityFromPostalCode(postalCode);
+                    if (city) {
+                        buyerCityInput.value = city;
+                    }
                 }
-            }
+            }, 500); // 500ms delay after typing stops
         });
     }
 
