@@ -20,6 +20,15 @@ class ContractController extends Controller
      * @param  \App\Models\Contract  $contract
      * @return \Barryvdh\DomPDF\PDF
      */
+    public function viewFacture(Contract $contract)
+    {
+        if ($contract->contract_type !== 'vente') {
+            abort(404, 'La facture n\'est disponible que pour les contrats de vente');
+        }
+        
+        return view('contracts.templates.facture', compact('contract'));
+    }
+    
     public function generatePdf(Contract $contract)
     {
         if (!in_array($contract->contract_type, ['vente', 'achat'])) {

@@ -37,5 +37,8 @@ Route::middleware('auth')->group(function () {
     // PDF Generation Routes
     Route::get('/contracts/{contract}/pdf', [ContractController::class, 'generatePdf'])->name('contracts.pdf');
     Route::get('/contracts/{contract}/download', [ContractController::class, 'downloadPdf'])->name('contracts.download');
+    
+    // Facture Route
+    Route::get('/contracts/{contract}/facture', [ContractController::class, 'viewFacture'])->name('contracts.facture');
 });
 
