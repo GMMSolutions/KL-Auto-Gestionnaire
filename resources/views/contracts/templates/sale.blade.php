@@ -109,7 +109,7 @@
         }
 
         .signature-date {
-            margin-bottom: 5px;
+            margin-bottom: 0px;
         }
 
         td {
