@@ -101,7 +101,7 @@
         .signature-section {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 10px;
         }
 
         .signature-left, .signature-right {
