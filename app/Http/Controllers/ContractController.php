@@ -26,7 +26,15 @@ class ContractController extends Controller
             abort(404, 'La facture n\'est disponible que pour les contrats de vente');
         }
         
-        return view('contracts.templates.facture', compact('contract'));
+        $pdf = PDF::loadView('contracts.templates.facture', compact('contract'));
+        
+        // Set paper size and orientation
+        $pdf->setPaper('a4', 'portrait');
+        
+        // Set the filename
+        $filename = 'facture-' . $contract->id . '.pdf';
+        
+        return $pdf->stream($filename);
     }
     
     public function generatePdf(Contract $contract)
