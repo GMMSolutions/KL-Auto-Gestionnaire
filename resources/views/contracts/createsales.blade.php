@@ -418,6 +418,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contractForm');
     const chassisInput = document.getElementById('chassis_number');
     const searchBtn = document.getElementById('searchVehicle');
+    const buyerZipInput = document.getElementById('buyer_zip');
+    const buyerCityInput = document.getElementById('buyer_city');
+
+    // Function to fetch city from postal code
+    async function fetchCityFromPostalCode(postalCode) {
+        if (!postalCode) return;
+        
+        try {
+            const response = await fetch(`https://api3.geo.admin.ch/rest/services/api/SearchServer?searchText=${encodeURIComponent(postalCode)}&type=locations&origins=zipcode`);
+            const data = await response.json();
+            
+            if (data.results && data.results.length > 0) {
+                // Extract city name from the label (format: "1347 - Le Sentier")
+                const label = data.results[0].attrs.label;
+                const cityMatch = label.match(/>\d+\s*-\s*(.*?)<\//);
+                if (cityMatch && cityMatch[1]) {
+                    return cityMatch[1].trim();
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching city data:', error);
+        }
+        return null;
+    }
+
+    // Add event listener for postal code blur
+    if (buyerZipInput && buyerCityInput) {
+        buyerZipInput.addEventListener('blur', async function() {
+            const postalCode = this.value.trim();
+            if (postalCode && !buyerCityInput.value.trim()) {
+                const city = await fetchCityFromPostalCode(postalCode);
+                if (city) {
+                    buyerCityInput.value = city;
+                }
+            }
+        });
+    }
 
     // Only proceed if the form and required elements exist
     if (!form || !chassisInput) return;
