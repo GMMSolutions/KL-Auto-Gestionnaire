@@ -516,15 +516,36 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.decode && Array.isArray(data.decode)) {
+                    let vehicleSpec = '';
+                    let model = '';
+                    let fuelType = '';
+                    
+                    // First pass: collect all relevant data
                     data.decode.forEach(item => {
                         if (item.label === 'Make') {
                             const brandInput = document.getElementById('vehicle_brand');
                             if (brandInput) brandInput.value = item.value || '';
+                        } else if (item.label === 'Vehicle Specification') {
+                            vehicleSpec = item.value || '';
                         } else if (item.label === 'Model') {
-                            const typeInput = document.getElementById('vehicle_type');
-                            if (typeInput) typeInput.value = item.value || '';
+                            model = item.value || '';
+                        } else if (item.label === 'Fuel Type - Primary') {
+                            fuelType = item.value || '';
                         }
                     });
+                    
+                    // Format the model name
+                    let formattedModel = vehicleSpec || model;
+                    if (fuelType && fuelType.toLowerCase().includes('diesel')) {
+                        formattedModel += ' - Diesel';
+                    }
+                    
+                    // Update the model field
+                    const typeInput = document.getElementById('vehicle_type');
+                    if (typeInput && formattedModel) {
+                        typeInput.value = formattedModel;
+                    }
+                    
                 } else {
                     throw new Error('Aucune information trouvée');
                 }

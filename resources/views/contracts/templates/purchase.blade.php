@@ -18,7 +18,7 @@
         }
 
         .company-name {
-            font-size: 36px;
+            font-size: 39px;
             font-weight: bold;
             color: #c41e3a;
             letter-spacing: 2px;
@@ -26,13 +26,13 @@
         }
 
         .company-details {
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 10px;
             font-weight: bold;
         }
 
         .company-details-underline {
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 5px;
             margin-top: 15px;
         }
@@ -53,7 +53,7 @@
         .warranty-section {
             border: 2px solid #c41e3a;
             margin: 15px 0;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .warranty-header {
@@ -113,7 +113,7 @@
         }
 
         td {
-            font-size: 14px;
+            font-size: 16px;
             padding: 4px 8px;
             vertical-align: top;
         }
