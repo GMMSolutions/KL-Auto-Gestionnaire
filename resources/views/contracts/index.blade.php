@@ -66,17 +66,14 @@
                 <td class="text-end">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
                 <td class="text-end">
                     <div class="btn-group" role="group" aria-label="Actions">
+                        <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-outline-primary px-3" title="Voir le contrat" target="_blank">
+                            <i class="bi bi-eye"></i>
+                        </a>
                         @if($contract->contract_type === 'vente')
-                            <a href="{{ route('contracts.facture', $contract) }}" class="btn btn-outline-info px-3" title="Voir la facture" target="_blank">
+                            <a href="{{ route('contracts.facture', $contract) }}" class="btn btn-outline-success px-3" title="Voir la facture" target="_blank">
                                 <i class="bi bi-receipt"></i>
                             </a>
                         @endif
-                        <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-outline-primary px-3" title="Voir le contrat" target="_blank">
-                            <i class="bi bi-file-text"></i>
-                        </a>
-                        <a href="{{ route('contracts.download', $contract) }}" class="btn btn-outline-success px-3" title="Télécharger le PDF">
-                            <i class="bi bi-download"></i>
-                        </a>
                         <a href="{{ route($contract->contract_type === 'vente' ? 'contracts.editsale' : 'contracts.editpurchase', $contract) }}" class="btn btn-outline-secondary px-3" title="Modifier">
                             <i class="bi bi-pencil"></i>
                         </a>
