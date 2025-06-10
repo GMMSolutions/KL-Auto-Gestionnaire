@@ -355,6 +355,7 @@
                                         <option value="">Sélectionnez...</option>
                                         <option value="Cash" {{ old('payment_condition', $contract->payment_condition) == 'Cash' ? 'selected' : '' }}>Cash</option>
                                         <option value="Leasing ou Crédit" {{ old('payment_condition', $contract->payment_condition) == 'Leasing ou Crédit' ? 'selected' : '' }}>Leasing ou Crédit</option>
+                                        <option value="Banque" {{ old('payment_condition', $contract->payment_condition) == 'Banque' ? 'selected' : '' }}>Banque</option>
                                     </select>
                                     @error('payment_condition')
                                         <div class="invalid-feedback">{{ $message }}</div>
