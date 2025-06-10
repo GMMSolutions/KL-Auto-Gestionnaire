@@ -343,6 +343,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contractForm');
     const chassisInput = document.getElementById('chassis_number');
     const searchBtn = document.getElementById('searchVehicle');
+    const buyerZipInput = document.getElementById('buyer_zip');
+    const buyerCityInput = document.getElementById('buyer_city');
+
+    // Function to fetch city from postal code
+    async function fetchCityFromPostalCode(postalCode) {
+        if (!postalCode) return;
+        
+        try {
+            const response = await fetch(`https://api3.geo.admin.ch/rest/services/api/SearchServer?searchText=${encodeURIComponent(postalCode)}&type=locations&origins=zipcode`);
+            const data = await response.json();
+            
+            if (data.results && data.results.length > 0) {
+                // Extract city name from the label (format: "1347 - Le Sentier")
+                const label = data.results[0].attrs.label;
+                const cityMatch = label.match(/>\d+\s*-\s*(.*?)<\//);
+                if (cityMatch && cityMatch[1]) {
+                    return cityMatch[1].trim();
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching city data:', error);
+        }
+        return null;
+    }
+
+    // Add event listener for postal code changes
+    if (buyerZipInput && buyerCityInput) {
+        let debounceTimer;
+        
+        buyerZipInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            const postalCode = this.value.trim();
+            
+            // Add a small delay to avoid too many API calls while typing
+            debounceTimer = setTimeout(async () => {
+                if (postalCode && postalCode.length >= 4) {  // Only trigger for valid-looking postal codes
+                    const city = await fetchCityFromPostalCode(postalCode);
+                    if (city) {
+                        buyerCityInput.value = city;
+                    }
+                }
+            }, 500); // 500ms delay after typing stops
+        });
+    }
 
     // Only proceed if the form and required elements exist
     if (!form || !chassisInput) return;
