@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Contrat de Vente - {{ $contract->id }}</title>
+    <title>KL Automobiles - Contrat de Vente - {{ $contract->id }}</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 

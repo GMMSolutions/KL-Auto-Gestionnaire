@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Contrats')
+@section('title', 'KL Automobiles - Contrats')
 
 @push('styles')
     <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">

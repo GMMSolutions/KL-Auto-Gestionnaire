@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Nouveau Contrat d\'Achat')
+@section('title', 'KL Automobiles - Modifier le Contrat')
 
 @push('styles')
 <meta name="vin-api-key" content="{{ config('app.VIN_API_KEY') }}">
