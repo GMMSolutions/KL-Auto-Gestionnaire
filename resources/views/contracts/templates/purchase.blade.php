@@ -18,7 +18,7 @@
         }
 
         .company-name {
-            font-size: 38px;
+            font-size: 50px;
             font-weight: bold;
             color: #c41e3a;
             letter-spacing: 2px;
