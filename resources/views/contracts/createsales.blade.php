@@ -318,7 +318,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="deposit" class="form-label">Accompte</label>
+                                    <label for="deposit" class="form-label">Acompte ou Reprise</label>
                                     <div class="input-group">
                                         <span class="input-group-text">CHF</span>
                                         <input type="number" 
