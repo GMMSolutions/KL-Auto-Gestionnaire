@@ -221,7 +221,7 @@
     </div>
 
     <div class="text-center">
-        <span style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le {{ \Carbon\Carbon::now()->format('d.m.Y') }}</span>
+        <span style="font-size: 12px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->updated_at->format('d.m.Y') }}</span>
     </div>
 
 
