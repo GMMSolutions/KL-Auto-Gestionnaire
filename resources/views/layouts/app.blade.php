@@ -4,7 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?{{ time() }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?{{ time() }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?{{ time() }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?{{ time() }}">
+    <link rel="manifest" href="/site.webmanifest?{{ time() }}">
+    <meta name="theme-color" content="#c41e3a">
     <title>@yield('title', 'KL Automobiles')</title>
 
 
