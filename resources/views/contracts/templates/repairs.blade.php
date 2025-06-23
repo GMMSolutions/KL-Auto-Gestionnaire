@@ -158,7 +158,7 @@
                 </tr>
             @else
                 <tr>
-                    <td colspan="3" style="border: 1px solid #000; padding: 4px 8px; text-align: center;">Aucune réparation enregistrée</td>
+                    <td colspan="2" style="border: 1px solid #000; padding: 4px 8px; text-align: center;">Aucune réparation enregistrée</td>
                 </tr>
             @endif
         </tbody>
