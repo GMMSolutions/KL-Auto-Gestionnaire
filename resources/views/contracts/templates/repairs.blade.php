@@ -131,17 +131,15 @@
         </div>
     </div>
 
-    <div class="contract-title">REPARATIONS - {{ $vehicle->vehicle_brand ?? '' }} {{ $vehicle->vehicle_type ?? '' }} - {{ $vehicle->license_plate ?? '' }}</div>
+    <div class="contract-title">REPARATIONS - {{ $vehicle->vehicle_brand ?? '' }} {{ $vehicle->vehicle_type ?? '' }} - {{ $vehicle->chassis_number ?? '' }} </div>
     
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <colgroup>
-            <col style="width: 25%;">
-            <col style="width: 55%;">
-            <col style="width: 20%;">
+            <col style="width: 65%;">
+            <col style="width: 35%;">
         </colgroup>
         <thead>
             <tr>
-                <th style="border: 1px solid #000; padding: 4px 8px; text-align: left;">Date</th>
                 <th style="border: 1px solid #000; padding: 4px 8px; text-align: left;">Description</th>
                 <th style="border: 1px solid #000; padding: 4px 8px; text-align: right;">Montant (CHF)</th>
             </tr>
@@ -150,7 +148,6 @@
             @if($repairs->count() > 0)
                 @foreach($repairs as $repair)
                     <tr>
-                        <td style="border: 1px solid #000; padding: 4px 8px;">{{ $repair->created_at->format('d.m.Y H:i') }}</td>
                         <td style="border: 1px solid #000; padding: 4px 8px;">{{ $repair->description }}</td>
                         <td style="border: 1px solid #000; padding: 4px 8px; text-align: right;">{{ number_format($repair->amount, 2, '.', "'") }}</td>
                     </tr>
