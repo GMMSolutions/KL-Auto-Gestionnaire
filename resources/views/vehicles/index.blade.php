@@ -49,7 +49,7 @@
                 <td>{{ $vehicle->chassis_number }}</td>
                 <td>{{ $vehicle->created_at->format('d.m.Y H:i') }}</td>
                 <td class="text-end">
-                    <button class="btn btn-sm btn-primary view-repairs" 
+                    <button class="btn btn-sm btn-outline-primary view-repairs" 
                             data-vehicle-id="{{ $vehicle->id }}"
                             data-vehicle-name="{{ $vehicle->vehicle_brand }} {{ $vehicle->vehicle_type }}"
                             data-bs-toggle="modal" 
@@ -92,7 +92,7 @@
                 }
             },
             order: [[3, 'desc']], // Sort by creation date by default
-            pageLength: 25,
+            pageLength: 10,
             responsive: true,
             dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             columnDefs: [
