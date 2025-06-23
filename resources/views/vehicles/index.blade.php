@@ -1,4 +1,78 @@
-$(document).ready(function() {
+@extends('layouts.app')
+
+@section('title', 'KL Automobiles - Véhicules')
+
+@push('styles')
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .table td, .table th {
+            white-space: nowrap;
+        }
+        .dataTables_wrapper .dataTables_scroll {
+            overflow-x: auto;
+            margin-bottom: 0;
+        }
+        .dataTables_scrollBody {
+            overflow-x: auto !important;
+        }
+    </style>
+@endpush
+
+@section('content')
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">Véhicules</h1>
+            </div>
+        </div>
+    </div>
+    <hr>
+    
+    <table id="vehicles-table" class="table w-100 pb-2">
+        <thead>
+            <tr>
+                <th>Marque</th>
+                <th>Type</th>
+                <th>N° de châssis (VIN)</th>
+                <th>Date d'ajout</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($vehicles as $vehicle)
+            <tr>
+                <td>{{ $vehicle->vehicle_brand }}</td>
+                <td>{{ $vehicle->vehicle_type }}</td>
+                <td>{{ $vehicle->chassis_number }}</td>
+                <td>{{ $vehicle->created_at->format('d.m.Y H:i') }}</td>
+                <td class="text-end">
+                    <button class="btn btn-sm btn-outline-primary view-repairs" 
+                            data-vehicle-id="{{ $vehicle->id }}"
+                            data-vehicle-name="{{ $vehicle->vehicle_brand }} {{ $vehicle->vehicle_type }}"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#repairsModal">
+                        <i class="bi bi-tools"></i> Réparations
+                    </button>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
+
+@push('scripts')
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
     // Initialize DataTable
     $('#vehicles-table').DataTable({
         language: {
@@ -271,3 +345,52 @@ $(document).ready(function() {
         }, 5000);
     }
 });
+</script>
+
+<!-- Repairs Modal -->
+<div class="modal fade" id="repairsModal" tabindex="-1" aria-labelledby="repairsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="repairsModalLabel">Réparations pour <span id="vehicleName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <div id="repairsList">
+                    <div class="text-center text-muted py-3">
+                        <i class="bi bi-hourglass-split fs-1"></i>
+                        <p class="mt-2">Chargement des réparations...</p>
+                    </div>
+                </div>
+                
+                <!-- Add Repair Form (Hidden by default) -->
+                <div id="addRepairForm" class="d-none">
+                    <h6>Nouvelle réparation</h6>
+                    <form id="repairForm">
+                        @csrf
+                        <input type="hidden" name="vehicle_id" id="vehicleId">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Montant (CHF)</label>
+                            <div class="input-group">
+                                <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required>
+                                <span class="input-group-text">CHF</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary btn-sm me-2" id="cancelRepairBtn">Annuler</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endpush
