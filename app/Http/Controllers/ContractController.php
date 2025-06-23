@@ -179,16 +179,9 @@ class ContractController extends Controller
                         ]
                     );
                     
-                    // Return the full decode array to match frontend expectations
-                    return response()->json([
-                        'success' => true,
-                        'data' => $result, // Return the full decode data for frontend processing
-                        'vehicle' => [
-                            'vehicle_brand' => $brand,
-                            'vehicle_type' => $formattedModel,
-                            'from_cache' => !$vehicle->wasRecentlyCreated
-                        ]
-                    ]);
+                    // Return the full decode array directly to match frontend expectations
+                    $result['success'] = true;
+                    return response()->json($result);
                 }
                 
                 return response()->json(['error' => 'Impossible de récupérer les informations du véhicule.'], 404);
