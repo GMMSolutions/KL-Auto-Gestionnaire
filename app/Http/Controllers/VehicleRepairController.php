@@ -103,8 +103,27 @@ class VehicleRepairController extends Controller
             
             return response()->json([
                 'success' => false,
-                'message' => 'Une erreur est survenue lors de la suppression de la réparation'
+                'message' => 'Une erreur est survenue lors de la suppression de la réparation',
+                'error' => $e->getMessage()
             ], 500);
         }
+    }
+    
+    /**
+     * Export repairs for a vehicle as PDF
+     */
+    public function exportPdf(Vehicle $vehicle)
+    {
+        $repairs = $vehicle->repairs()->latest()->get();
+        $total = $repairs->sum('amount');
+        
+        $pdf = PDF::loadView('contracts.templates.repairs', [
+            'vehicle' => $vehicle,
+            'repairs' => $repairs,
+            'total' => $total,
+            'date' => now()->format('d.m.Y')
+        ]);
+        
+        return $pdf->stream("reparations-{$vehicle->id}-{$vehicle->vehicle_brand}-{$vehicle->vehicle_type}.pdf");
     }
 }

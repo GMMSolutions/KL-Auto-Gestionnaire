@@ -323,6 +323,15 @@
         });
     });
     
+    // Handle PDF export button click
+    $(document).on('click', '#exportPdfBtn', function(e) {
+        e.preventDefault();
+        const vehicleId = $('#vehicleId').val();
+        if (vehicleId) {
+            window.open(`/vehicles/${vehicleId}/repairs/export-pdf`, '_blank');
+        }
+    });
+    
     // Helper function to show alerts - IMPROVED
     function showAlert(type, message) {
         const $modal = $('#repairsModal');
@@ -353,7 +362,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="repairsModalLabel">Réparations pour <span id="vehicleName"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                <div>
+                    <a href="#" class="btn btn-sm btn-outline-danger me-2" id="exportPdfBtn">
+                        <i class="bi bi-file-earmark-pdf"></i> Exporter PDF
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div id="repairsList">

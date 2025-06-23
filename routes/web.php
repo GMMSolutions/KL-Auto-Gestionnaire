@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [\App\Http\Controllers\VehicleRepairController::class, 'store'])->name('store');
         Route::get('/{repair}', [\App\Http\Controllers\VehicleRepairController::class, 'show'])->name('show');
         Route::delete('/{repair}', [\App\Http\Controllers\VehicleRepairController::class, 'destroy'])->name('destroy');
+        Route::get('/export-pdf', [\App\Http\Controllers\VehicleRepairController::class, 'exportPdf'])->name('export-pdf');
     });
 });
 
