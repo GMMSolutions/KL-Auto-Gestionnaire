@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>KL Automobiles - Facture - {{ $contract->id }}</title>
+    <title>KL Automobiles - Réparations - {{ $vehicle->vehicle_brand ?? '' }} {{ $vehicle->vehicle_type ?? '' }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    <div class="contract-title">REPARATIONS - {{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</div>
+    <div class="contract-title">REPARATIONS - {{ $vehicle->vehicle_brand ?? '' }} {{ $vehicle->vehicle_type ?? '' }} - {{ $vehicle->license_plate ?? '' }}</div>
     
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <colgroup>

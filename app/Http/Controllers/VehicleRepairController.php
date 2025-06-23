@@ -113,11 +113,12 @@ class VehicleRepairController extends Controller
     /**
      * Export repairs for a vehicle as PDF
      *
-     * @param  \App\Models\Vehicle  $vehicle
+     * @param  int  $vehicle
      * @return \Barryvdh\DomPDF\PDF
      */
-    public function exportPdf(Vehicle $vehicle)
+    public function exportPdf($vehicle)
     {
+        $vehicle = Vehicle::findOrFail($vehicle);
         $repairs = $vehicle->repairs()->latest()->get();
         $total = $repairs->sum('amount');
         
