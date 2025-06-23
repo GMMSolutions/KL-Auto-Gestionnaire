@@ -175,9 +175,9 @@
                         html += `
                             <tr>
                                 <td>${repair.description}</td>
-                                <td class="text-end">CHF ${parseFloat(repair.amount).toFixed(2)}</td>
-                                <td class="text-end">${formattedDate}</td>
-                                <td class="text-end">
+                                <td>CHF ${parseFloat(repair.amount).toFixed(2)}</td>
+                                <td>${formattedDate}</td>
+                                <td>
                                     <button class="btn btn-sm btn-outline-danger delete-repair" data-id="${repair.id}">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -190,7 +190,7 @@
                     html += `
                                 <tr class="table-secondary fw-bold">
                                     <td>Total</td>
-                                    <td class="text-end">CHF ${total.toFixed(2)}</td>
+                                    <td>CHF ${total.toFixed(2)}</td>
                                     <td colspan="2"></td>
                                 </tr>
                             </tbody>
