@@ -184,7 +184,7 @@
                                 <tr class="table-secondary fw-bold">
                                     <td>Total</td>
                                     <td>CHF ${total.toFixed(2)}</td>
-                                    <td colspan="2"></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
