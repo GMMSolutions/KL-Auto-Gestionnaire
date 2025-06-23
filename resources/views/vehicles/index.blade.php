@@ -37,7 +37,6 @@
                 <th>Marque</th>
                 <th>Type</th>
                 <th>N° de châssis (VIN)</th>
-                <th>Date d'ajout</th>
                 <th class="text-end">Actions</th>
             </tr>
         </thead>
@@ -47,7 +46,6 @@
                 <td>{{ $vehicle->vehicle_brand }}</td>
                 <td>{{ $vehicle->vehicle_type }}</td>
                 <td>{{ $vehicle->chassis_number }}</td>
-                <td>{{ $vehicle->created_at->format('d.m.Y H:i') }}</td>
                 <td class="text-end">
                     <button class="btn btn-sm btn-outline-primary view-repairs" 
                             data-vehicle-id="{{ $vehicle->id }}"
@@ -91,7 +89,6 @@
                 previous: 'Précédent'
             }
         },
-        order: [[3, 'desc']], // Sort by creation date by default
         pageLength: 10,
         responsive: true,
         dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
@@ -160,7 +157,6 @@
                                     <tr>
                                         <th>Description</th>
                                         <th>Montant</th>
-                                        <th>Date</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -169,14 +165,11 @@
                     let total = 0;
                     
                     response.data.forEach(function(repair) {
-                        const date = new Date(repair.created_at);
-                        const formattedDate = date.toLocaleDateString('fr-CH') + ' ' + date.toLocaleTimeString('fr-CH', {hour: '2-digit', minute:'2-digit'});
                         
                         html += `
                             <tr>
                                 <td>${repair.description}</td>
                                 <td>CHF ${parseFloat(repair.amount).toFixed(2)}</td>
-                                <td>${formattedDate}</td>
                                 <td>
                                     <button class="btn btn-sm btn-outline-danger delete-repair" data-id="${repair.id}">
                                         <i class="bi bi-trash"></i>
