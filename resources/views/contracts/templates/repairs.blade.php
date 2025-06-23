@@ -141,7 +141,7 @@
         <thead>
             <tr>
                 <th style="border: 1px solid #000; padding: 4px 8px; text-align: left;">Description</th>
-                <th style="border: 1px solid #000; padding: 4px 8px; text-align: right;">Montant (CHF)</th>
+                <th style="border: 1px solid #000; padding: 4px 8px; text-align: right;">Montant</th>
             </tr>
         </thead>
         <tbody>
@@ -149,12 +149,12 @@
                 @foreach($repairs as $repair)
                     <tr>
                         <td style="border: 1px solid #000; padding: 4px 8px;">{{ $repair->description }}</td>
-                        <td style="border: 1px solid #000; padding: 4px 8px; text-align: right;">{{ number_format($repair->amount, 2, '.', "'") }}</td>
+                        <td style="border: 1px solid #000; padding: 4px 8px; text-align: right;">CHF {{ number_format($repair->amount, 2, '.', "'") }}</td>
                     </tr>
                 @endforeach
                 <tr>
                     <td style="border: 1px solid #000; padding: 4px 8px; text-align: left; font-weight: bold;">Total</td>
-                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: right; font-weight: bold;">{{ number_format($total, 2, '.', "'") }}</td>
+                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: right; font-weight: bold;">CHF {{ number_format($total, 2, '.', "'") }}</td>
                 </tr>
             @else
                 <tr>

@@ -159,8 +159,8 @@
                                 <thead>
                                     <tr>
                                         <th>Description</th>
-                                        <th class="text-end">Montant</th>
-                                        <th class="text-end">Date</th>
+                                        <th>Montant</th>
+                                        <th>Date</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -175,7 +175,7 @@
                         html += `
                             <tr>
                                 <td>${repair.description}</td>
-                                <td class="text-end">${parseFloat(repair.amount).toFixed(2)} CHF</td>
+                                <td class="text-end">CHF ${parseFloat(repair.amount).toFixed(2)}</td>
                                 <td class="text-end">${formattedDate}</td>
                                 <td class="text-end">
                                     <button class="btn btn-sm btn-outline-danger delete-repair" data-id="${repair.id}">
@@ -190,7 +190,7 @@
                     html += `
                                 <tr class="table-secondary fw-bold">
                                     <td>Total</td>
-                                    <td class="text-end">${total.toFixed(2)} CHF</td>
+                                    <td class="text-end">CHF ${total.toFixed(2)}</td>
                                     <td colspan="2"></td>
                                 </tr>
                             </tbody>
@@ -392,7 +392,7 @@
                             <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="amount" class="form-label">Montant (CHF)</label>
+                            <label for="amount" class="form-label">Montant</label>
                             <div class="input-group">
                                 <input type="number" step="0.01" min="0" class="form-control" id="amount" name="amount" required>
                                 <span class="input-group-text">CHF</span>
