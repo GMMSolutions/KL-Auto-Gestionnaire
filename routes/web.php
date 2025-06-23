@@ -44,5 +44,13 @@ Route::middleware('auth')->group(function () {
     
     // Vehicles Routes
     Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
+    
+    // Vehicle Repairs API Routes
+    Route::prefix('vehicles/{vehicle}/repairs')->name('vehicles.repairs.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\VehicleRepairController::class, 'index'])->name('index');
+        Route::post('/', [\App\Http\Controllers\VehicleRepairController::class, 'store'])->name('store');
+        Route::get('/{repair}', [\App\Http\Controllers\VehicleRepairController::class, 'show'])->name('show');
+        Route::delete('/{repair}', [\App\Http\Controllers\VehicleRepairController::class, 'destroy'])->name('destroy');
+    });
 });
 
