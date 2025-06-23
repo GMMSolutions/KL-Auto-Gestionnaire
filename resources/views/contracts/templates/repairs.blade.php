@@ -131,7 +131,7 @@
         </div>
     </div>
 
-    <div class="contract-title">Réparations - {{ $vehicle->vehicle_brand ?? '' }} {{ $vehicle->vehicle_type ?? '' }} - {{ $vehicle->chassis_number ?? '' }} </div>
+    <div class="contract-title">Réparations : {{ $vehicle->vehicle_brand ?? '' }} {{ $vehicle->vehicle_type ?? '' }} - {{ $vehicle->chassis_number ?? '' }} </div>
     
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <colgroup>
