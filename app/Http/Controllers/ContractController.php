@@ -138,45 +138,55 @@ class ContractController extends Controller
                 $result = $response->json();
                 \Log::info('Vincario API Response:', ['response' => $result]);
                 
-                // Extract vehicle info from API response
-                $brand = null;
-                $model = null;
+                $brand = '';
+                $vehicleSpec = '';
+                $model = '';
+                $fuelType = '';
                 
-                // Check if we have a valid response with data
+                // Extract vehicle info from API response using the same logic as frontend
                 if (isset($result['decode']) && is_array($result['decode'])) {
-                    // The API returns an array of objects with 'label' and 'value' properties
                     foreach ($result['decode'] as $item) {
-                        if (isset($item['label']) && $item['label'] === 'Make') {
-                            $brand = $item['value'] ?? null;
-                        }
-                        if (isset($item['label']) && $item['label'] === 'Model') {
-                            $model = $item['value'] ?? null;
+                        if (!isset($item['label'])) continue;
+                        
+                        switch ($item['label']) {
+                            case 'Make':
+                                $brand = $item['value'] ?? '';
+                                break;
+                            case 'Vehicle Specification':
+                                $vehicleSpec = $item['value'] ?? '';
+                                break;
+                            case 'Model':
+                                $model = $item['value'] ?? '';
+                                break;
+                            case 'Fuel Type - Primary':
+                                $fuelType = $item['value'] ?? '';
+                                break;
                         }
                     }
-                }
-                
-                \Log::info('Extracted vehicle info:', [
-                    'brand' => $brand,
-                    'model' => $model,
-                    'full_decode' => $result['decode'] ?? 'No decode array'
-                ]);
-                
-                if ($brand && $model) {
-                    // Create new vehicle record
-                    $vehicle = \App\Models\Vehicle::firstOrCreate(
+                    
+                    // Format the model name (same logic as frontend)
+                    $formattedModel = !empty($vehicleSpec) ? $vehicleSpec : $model;
+                    if (!empty($fuelType) && stripos(strtolower($fuelType), 'diesel') !== false) {
+                        $formattedModel .= ' - Diesel';
+                    }
+                    
+                    // Create or update vehicle record with the formatted data
+                    $vehicle = \App\Models\Vehicle::updateOrCreate(
                         ['chassis_number' => $vin],
                         [
                             'vehicle_brand' => $brand,
-                            'vehicle_type' => $model,
+                            'vehicle_type' => $formattedModel,
                         ]
                     );
                     
+                    // Return the full decode array to match frontend expectations
                     return response()->json([
                         'success' => true,
-                        'data' => [
-                            'vehicle_brand' => $vehicle->vehicle_brand,
-                            'vehicle_type' => $vehicle->vehicle_type,
-                            'from_cache' => $vehicle->wasRecentlyCreated ? false : true
+                        'data' => $result, // Return the full decode data for frontend processing
+                        'vehicle' => [
+                            'vehicle_brand' => $brand,
+                            'vehicle_type' => $formattedModel,
+                            'from_cache' => !$vehicle->wasRecentlyCreated
                         ]
                     ]);
                 }
