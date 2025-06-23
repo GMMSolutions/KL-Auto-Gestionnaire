@@ -153,7 +153,7 @@
                     </tr>
                 @endforeach
                 <tr>
-                    <td colspan="2" style="border: 1px solid #000; padding: 4px 8px; text-align: right; font-weight: bold;">Total :</td>
+                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: right; font-weight: bold;">Total :</td>
                     <td style="border: 1px solid #000; padding: 4px 8px; text-align: right; font-weight: bold;">{{ number_format($total, 2, '.', "'") }}</td>
                 </tr>
             @else
