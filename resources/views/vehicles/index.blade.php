@@ -110,76 +110,65 @@
             const vehicleName = $(this).data('vehicle-name');
             
             $('#vehicleName').text(vehicleName);
-            $('#vehicleId').val(currentVehicleId);
             
-            // Reset form and UI state
-            $('#repairsList').html(`
-                <div class="text-center text-muted py-3">
-                    <i class="bi bi-hourglass-split fs-1"></i>
-                    <p class="mt-2">Chargement des réparations...</p>
-                </div>
-            `);
-            
-            // Show the modal
-            const modal = new bootstrap.Modal(document.getElementById('repairsModal'));
-            modal.show();
-            
-            // Load repairs after a small delay to ensure modal is shown
-            setTimeout(() => {
-                loadRepairs(currentVehicleId);
-            }, 100);
-        });
-        
-        // Reset modal when hidden
-        $('#repairsModal').on('hidden.bs.modal', function () {
-            $('#repairsList').html('');
-            $('#addRepairForm').addClass('d-none');
-            $('#repairForm')[0].reset();
-            currentVehicleId = null;
-        });
-        
-        // Load repairs function
-        function loadRepairs(vehicleId) {
-            const $modal = $('#repairsModal');
-            
-            $.get(`/vehicles/${vehicleId}/repairs`)
-                .done(function(response) {
-                    if (response.data.length > 0) {
-                        let html = `
-                            <div class="table-responsive">
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>Description</th>
-                                            <th class="text-end">Montant</th>
-                                            <th class="text-end">Date</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>`;
-                        
-                        let total = 0;
-                        
-                        response.data.forEach(function(repair) {
-                            const date = new Date(repair.created_at);
-                            const formattedDate = date.toLocaleDateString('fr-CH') + ' ' + date.toLocaleTimeString('fr-CH', {hour: '2-digit', minute:'2-digit'});
+            // Load repairs function
+            function loadRepairs(vehicleId) {
+                if (!vehicleId) return;
+                
+                const $repairsList = $('#repairsList');
+                
+                $repairsList.html(`
+                    <div class="text-center text-muted py-3">
+                        <i class="bi bi-hourglass-split fs-1"></i>
+                        <p class="mt-2">Chargement des réparations...</p>
+                    </div>
+                `);
+                
+                $('#addRepairForm').addClass('d-none');
+                $('#addRepairBtn').show();
+                
+                // Make sure modal is shown
+                const modal = new bootstrap.Modal(document.getElementById('repairsModal'));
+                modal.show();
+                
+                $.get(`/vehicles/${vehicleId}/repairs`)
+                    .done(function(response) {
+                        if (response.data.length > 0) {
+                            let html = `
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th class="text-end">Montant</th>
+                                                <th class="text-end">Date</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`;
+                            
+                            let total = 0;
+                            
+                            response.data.forEach(function(repair) {
+                                const date = new Date(repair.created_at);
+                                const formattedDate = date.toLocaleDateString('fr-CH') + ' ' + date.toLocaleTimeString('fr-CH', {hour: '2-digit', minute:'2-digit'});
+                                
+                                html += `
+                                    <tr>
+                                        <td>${repair.description}</td>
+                                        <td class="text-end">${parseFloat(repair.amount).toFixed(2)} CHF</td>
+                                        <td class="text-end">${formattedDate}</td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-danger delete-repair" data-id="${repair.id}">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                                
+                                total += parseFloat(repair.amount);
+                            });
                             
                             html += `
-                                <tr>
-                                    <td>${repair.description}</td>
-                                    <td class="text-end">${parseFloat(repair.amount).toFixed(2)} CHF</td>
-                                    <td class="text-end">${formattedDate}</td>
-                                    <td class="text-end">
-                                        <button class="btn btn-sm btn-outline-danger delete-repair" data-id="${repair.id}">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>`;
-                            
-                            total += parseFloat(repair.amount);
-                        });
-                        
-                        html += `
                                     <tr class="table-secondary fw-bold">
                                         <td>Total</td>
                                         <td class="text-end">${total.toFixed(2)} CHF</td>
@@ -193,28 +182,39 @@
                                 <i class="bi bi-plus"></i> Ajouter une réparation
                             </button>
                         </div>`;
-                        
-                        $modal.find('#repairsList').html(html);
-                    } else {
-                        $('#repairsList').html(`
-                            <div class="text-center text-muted py-3">
-                                <i class="bi bi-tools fs-1"></i>
-                                <p class="mt-2">Aucune réparation enregistrée pour ce véhicule</p>
-                                <button class="btn btn-primary btn-sm mt-2" id="addRepairBtn">
-                                    <i class="bi bi-plus"></i> Ajouter une réparation
-                                </button>
+                            
+                            $repairsList.html(html);
+                        } else {
+                            $('#repairsList').html(`
+                                <div class="text-center text-muted py-3">
+                                    <i class="bi bi-tools fs-1"></i>
+                                    <p class="mt-2">Aucune réparation enregistrée pour ce véhicule</p>
+                                    <button class="btn btn-primary btn-sm mt-2" id="addRepairBtn">
+                                        <i class="bi bi-plus"></i> Ajouter une réparation
+                                    </button>
+                                </div>
+                            `);
+                        }
+                    })
+                    .fail(function() {
+                        $repairsList.html(`
+                            <div class="alert alert-danger">
+                                Une erreur est survenue lors du chargement des réparations
                             </div>
                         `);
-                    }
-                })
-                .fail(function() {
-                    $modal.find('#repairsList').html(`
-                        <div class="alert alert-danger">
-                            Une erreur est survenue lors du chargement des réparations
-                        </div>
-                    `);
-                });
-        }
+                    });
+            }
+            
+            loadRepairs(currentVehicleId);
+        });
+        
+        // Reset modal when hidden
+        $('#repairsModal').on('hidden.bs.modal', function () {
+            $('#repairsList').html('');
+            $('#addRepairForm').addClass('d-none');
+            $('#repairForm')[0].reset();
+            currentVehicleId = null;
+        });
         
         // Show add repair form
         $(document).on('click', '#addRepairBtn', function(e) {
