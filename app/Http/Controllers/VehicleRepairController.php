@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Repair;
 use App\Models\Vehicle;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -111,6 +112,9 @@ class VehicleRepairController extends Controller
     
     /**
      * Export repairs for a vehicle as PDF
+     *
+     * @param  \App\Models\Vehicle  $vehicle
+     * @return \Barryvdh\DomPDF\PDF
      */
     public function exportPdf(Vehicle $vehicle)
     {
