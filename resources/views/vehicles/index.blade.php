@@ -329,7 +329,7 @@
         const $modal = $('#repairsModal');
         const vehicleId = $modal.data('vehicle-id');
         if (vehicleId) {
-            window.open(`/vehicles/${vehicleId}/repairs/export-pdf`, '_blank');
+            window.open(`/vehicles/${vehicleId}/repairs-pdf`, '_blank');
         } else {
             console.error('Vehicle ID not found');
             showAlert('danger', 'Impossible de générer le PDF : véhicule non trouvé');
