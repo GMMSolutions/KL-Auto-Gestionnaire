@@ -110,15 +110,15 @@ class ContractController extends Controller
 
         $vin = mb_strtoupper($request->input('chassis_number'));
 
-        // Check if vehicle already exists in our database
+        // First check if we have this vehicle in our database
         $vehicle = \App\Models\Vehicle::where('chassis_number', $vin)->first();
         if ($vehicle) {
+            // Return a response that matches the frontend's expected format
             return response()->json([
                 'success' => true,
-                'data' => [
-                    'vehicle_brand' => $vehicle->vehicle_brand,
-                    'vehicle_type' => $vehicle->vehicle_type,
-                    'from_cache' => true
+                'decode' => [
+                    ['label' => 'Make', 'value' => $vehicle->vehicle_brand],
+                    ['label' => 'Model', 'value' => $vehicle->vehicle_type]
                 ]
             ]);
         }
@@ -170,14 +170,14 @@ class ContractController extends Controller
                         $formattedModel .= ' - Diesel';
                     }
                     
-                    // Create or update vehicle record with the formatted data
-                    $vehicle = \App\Models\Vehicle::updateOrCreate(
-                        ['chassis_number' => $vin],
-                        [
+                    // Create new vehicle record only if we have both brand and model
+                    if (!empty($brand) && !empty($formattedModel)) {
+                        \App\Models\Vehicle::create([
+                            'chassis_number' => $vin,
                             'vehicle_brand' => $brand,
                             'vehicle_type' => $formattedModel,
-                        ]
-                    );
+                        ]);
+                    }
                     
                     // Return the full decode array directly to match frontend expectations
                     $result['success'] = true;
