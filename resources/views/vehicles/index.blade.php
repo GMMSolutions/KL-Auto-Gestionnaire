@@ -100,37 +100,42 @@
             ]
         });
         
+        let currentVehicleId = null;
+        
         // Show repairs when clicking the button
-        $(document).on('click', '.view-repairs', function() {
-            const vehicleId = $(this).data('vehicle-id');
+        $(document).on('click', '.view-repairs', function(e) {
+            e.preventDefault();
+            
+            currentVehicleId = $(this).data('vehicle-id');
             const vehicleName = $(this).data('vehicle-name');
             
-            // Store the current vehicle ID in the modal's data
-            const $modal = $('#repairsModal');
-            $modal.data('vehicle-id', vehicleId);
-            
             $('#vehicleName').text(vehicleName);
-            $('#vehicleId').val(vehicleId);
+            $('#vehicleId').val(currentVehicleId);
             
             // Reset form and UI state
-            $modal.find('#repairsList').html(`
+            $('#repairsList').html(`
                 <div class="text-center text-muted py-3">
                     <i class="bi bi-hourglass-split fs-1"></i>
                     <p class="mt-2">Chargement des réparations...</p>
                 </div>
             `);
-            $modal.find('#addRepairForm').addClass('d-none');
-            $modal.find('#addRepairBtn').show();
             
-            // Load repairs
-            loadRepairs(vehicleId);
+            // Show the modal
+            const modal = new bootstrap.Modal(document.getElementById('repairsModal'));
+            modal.show();
+            
+            // Load repairs after a small delay to ensure modal is shown
+            setTimeout(() => {
+                loadRepairs(currentVehicleId);
+            }, 100);
         });
         
         // Reset modal when hidden
         $('#repairsModal').on('hidden.bs.modal', function () {
-            const $modal = $(this);
-            $modal.find('#repairsList').html('');
-            $modal.find('#addRepairForm').addClass('d-none');
+            $('#repairsList').html('');
+            $('#addRepairForm').addClass('d-none');
+            $('#repairForm')[0].reset();
+            currentVehicleId = null;
         });
         
         // Load repairs function
@@ -191,7 +196,7 @@
                         
                         $modal.find('#repairsList').html(html);
                     } else {
-                        $modal.find('#repairsList').html(`
+                        $('#repairsList').html(`
                             <div class="text-center text-muted py-3">
                                 <i class="bi bi-tools fs-1"></i>
                                 <p class="mt-2">Aucune réparation enregistrée pour ce véhicule</p>
@@ -214,45 +219,39 @@
         // Show add repair form
         $(document).on('click', '#addRepairBtn', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            
-            const $modal = $('#repairsModal');
-            $modal.find('#repairsList').addClass('d-none');
-            $modal.find('#addRepairForm').removeClass('d-none');
+            $('#repairsList').addClass('d-none');
+            $('#addRepairForm').removeClass('d-none');
             $(this).hide();
         });
         
         // Cancel add repair
         $(document).on('click', '#cancelRepairBtn', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            
-            const $modal = $('#repairsModal');
-            $modal.find('#repairForm')[0].reset();
-            $modal.find('#addRepairForm').addClass('d-none');
-            $modal.find('#repairsList').removeClass('d-none');
-            $modal.find('#addRepairBtn').show();
+            $('#repairForm')[0].reset();
+            $('#addRepairForm').addClass('d-none');
+            $('#repairsList').removeClass('d-none');
+            $('#addRepairBtn').show();
         });
         
         // Submit repair form
         $(document).on('submit', '#repairForm', function(e) {
             e.preventDefault();
             
-            const vehicleId = $('#vehicleId').val();
+            if (!currentVehicleId) return;
+            
             const formData = $(this).serialize();
             
             $.ajax({
-                url: `/vehicles/${vehicleId}/repairs`,
+                url: `/vehicles/${currentVehicleId}/repairs`,
                 method: 'POST',
                 data: formData,
                 success: function(response) {
                     if (response.success) {
-                        const $modal = $('#repairsModal');
                         showAlert('success', 'Réparation ajoutée avec succès');
-                        $modal.find('#repairForm')[0].reset();
-                        loadRepairs(vehicleId);
-                        $modal.find('#addRepairForm').addClass('d-none');
-                        $modal.find('#repairsList').removeClass('d-none');
+                        $('#repairForm')[0].reset();
+                        loadRepairs(currentVehicleId);
+                        $('#addRepairForm').addClass('d-none');
+                        $('#repairsList').removeClass('d-none');
                     }
                 },
                 error: function(xhr) {
@@ -264,15 +263,14 @@
         
         // Delete repair
         $(document).on('click', '.delete-repair', function() {
-            if (!confirm('Êtes-vous sûr de vouloir supprimer cette réparation ?')) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer cette réparation ?') || !currentVehicleId) {
                 return;
             }
             
             const repairId = $(this).data('id');
-            const vehicleId = $('#vehicleId').val();
             
             $.ajax({
-                url: `/vehicles/${vehicleId}/repairs/${repairId}`,
+                url: `/vehicles/${currentVehicleId}/repairs/${repairId}`,
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -280,7 +278,7 @@
                 success: function(response) {
                     if (response.success) {
                         showAlert('success', 'Réparation supprimée avec succès');
-                        loadRepairs(vehicleId);
+                        loadRepairs(currentVehicleId);
                     }
                 },
                 error: function() {
@@ -291,7 +289,6 @@
         
         // Helper function to show alerts
         function showAlert(type, message) {
-            const $modal = $('#repairsModal');
             const alert = $(`
                 <div class="alert alert-${type} alert-dismissible fade show" role="alert">
                     ${message}
@@ -299,7 +296,7 @@
                 </div>
             `);
             
-            $modal.find('.modal-body').prepend(alert);
+            $('.modal-body').prepend(alert);
             
             // Auto-dismiss after 5 seconds
             setTimeout(() => {
