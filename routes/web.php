@@ -26,8 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/contracts/{contract}/editsale', [ContractController::class, 'editSale'])->name('contracts.editsale');
     Route::get('/contracts/{contract}/editpurchase', [ContractController::class, 'editPurchase'])->name('contracts.editpurchase');
 
-    // Resource route ensuite
-    Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update']);
+    // Resource route with custom delete route
+    Route::resource('contracts', ContractController::class)->except(['create', 'edit', 'update', 'destroy']);
     
     // Update route
     Route::put('/contracts/{contract}', [ContractController::class, 'update'])->name('contracts.update');
