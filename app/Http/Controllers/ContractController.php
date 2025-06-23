@@ -110,6 +110,20 @@ class ContractController extends Controller
 
         $vin = mb_strtoupper($request->input('chassis_number'));
 
+        // Check if vehicle already exists in our database
+        $vehicle = \App\Models\Vehicle::where('chassis_number', $vin)->first();
+        if ($vehicle) {
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'vehicle_brand' => $vehicle->vehicle_brand,
+                    'vehicle_type' => $vehicle->vehicle_type,
+                    'from_cache' => true
+                ]
+            ]);
+        }
+
+        // If not in database, fetch from API
         $apiPrefix = "https://api.vindecoder.eu/3.2";
         $apiKey = "49cc4c9b0533";
         $secretKey = "df90e9ea6c";
@@ -122,7 +136,30 @@ class ContractController extends Controller
 
             if ($response->successful()) {
                 $result = $response->json();
-                return response()->json($result);
+                
+                // Extract vehicle info from API response
+                $brand = $result['decode'][0] ?? null;
+                $model = $result['decode'][1] ?? null;
+                
+                if ($brand && $model) {
+                    // Create new vehicle record
+                    $vehicle = \App\Models\Vehicle::create([
+                        'chassis_number' => $vin,
+                        'vehicle_brand' => $brand,
+                        'vehicle_type' => $model,
+                    ]);
+                    
+                    return response()->json([
+                        'success' => true,
+                        'data' => [
+                            'vehicle_brand' => $vehicle->vehicle_brand,
+                            'vehicle_type' => $vehicle->vehicle_type,
+                            'from_cache' => false
+                        ]
+                    ]);
+                }
+                
+                return response()->json(['error' => 'Impossible de récupérer les informations du véhicule.'], 404);
             } else {
                 Log::error("Erreur API Vincario : " . $response->body());
                 return response()->json(['error' => 'Erreur lors de la récupération des infos véhicule.'], 500);

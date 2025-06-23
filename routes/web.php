@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\VehicleController;
 
 // Routes d'authentification
 Route::middleware('guest')->group(function () {
@@ -40,5 +41,8 @@ Route::middleware('auth')->group(function () {
     
     // Facture Route
     Route::get('/contracts/{contract}/facture', [ContractController::class, 'viewFacture'])->name('contracts.facture');
+    
+    // Vehicles Routes
+    Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicles.index');
 });
 

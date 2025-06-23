@@ -29,7 +29,20 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto"></ul>
+                <ul class="navbar-nav me-auto">
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                                <i class="fas fa-file-contract me-1"></i> Contrats
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('vehicles.index') ? 'active' : '' }}" href="{{ route('vehicles.index') }}">
+                                <i class="fas fa-car me-1"></i> Véhicules
+                            </a>
+                        </li>
+                    @endauth
+                </ul>
                 <ul class="navbar-nav ms-auto">
                     @guest
                         <li class="nav-item">
