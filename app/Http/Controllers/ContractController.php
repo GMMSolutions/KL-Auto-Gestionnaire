@@ -136,25 +136,47 @@ class ContractController extends Controller
 
             if ($response->successful()) {
                 $result = $response->json();
+                \Log::info('Vincario API Response:', ['response' => $result]);
                 
                 // Extract vehicle info from API response
-                $brand = $result['decode'][0] ?? null;
-                $model = $result['decode'][1] ?? null;
+                $brand = null;
+                $model = null;
+                
+                // Check if we have a valid response with data
+                if (isset($result['decode']) && is_array($result['decode'])) {
+                    // The API returns an array of objects with 'label' and 'value' properties
+                    foreach ($result['decode'] as $item) {
+                        if (isset($item['label']) && $item['label'] === 'Make') {
+                            $brand = $item['value'] ?? null;
+                        }
+                        if (isset($item['label']) && $item['label'] === 'Model') {
+                            $model = $item['value'] ?? null;
+                        }
+                    }
+                }
+                
+                \Log::info('Extracted vehicle info:', [
+                    'brand' => $brand,
+                    'model' => $model,
+                    'full_decode' => $result['decode'] ?? 'No decode array'
+                ]);
                 
                 if ($brand && $model) {
                     // Create new vehicle record
-                    $vehicle = \App\Models\Vehicle::create([
-                        'chassis_number' => $vin,
-                        'vehicle_brand' => $brand,
-                        'vehicle_type' => $model,
-                    ]);
+                    $vehicle = \App\Models\Vehicle::firstOrCreate(
+                        ['chassis_number' => $vin],
+                        [
+                            'vehicle_brand' => $brand,
+                            'vehicle_type' => $model,
+                        ]
+                    );
                     
                     return response()->json([
                         'success' => true,
                         'data' => [
                             'vehicle_brand' => $vehicle->vehicle_brand,
                             'vehicle_type' => $vehicle->vehicle_type,
-                            'from_cache' => false
+                            'from_cache' => $vehicle->wasRecentlyCreated ? false : true
                         ]
                     ]);
                 }
