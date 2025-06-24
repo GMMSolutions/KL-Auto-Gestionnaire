@@ -211,16 +211,13 @@
             <td style="padding: 4px 8px;">Expertisée le</td>
             <td style="padding: 4px 8px;">{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
         </tr>
+        <tr>
+            <td style="padding: 4px 8px;">Remarques</td>
+            <td style="padding: 4px 8px;">{{ $contract->remarques ?? '' }}</td>
+        </tr>
     </table>
 
     <hr>
-    
-    @if(!empty($contract->remarques))
-    <div class="field-group" style="margin: 15px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-        <div style="font-weight: bold; margin-bottom: 5px; color: #c41e3a;">Remarques :</div>
-        <div style="white-space: pre-line;">{{ $contract->remarques }}</div>
-    </div>
-    @endif
 
     <div class="declaration">
         Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est ni investi,
