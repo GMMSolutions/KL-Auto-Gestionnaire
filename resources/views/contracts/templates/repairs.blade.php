@@ -27,19 +27,19 @@
         }
 
         .company-details {
-            font-size: 15.5px;
+            font-size: 16px;
             margin-bottom: 10px;
             font-weight: bold;
         }
 
         .company-details-underline {
-            font-size: 15.5px;
+            font-size: 16px;
             margin-bottom: 5px;
-            margin-top: 15.5px;
+            margin-top: 16px;
         }
 
         .contract-title {
-            font-size: 15.5px;
+            font-size: 16px;
             font-weight: bold;
             margin-bottom: 8px;
             margin-top: 20px;
@@ -53,8 +53,8 @@
 
         .warranty-section {
             border: 2px solid #c41e3a;
-            margin: 15.5px 0;
-            font-size: 15.5px;
+            margin: 16px 0;
+            font-size: 16px;
         }
 
         .warranty-header {
@@ -95,7 +95,7 @@
 
         .declaration {
             font-size: 11px;
-            margin: 15.5px 0;
+            margin: 16px 0;
             line-height: 1.3;
         }
 
@@ -114,7 +114,7 @@
         }
 
         td {
-            font-size: 15.5px;
+            font-size: 16px;
             padding: 4px 8px;
             vertical-align: top;
         }
