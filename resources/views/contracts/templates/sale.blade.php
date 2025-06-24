@@ -23,6 +23,7 @@
             color: #c41e3a;
             letter-spacing: 2px;
             margin-bottom: 8px;
+            margin-top: 0px;
         }
 
         .company-details {
