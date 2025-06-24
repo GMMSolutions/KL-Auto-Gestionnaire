@@ -230,7 +230,7 @@
     </table>
 
     <div class="warranty-section">
-        <div class="warranty-header">Conditions de garantie</div>
+        <div class="warranty-header">Conditions de garantie (Moteur et boite à vitesse : 12 mois ou 20 000 km)</div>
         <div class="warranty-content">
             <div class="warranty-option">
                 <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty' ? 'checked' : '' }}"></span>
