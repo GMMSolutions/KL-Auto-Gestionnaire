@@ -235,11 +235,15 @@
         <div class="warranty-content">
             <div class="warranty-option">
                 <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty' ? 'checked' : '' }}"></span>
-                <span style="color: #c41e3a; font-weight: bold;">Sans Garantie/Pour Export</span>
+                <span style="color: #c41e3a; font-weight: bold;">Sans Garantie</span>
+            </div>
+            <div class="warranty-option">
+                <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty_export' ? 'checked' : '' }}"></span>
+                <span style="color: #c41e3a; font-weight: bold;">Sans Garantie (export)</span>
             </div>
             <div class="warranty-option">
                 <span class="checkbox {{ ($contract->warranty ?? '') === 'quality_1_qbase' ? 'checked' : '' }}"></span>
-                <span style="color: #c41e3a; font-weight: bold;">Quality1 Qbase /Contrat séparé</span>
+                <span style="color: #c41e3a; font-weight: bold;">Quality1 Qbase / Contrat séparé</span>
             </div>
             <div class="warranty-option">
                 <span class="checkbox {{ ($contract->warranty ?? '') === 'quality_1_q3' ? 'checked' : '' }}"></span>

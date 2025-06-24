@@ -371,7 +371,8 @@
                                             name="warranty" 
                                             required>
                                         <option value="">Sélectionnez...</option>
-                                        <option value="no_warranty" {{ old('warranty', $contract->warranty) == 'no_warranty' ? 'selected' : '' }}>Sans garantie (export)</option>
+                                        <option value="no_warranty" {{ old('warranty', $contract->warranty) == 'no_warranty' ? 'selected' : '' }}>Sans garantie</option>
+                                        <option value="no_warranty_export" {{ old('warranty', $contract->warranty) == 'no_warranty_export' ? 'selected' : '' }}>Sans garantie (export)</option>
                                         <option value="quality_1_qbase" {{ old('warranty', $contract->warranty) == 'quality_1_qbase' ? 'selected' : '' }}>Garantie Quality 1 QBase</option>
                                         <option value="quality_1_q3" {{ old('warranty', $contract->warranty) == 'quality_1_q3' ? 'selected' : '' }}>Garantie Quality 1 Q3</option>
                                         <option value="quality_1_q5" {{ old('warranty', $contract->warranty) == 'quality_1_q5' ? 'selected' : '' }}>Garantie Quality 1 Q5</option>
