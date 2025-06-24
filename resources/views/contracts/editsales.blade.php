@@ -400,6 +400,23 @@
                             </div>
                         </div>
 
+                        <!-- Remarques -->
+                        <div class="field-group">
+                            <h5><i class="fas fa-sticky-note me-2"></i>Remarques</h5>
+                            <div class="mb-3">
+                                <label for="remarques" class="form-label">Notes supplémentaires</label>
+                                <textarea class="form-control {{ $errors->has('remarques') ? 'is-invalid' : '' }}" 
+                                          id="remarques" 
+                                          name="remarques" 
+                                          rows="3">{{ old('remarques', $contract->remarques) }}</textarea>
+                                @error('remarques')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- Submit Button -->
                         <div class="text-center">
                             <button type="submit" class="btn btn-success btn-lg px-5">

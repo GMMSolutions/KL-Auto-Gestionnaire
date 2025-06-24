@@ -237,6 +237,7 @@ class ContractController extends Controller
             'deposit' => 'nullable|numeric|min:0',
             'remaining_amount' => 'nullable|numeric|min:0',
             'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
+            'remarques' => 'nullable|string',
         ];
 
         $validated = $request->validate($rules);
@@ -343,6 +344,7 @@ class ContractController extends Controller
             'deposit' => 'nullable|numeric|min:0',
             'remaining_amount' => 'nullable|numeric|min:0',
             'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
+            'remarques' => 'nullable|string',
         ];
 
         $validated = $request->validate($rules);
@@ -350,7 +352,7 @@ class ContractController extends Controller
         // Get all nullable fields from the rules
         $nullableFields = [
             'buyer_birth_date', 'buyer_email', 'plate_number', 'expertise_date',
-            'deposit', 'remaining_amount', 'warranty_amount', 'has_accident'
+            'deposit', 'remaining_amount', 'warranty_amount', 'has_accident', 'remarques'
         ];
 
         // Set empty optional fields to null

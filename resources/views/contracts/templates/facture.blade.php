@@ -250,6 +250,13 @@
         </div>
     </div>
 
+    @if(!empty($contract->remarques))
+    <div class="field-group" style="margin: 15px 0; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        <div style="font-weight: bold; margin-bottom: 5px; color: #c41e3a;">Remarques :</div>
+        <div style="white-space: pre-line;">{{ $contract->remarques }}</div>
+    </div>
+    @endif
+
     <div class="declaration">
         Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est ni investi,
         ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété.

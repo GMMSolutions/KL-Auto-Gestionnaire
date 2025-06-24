@@ -41,6 +41,7 @@ class Contract extends Model
         'payment_condition',
         'warranty',
         'warranty_amount',
+        'remarques',
     ];
 
     protected $casts = [
