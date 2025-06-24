@@ -265,7 +265,7 @@
     </div>
 
 
-    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 5px;">
+    <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <colgroup>
             <col style="width: 55%;">
             <col style="width: 45%;">
