@@ -255,7 +255,14 @@ class ContractController extends Controller
         }
 
         // Create the contract with all validated data
-        Contract::create($validated);
+        $contract = Contract::create($validated);
+        
+        // Update the created_at and updated_at timestamps if they were provided in the request
+        if ($request->has('created_at') && $request->created_at) {
+            $contract->created_at = $request->created_at;
+            $contract->updated_at = $request->created_at; // Set updated_at to match created_at for new records
+            $contract->save();
+        }
 
         return redirect()->route('contracts.index')
             ->with('success', 'Contrat créé avec succès.');
@@ -390,6 +397,13 @@ class ContractController extends Controller
 
         // Update the contract with all validated data
         $contract->update($validated);
+        
+        // Update the created_at timestamp if it was provided in the request
+        if ($request->has('created_at') && $request->created_at) {
+            $contract->created_at = $request->created_at;
+            $contract->updated_at = now(); // Set updated_at to current time for updates
+            $contract->save();
+        }
 
         return redirect()->route('contracts.index')
             ->with('success', 'Contrat mis à jour avec succès.');
