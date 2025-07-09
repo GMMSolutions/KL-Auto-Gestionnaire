@@ -226,7 +226,7 @@
     </div>
 
     <div class="text-center">
-        <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->updated_at->format('d.m.Y') }}</span>
+        <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
 </body>
 </html>
