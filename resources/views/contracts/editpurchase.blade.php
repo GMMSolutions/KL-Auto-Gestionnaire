@@ -174,7 +174,7 @@
 
                         <!-- Buyer Information -->
                         <div class="field-group">
-                            <h5><i class="fas fa-user me-2"></i>Informations de l'acheteur</h5>
+                            <h5><i class="fas fa-user me-2"></i>Informations du vendeur</h5>
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
