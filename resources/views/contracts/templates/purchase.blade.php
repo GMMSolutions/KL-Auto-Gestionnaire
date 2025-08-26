@@ -226,19 +226,7 @@
     </div>
 
     <div class="text-center">
-        <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->updated_at->format('d.m.Y') }}</span>
+        <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
-
-
-    <table style="width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 10px;">
-        <colgroup>
-            <col style="width: 55%;">
-            <col style="width: 45%;">
-        </colgroup>
-        <tr>
-            <td style="font-weight: bold;">Pour {{ config('app.name', '') }} :</td>
-            <td style="font-weight: bold;">Acheteur :</td>
-        </tr>
-    </table>
 </body>
 </html>

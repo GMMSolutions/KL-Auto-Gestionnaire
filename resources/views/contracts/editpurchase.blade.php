@@ -289,6 +289,18 @@
                             
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label for="created_at" class="form-label">Date du contrat <span class="text-danger">*</span></label>
+                                    <input type="date" 
+                                           class="form-control {{ $errors->has('created_at') ? 'is-invalid' : '' }}" 
+                                           id="created_at" 
+                                           name="created_at"
+                                           value="{{ old('created_at', $contract->created_at ? $contract->created_at->format('Y-m-d') : now()->format('Y-m-d')) }}" 
+                                           required>
+                                    @error('created_at')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6 mb-3">
                                     <label for="sale_price" class="form-label">Prix d'achat TTC <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text">CHF</span>
