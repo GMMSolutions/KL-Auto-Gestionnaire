@@ -112,6 +112,13 @@
             padding: 2.5px 8px;
             vertical-align: top;
         }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 10px;
+            font-size: 14px;
+        }
 
     </style>
 </head>
@@ -222,8 +229,7 @@
     <div class="text-center">
         <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
-    <div class="signature-section"
-     style="margin-top: 10px; font-size: 14px; display: flex; justify-content: space-between; align-items: baseline;">
+    <div class="signature-section">
     <div>Vendeur :</div>
     <div>Acheteur :</div>
 </div>
