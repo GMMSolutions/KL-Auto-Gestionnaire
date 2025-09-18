@@ -133,6 +133,7 @@
         .signature-table .right {
             text-align: right;
             width: 50%;
+            padding-right: 30px;
         }
 
     </style>
