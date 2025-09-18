@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>KL Automobiles - Contrat de Vente - Contract ID</title>
+    <title>KL Automobiles - Contrat de Vente - {{ $contract->id }}</title>
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -113,21 +113,6 @@
             vertical-align: top;
         }
 
-        /* Fixed signature section */
-        .signature-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-top: 10px;
-            font-size: 14px;
-            width: 100%;
-        }
-
-        .signature-section > div {
-            flex: 0 0 auto; /* Don't grow or shrink, maintain natural width */
-        }
-
-        /* Alternative using table for better alignment if flexbox doesn't work in your environment */
         .signature-table {
             width: 100%;
             margin-top: 10px;
@@ -154,7 +139,7 @@
 </head>
 <body>
     <div class="header">
-        <div class="company-name">KL AUTOMOBILES SA</div>
+        <div class="company-name">{{ config('app.name', 'KL AUTOMOBILES SA') }}</div>
         <div class="company-details">
             Route de Bussigny 22 - 1023 Crissier - +41 79 500 67 67<br>
         </div>
@@ -176,27 +161,27 @@
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Nom, Prénom</td>
-            <td style="padding: 2.5px 8px;">John, Doe</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->buyer_surname ?? '' }}, {{ $contract->buyer_name ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Date de naissance</td>
-            <td style="padding: 2.5px 8px;">15.03.1985</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Adresse (Rue, Numéro)</td>
-            <td style="padding: 2.5px 8px;">Rue de la Paix 123</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->buyer_address ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Code Postal / Ville</td>
-            <td style="padding: 2.5px 8px;">1000 Lausanne</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->buyer_zip ?? '' }} {{ $contract->buyer_city ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">N° de Téléphone</td>
-            <td style="padding: 2.5px 8px;">+41 78 123 45 67</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->buyer_phone ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Email</td>
-            <td style="padding: 2.5px 8px;">john.doe@email.com</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->buyer_email ?? '' }}</td>
         </tr>
     </table>
 
@@ -209,55 +194,55 @@
         </colgroup>
         <tr>
             <td style="padding: 2.5px 8px;">Marque et Type</td>
-            <td style="font-weight: bold;">BMW X3</td>
+            <td style="font-weight: bold;">{{ $contract->vehicle_brand ?? '' }} {{ $contract->vehicle_type ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">1ère Immatriculation</td>
-            <td style="padding: 2.5px 8px;">12.05.2020</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Kilométrage</td>
-            <td style="padding: 2.5px 8px;">45 000</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->mileage ? number_format($contract->mileage, 0, '.', ' ') : '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Numéro de chassis</td>
-            <td style="padding: 2.5px 8px;">WBA12345678901234</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->chassis_number ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Couleur</td>
-            <td style="padding: 2.5px 8px;">Noir</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->color ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">N° de plaques</td>
-            <td style="padding: 2.5px 8px;">VD 123456</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->plate_number ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Accidenté</td>  
-            <td style="padding: 2.5px 8px;">Non</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->has_accident ? 'Oui' : 'Non' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Prix de vente TVA incluse</td>
-            <td style="padding: 2.5px 8px; font-weight: bold; text-decoration: underline;">CHF 35 000,00</td>
+            <td style="padding: 2.5px 8px; font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Expertisée le</td>
-            <td style="padding: 2.5px 8px;">10.09.2025</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Acompte ou reprise</td>
-            <td style="padding: 2.5px 8px;">CHF 5 000,00</td>
+            <td style="padding: 2.5px 8px;">CHF {{ number_format($contract->deposit, 2, ',', ' ') }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Reste à payer</td>
-            <td style="padding: 2.5px 8px; font-weight: bold;">CHF 30 000,00</td>
+            <td style="padding: 2.5px 8px; font-weight: bold;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Conditions de paiement</td>
-            <td style="padding: 2.5px 8px;">Comptant à la livraison</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->payment_condition ?? '' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Remarques</td>
-            <td style="padding: 2.5px 8px;">Véhicule en excellent état</td>
+            <td style="padding: 2.5px 8px;">{{ $contract->remarques ?? '' }}</td>
         </tr>
     </table>
 
@@ -265,25 +250,27 @@
         <div class="warranty-header">Conditions de garantie (Moteur et boite à vitesse : 12 mois ou 20 000 km)</div>
         <div class="warranty-content">
             <div class="warranty-option">
-                <span class="checkbox"></span>
+                <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty' ? 'checked' : '' }}"></span>
                 <span style="color: #c41e3a; font-weight: bold;">Sans Garantie</span>
             </div>
             <div class="warranty-option">
-                <span class="checkbox"></span>
+                <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty_export' ? 'checked' : '' }}"></span>
                 <span style="color: #c41e3a; font-weight: bold;">Sans Garantie (export)</span>
             </div>
             <div class="warranty-option">
-                <span class="checkbox"></span>
+                <span class="checkbox {{ ($contract->warranty ?? '') === 'quality_1_qbase' ? 'checked' : '' }}"></span>
                 <span style="color: #c41e3a; font-weight: bold;">Quality1 Qbase / Contrat séparé</span>
             </div>
             <div class="warranty-option">
-                <span class="checkbox checked"></span>
+                <span class="checkbox {{ ($contract->warranty ?? '') === 'quality_1_q3' ? 'checked' : '' }}"></span>
                 <span style="color: #c41e3a; font-weight: bold;">Quality1 Q3</span>
             </div>
             <div class="warranty-option">
-                <span class="checkbox"></span>
+                <span class="checkbox {{ ($contract->warranty ?? '') === 'quality_1_q5' ? 'checked' : '' }}"></span>
                 <span style="color: #c41e3a; font-weight: bold;">Quality1 Q5 Contre supplément de</span>
-                <span>CHF 500,00</span>
+                @if(!empty($contract->warranty_amount))
+                    <span>CHF {{ number_format($contract->warranty_amount, 2, ',', ' ') }}</span>
+                @endif
             </div>
         </div>
     </div>
@@ -294,9 +281,8 @@
     </div>
 
     <div class="text-center">
-        <span style="font-size: 12px; margin-bottom: 0px;">Crissier, le 18.09.2025</span>
+        <span style="font-size: 12px; margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
-
     <table class="signature-table">
         <tr>
             <td class="left">Vendeur :</td>
