@@ -99,12 +99,6 @@
             line-height: 1.3;
         }
 
-        .signature-section {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
         .signature-left, .signature-right {
             width: 45%;
         }
