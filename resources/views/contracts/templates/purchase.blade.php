@@ -230,8 +230,8 @@
         <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
     <div class="signature-section">
-    <div>Vendeur :</div>
-    <div>Acheteur :</div>
-</div>
+        <div>Vendeur :</div>
+        <div>Acheteur :</div>
+    </div>
 </body>
 </html>
