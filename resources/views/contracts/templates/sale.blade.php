@@ -297,15 +297,6 @@
         <span style="font-size: 12px; margin-bottom: 0px;">Crissier, le 18.09.2025</span>
     </div>
 
-    <!-- OPTION 1: Improved flexbox version -->
-    <div class="signature-section">
-        <div>Vendeur :</div>
-        <div>Acheteur :</div>
-    </div>
-
-    <br><br>
-
-    <!-- OPTION 2: Alternative table-based approach (more reliable for PDF generation) -->
     <table class="signature-table">
         <tr>
             <td class="left">Vendeur :</td>
