@@ -228,5 +228,9 @@
     <div class="text-center">
         <span style="font-size: 12px;margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
+    <div class="signature-section" style="margin-top: 40px; font-size: 14px;">
+        <div class="signature-left">Vendeur :</div>
+        <div class="signature-right" style="text-align: right;">Acheteur :</div>
+    </div>
 </body>
 </html>
