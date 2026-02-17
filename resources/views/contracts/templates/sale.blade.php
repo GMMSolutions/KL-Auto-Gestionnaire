@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>KL Automobiles - Contrat de Vente - {{ $contract->id }}</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            font-size: 13px; 
-            line-height: 1.2; 
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            line-height: 1.2;
             margin: 20px;
             color: #000;
         }
@@ -99,7 +100,8 @@
             line-height: 1.3;
         }
 
-        .signature-left, .signature-right {
+        .signature-left,
+        .signature-right {
             width: 45%;
         }
 
@@ -115,7 +117,7 @@
 
         .signature-table {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 0px;
             font-size: 10px;
             border-collapse: collapse;
         }
@@ -135,9 +137,9 @@
             width: 50%;
             padding-right: 100px;
         }
-
     </style>
 </head>
+
 <body>
     <div class="header">
         <div class="company-name">{{ config('app.name', 'KL AUTOMOBILES SA') }}</div>
@@ -145,12 +147,13 @@
             Route de Bussigny 22 - 1023 Crissier - +41 79 500 67 67<br>
         </div>
         <div class="company-details-underline">
-            <span style="float: left;">TVA .109.519.355</span> <span style="float: right;">IBAN CH90 0900 0000 1770 9550 0</span>
+            <span style="float: left;">TVA .109.519.355</span> <span style="float: right;">IBAN CH90 0900 0000 1770 9550
+                0</span>
         </div>
     </div>
 
     <div class="contract-title">CONTRAT DE VENTE D'UN VEHICULE D'OCCASION</div>
-    
+
     <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
         <colgroup>
             <col style="width: 35%;">
@@ -166,7 +169,9 @@
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Date de naissance</td>
-            <td style="padding: 2.5px 8px;">{{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}</td>
+            <td style="padding: 2.5px 8px;">
+                {{ $contract->buyer_birth_date ? \Carbon\Carbon::parse($contract->buyer_birth_date)->format('d.m.Y') : '' }}
+            </td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Adresse (Rue, Numéro)</td>
@@ -199,11 +204,15 @@
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">1ère Immatriculation</td>
-            <td style="padding: 2.5px 8px;">{{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '' }}</td>
+            <td style="padding: 2.5px 8px;">
+                {{ $contract->first_registration_date ? \Carbon\Carbon::parse($contract->first_registration_date)->format('d.m.Y') : '' }}
+            </td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Kilométrage</td>
-            <td style="padding: 2.5px 8px;">{{ $contract->mileage ? number_format($contract->mileage, 0, '.', ' ') : '' }}</td>
+            <td style="padding: 2.5px 8px;">
+                {{ $contract->mileage ? number_format($contract->mileage, 0, '.', ' ') : '' }}
+            </td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Numéro de chassis</td>
@@ -218,16 +227,20 @@
             <td style="padding: 2.5px 8px;">{{ $contract->plate_number ?? '' }}</td>
         </tr>
         <tr>
-            <td style="padding: 2.5px 8px;">Accidenté</td>  
+            <td style="padding: 2.5px 8px;">Accidenté</td>
             <td style="padding: 2.5px 8px;">{{ $contract->has_accident ? 'Oui' : 'Non' }}</td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Prix de vente TVA incluse</td>
-            <td style="padding: 2.5px 8px; font-weight: bold; text-decoration: underline;">CHF {{ number_format($contract->sale_price, 2, ',', ' ') }}</td>
+            <td style="padding: 2.5px 8px; font-weight: bold; text-decoration: underline;">CHF
+                {{ number_format($contract->sale_price, 2, ',', ' ') }}
+            </td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Expertisée le</td>
-            <td style="padding: 2.5px 8px;">{{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}</td>
+            <td style="padding: 2.5px 8px;">
+                {{ $contract->expertise_date ? \Carbon\Carbon::parse($contract->expertise_date)->format('d.m.Y') : '' }}
+            </td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Acompte ou reprise</td>
@@ -235,7 +248,9 @@
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Reste à payer</td>
-            <td style="padding: 2.5px 8px; font-weight: bold;">CHF {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}</td>
+            <td style="padding: 2.5px 8px; font-weight: bold;">CHF
+                {{ number_format($contract->sale_price - $contract->deposit, 2, ',', ' ') }}
+            </td>
         </tr>
         <tr>
             <td style="padding: 2.5px 8px;">Conditions de paiement</td>
@@ -255,7 +270,8 @@
                 <span style="color: #c41e3a; font-weight: bold;">Sans Garantie</span>
             </div>
             <div class="warranty-option">
-                <span class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty_export' ? 'checked' : '' }}"></span>
+                <span
+                    class="checkbox {{ ($contract->warranty ?? '') === 'no_warranty_export' ? 'checked' : '' }}"></span>
                 <span style="color: #c41e3a; font-weight: bold;">Sans Garantie (export)</span>
             </div>
             <div class="warranty-option">
@@ -277,12 +293,14 @@
     </div>
 
     <div class="declaration">
-        Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est ni investi,
+        Le vendeur déclare que le véhicule mentionné ci-dessus est sa propriété, libre de toute engagement qu'il n'est
+        ni investi,
         ni mis en gage, ni sujet à aucun leasing et qu'il n'est pas inscrit dans le registre de réserve de propriété.
     </div>
 
     <div class="text-center">
-        <span style="font-size: 12px; margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le {{ $contract->created_at->format('d.m.Y') }}</span>
+        <span style="font-size: 12px; margin-bottom: 0px;">{{ config('app.city', 'Crissier') }}, le
+            {{ $contract->created_at->format('d.m.Y') }}</span>
     </div>
     <table class="signature-table">
         <tr>
@@ -291,4 +309,5 @@
         </tr>
     </table>
 </body>
+
 </html>
