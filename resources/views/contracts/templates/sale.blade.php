@@ -117,7 +117,7 @@
 
         .signature-table {
             width: 100%;
-            margin-top: 0px;
+            margin-top: 2px;
             font-size: 10px;
             border-collapse: collapse;
         }
