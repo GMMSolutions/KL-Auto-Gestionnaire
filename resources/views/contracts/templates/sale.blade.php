@@ -6,13 +6,13 @@
     <title>KL Automobiles - Contrat de Vente - {{ $contract->id }}</title>
     <style>
         @page {
-            margin: 20px 30px 15px 30px;
+            margin: 22px 32px 18px 32px;
         }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            font-size: 10px;
-            line-height: 1.2;
+            font-size: 11px;
+            line-height: 1.25;
             color: #000;
             margin: 0;
             padding: 0;
@@ -24,16 +24,16 @@
         }
 
         .company-name {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             color: #000;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
             margin-top: 0px;
         }
 
         .company-details {
-            font-size: 11px;
+            font-size: 11.5px;
             margin-bottom: 4px;
             font-weight: normal;
         }
@@ -41,8 +41,8 @@
         .company-subinfo {
             width: 100%;
             border-collapse: collapse;
-            font-size: 10.5px;
-            margin-bottom: 4px;
+            font-size: 11px;
+            margin-bottom: 5px;
         }
 
         .company-subinfo td {
@@ -50,12 +50,12 @@
         }
 
         .contract-title {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
-            margin-bottom: 4px;
-            margin-top: 4px;
+            margin-bottom: 5px;
+            margin-top: 5px;
             background-color: #e6e6e6;
-            padding: 2px 6px;
+            padding: 2.5px 6px;
             border-bottom: 1.5px solid #000;
             border-top: 1px solid #000;
             text-align: center;
@@ -66,12 +66,12 @@
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .info-table td {
-            font-size: 10px;
-            padding: 1.2px 4px;
+            font-size: 10.5px;
+            padding: 2px 4px;
             vertical-align: top;
         }
 
@@ -84,96 +84,96 @@
         }
 
         .section-title {
-            font-size: 10.5px;
+            font-size: 11px;
             font-weight: bold;
-            margin-top: 4px;
-            margin-bottom: 1px;
+            margin-top: 5px;
+            margin-bottom: 2px;
         }
 
         .section-text {
-            font-size: 8.5px;
-            line-height: 1.2;
+            font-size: 9.5px;
+            line-height: 1.25;
             text-align: justify;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .warranty-section {
             border: 1px solid #000;
-            margin: 4px 0;
-            padding: 4px 6px;
+            margin: 5px 0;
+            padding: 5px 7px;
         }
 
         .warranty-header-title {
             font-weight: bold;
-            font-size: 10px;
-            margin-bottom: 2px;
+            font-size: 11px;
+            margin-bottom: 2.5px;
         }
 
         .warranty-desc {
-            font-size: 8.5px;
-            line-height: 1.2;
-            margin-bottom: 3px;
+            font-size: 9.5px;
+            line-height: 1.25;
+            margin-bottom: 4px;
         }
 
         .warranty-option {
-            margin: 1.5px 0;
-            font-size: 8.5px;
-            line-height: 1.2;
+            margin: 2px 0;
+            font-size: 9.5px;
+            line-height: 1.25;
         }
 
         .checkbox {
-            width: 9px;
-            height: 9px;
+            width: 10px;
+            height: 10px;
             border: 1px solid #000;
             display: inline-block;
             vertical-align: middle;
             text-align: center;
-            line-height: 8px;
-            font-size: 8px;
+            line-height: 9px;
+            font-size: 8.5px;
             font-weight: bold;
-            margin-right: 4px;
+            margin-right: 5px;
             font-family: Arial, sans-serif;
         }
 
         .paraphe-box {
             text-align: right;
-            font-size: 8.5px;
-            margin-top: 2px;
+            font-size: 9.5px;
+            margin-top: 3px;
             margin-bottom: 4px;
         }
 
         .declaration-text {
-            font-size: 8.5px;
-            line-height: 1.2;
+            font-size: 9.5px;
+            line-height: 1.25;
             margin-bottom: 3px;
             text-align: justify;
         }
 
         .signature-table {
             width: 100%;
-            margin-top: 4px;
+            margin-top: 6px;
             border-collapse: collapse;
         }
 
         .signature-table td {
             padding: 0;
-            font-size: 10px;
+            font-size: 10.5px;
             vertical-align: top;
         }
 
         .signature-table .col-date {
             text-align: left;
-            width: 40%;
+            width: 38%;
         }
 
         .signature-table .col-vendeur {
             text-align: left;
-            width: 30%;
+            width: 31%;
         }
 
         .signature-table .col-acheteur {
             text-align: left;
-            width: 30%;
+            width: 31%;
         }
 
         /* Page 2 - CGV */
@@ -183,24 +183,24 @@
 
         .cgv-header {
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .cgv-title {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
             margin-bottom: 2px;
             letter-spacing: 0.5px;
         }
 
         .cgv-subtitle {
-            font-size: 9px;
+            font-size: 10px;
             margin-bottom: 2px;
         }
 
         .cgv-version {
-            font-size: 8.5px;
-            margin-bottom: 6px;
+            font-size: 9.5px;
+            margin-bottom: 8px;
         }
 
         .cgv-table {
@@ -211,21 +211,21 @@
 
         .cgv-col {
             vertical-align: top;
-            font-size: 7.5px;
-            line-height: 1.15;
+            font-size: 9px;
+            line-height: 1.25;
             text-align: justify;
         }
 
         .cgv-article-title {
             font-weight: bold;
-            font-size: 8px;
-            margin-top: 3.5px;
-            margin-bottom: 1px;
+            font-size: 9.5px;
+            margin-top: 4px;
+            margin-bottom: 1.5px;
         }
 
         .cgv-article-p {
             margin-top: 0;
-            margin-bottom: 3.5px;
+            margin-bottom: 4px;
         }
     </style>
 </head>
@@ -355,19 +355,19 @@
             La garantie est fournie exclusivement par Quality1 AG, selon un contrat de garantie séparé remis à l'acheteur. Seules les conditions de ce contrat font foi quant à l'étendue, la durée et les exclusions de la couverture.
         </div>
         <div class="warranty-option">
-            <span class="checkbox">{{ ($contract->warranty ?? '') === 'quality_1_qbase' ? 'X' : '' }}</span> Quality1 Qbase, comprise dans le prix (moteur et boîte de vitesses : 12 mois ou 20 000 km)
+            <span class="checkbox">{!! ($contract->warranty ?? '') === 'quality_1_qbase' ? 'X' : '&nbsp;' !!}</span> Quality1 Qbase, comprise dans le prix (moteur et boîte de vitesses : 12 mois ou 20 000 km)
         </div>
         <div class="warranty-option">
-            <span class="checkbox">{{ ($contract->warranty ?? '') === 'quality_1_q3' ? 'X' : '' }}</span> Quality1 Q3, contre supplément de CHF {{ ($contract->warranty === 'quality_1_q3' && !empty($contract->warranty_amount)) ? number_format($contract->warranty_amount, 2, ',', ' ') : '________' }}
+            <span class="checkbox">{!! ($contract->warranty ?? '') === 'quality_1_q3' ? 'X' : '&nbsp;' !!}</span> Quality1 Q3, contre supplément de CHF {{ ($contract->warranty === 'quality_1_q3' && !empty($contract->warranty_amount)) ? number_format($contract->warranty_amount, 2, ',', ' ') : '________' }}
         </div>
         <div class="warranty-option">
-            <span class="checkbox">{{ ($contract->warranty ?? '') === 'quality_1_q5' ? 'X' : '' }}</span> Quality1 Q5, contre supplément de CHF {{ ($contract->warranty === 'quality_1_q5' && !empty($contract->warranty_amount)) ? number_format($contract->warranty_amount, 2, ',', ' ') : '________' }}
+            <span class="checkbox">{!! ($contract->warranty ?? '') === 'quality_1_q5' ? 'X' : '&nbsp;' !!}</span> Quality1 Q5, contre supplément de CHF {{ ($contract->warranty === 'quality_1_q5' && !empty($contract->warranty_amount)) ? number_format($contract->warranty_amount, 2, ',', ' ') : '________' }}
         </div>
         <div class="warranty-option">
-            <span class="checkbox">{{ ($contract->warranty ?? '') === 'no_warranty' ? 'X' : '' }}</span> Sans garantie
+            <span class="checkbox">{!! ($contract->warranty ?? '') === 'no_warranty' ? 'X' : '&nbsp;' !!}</span> Sans garantie
         </div>
         <div class="warranty-option">
-            <span class="checkbox">{{ ($contract->warranty ?? '') === 'no_warranty_export' ? 'X' : '' }}</span> Sans garantie (véhicule destiné à l'exportation)
+            <span class="checkbox">{!! ($contract->warranty ?? '') === 'no_warranty_export' ? 'X' : '&nbsp;' !!}</span> Sans garantie (véhicule destiné à l'exportation)
         </div>
     </div>
 
@@ -409,7 +409,7 @@
     <table class="cgv-table">
         <tr>
             <!-- Left Column (Articles 1 to 12) -->
-            <td class="cgv-col" style="width: 48.5%; padding-right: 8px;">
+            <td class="cgv-col" style="width: 48.5%; padding-right: 10px;">
                 <div class="cgv-article-title">1. Champ d'application</div>
                 <div class="cgv-article-p">
                     Les présentes conditions générales s'appliquent à toute vente de véhicule d'occasion par KL Automobiles SA (ci-après « le vendeur »). Elles font partie intégrante du contrat de vente. En cas de contradiction, le contrat de vente l'emporte.
@@ -475,7 +475,7 @@
             <td style="width: 3%;"></td>
 
             <!-- Right Column (Articles 13 to 16) -->
-            <td class="cgv-col" style="width: 48.5%; padding-left: 8px;">
+            <td class="cgv-col" style="width: 48.5%; padding-left: 10px;">
                 <div class="cgv-article-title">13. Vente à l'exportation</div>
                 <div class="cgv-article-p">
                     Lorsque le véhicule est vendu pour l'exportation, l'acheteur s'engage à l'exporter et à remettre au vendeur la preuve du dédouanement dans les 30 jours. Il supporte les formalités et taxes liées à l'exportation. Si le prix a été fixé hors TVA en vue de l'exportation et que cette preuve n'est pas remise dans le délai, la TVA est due en sus.
