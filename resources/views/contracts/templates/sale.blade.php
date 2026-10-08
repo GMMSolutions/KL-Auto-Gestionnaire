@@ -6,13 +6,13 @@
     <title>KL Automobiles - Contrat de Vente - {{ $contract->id }}</title>
     <style>
         @page {
-            margin: 22px 32px 18px 32px;
+            margin: 20px 32px 18px 32px;
         }
 
         body {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11px;
-            line-height: 1.25;
+            line-height: 1.28;
             color: #000;
             margin: 0;
             padding: 0;
@@ -24,7 +24,7 @@
         }
 
         .company-name {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: bold;
             color: #000;
             letter-spacing: 1.5px;
@@ -92,7 +92,7 @@
 
         .section-text {
             font-size: 9.5px;
-            line-height: 1.25;
+            line-height: 1.26;
             text-align: justify;
             margin-bottom: 4px;
         }
@@ -122,17 +122,18 @@
         }
 
         .checkbox {
-            width: 10px;
-            height: 10px;
-            border: 1px solid #000;
+            width: 11px;
+            height: 11px;
+            border: 1.2px solid #000;
             display: inline-block;
             vertical-align: middle;
             text-align: center;
-            line-height: 9px;
-            font-size: 8.5px;
+            line-height: 10px;
+            font-size: 9px;
             font-weight: bold;
             margin-right: 5px;
             font-family: Arial, sans-serif;
+            background-color: #fff;
         }
 
         .paraphe-box {
@@ -151,7 +152,7 @@
 
         .signature-table {
             width: 100%;
-            margin-top: 6px;
+            margin-top: 8px;
             border-collapse: collapse;
         }
 
@@ -183,24 +184,24 @@
 
         .cgv-header {
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .cgv-title {
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
             letter-spacing: 0.5px;
         }
 
         .cgv-subtitle {
-            font-size: 10px;
-            margin-bottom: 2px;
+            font-size: 10.5px;
+            margin-bottom: 3px;
         }
 
         .cgv-version {
             font-size: 9.5px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .cgv-table {
@@ -211,21 +212,21 @@
 
         .cgv-col {
             vertical-align: top;
-            font-size: 9px;
-            line-height: 1.25;
+            font-size: 9.2px;
+            line-height: 1.28;
             text-align: justify;
         }
 
         .cgv-article-title {
             font-weight: bold;
-            font-size: 9.5px;
-            margin-top: 4px;
-            margin-bottom: 1.5px;
+            font-size: 9.8px;
+            margin-top: 5px;
+            margin-bottom: 2px;
         }
 
         .cgv-article-p {
             margin-top: 0;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
