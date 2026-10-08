@@ -230,13 +230,13 @@ class ContractController extends Controller
             // Sale - Required fields
             'sale_price' => 'required|numeric|min:0',
             'payment_condition' => 'nullable|required_if:contract_type,vente|in:Cash,Leasing ou Crédit,Banque',
-            'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
+            'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,no_warranty_export,quality_1_qbase,quality_1_q3,quality_1_q5',
             
             // Sale - Optional fields
             'expertise_date' => 'nullable|date',
             'deposit' => 'nullable|numeric|min:0',
             'remaining_amount' => 'nullable|numeric|min:0',
-            'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
+            'warranty_amount' => 'nullable|numeric|min:0',
             'remarques' => 'nullable|string',
         ];
 
@@ -344,13 +344,13 @@ class ContractController extends Controller
             // Sale - Required fields
             'sale_price' => 'required|numeric|min:0',
             'payment_condition' => 'nullable|required_if:contract_type,vente|in:Cash,Leasing ou Crédit,Banque',
-            'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,quality_1_qbase,quality_1_q3,quality_1_q5',
+            'warranty' => 'nullable|required_if:contract_type,vente|in:no_warranty,no_warranty_export,quality_1_qbase,quality_1_q3,quality_1_q5',
             
             // Sale - Optional fields
             'expertise_date' => 'nullable|date',
             'deposit' => 'nullable|numeric|min:0',
             'remaining_amount' => 'nullable|numeric|min:0',
-            'warranty_amount' => 'nullable|required_if:warranty,quality_1_q5|numeric|min:0',
+            'warranty_amount' => 'nullable|numeric|min:0',
             'remarques' => 'nullable|string',
         ];
 

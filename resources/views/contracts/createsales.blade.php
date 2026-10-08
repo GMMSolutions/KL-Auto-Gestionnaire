@@ -330,7 +330,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="deposit" class="form-label">Acompte ou Reprise</label>
+                                    <label for="deposit" class="form-label">Arrhes versées ce jour</label>
                                     <div class="input-group">
                                         <span class="input-group-text">CHF</span>
                                         <input type="number" 
@@ -382,11 +382,11 @@
                                             name="warranty" 
                                             required>
                                         <option value="">Sélectionnez...</option>
+                                        <option value="quality_1_qbase" {{ old('warranty') == 'quality_1_qbase' ? 'selected' : '' }}>Quality1 Qbase, comprise dans le prix (12 mois / 20 000 km)</option>
+                                        <option value="quality_1_q3" {{ old('warranty') == 'quality_1_q3' ? 'selected' : '' }}>Quality1 Q3 (contre supplément)</option>
+                                        <option value="quality_1_q5" {{ old('warranty') == 'quality_1_q5' ? 'selected' : '' }}>Quality1 Q5 (contre supplément)</option>
                                         <option value="no_warranty" {{ old('warranty') == 'no_warranty' ? 'selected' : '' }}>Sans garantie</option>
-                                        <option value="no_warranty_export" {{ old('warranty') == 'no_warranty_export' ? 'selected' : '' }}>Sans garantie (export)</option>
-                                        <option value="quality_1_qbase" {{ old('warranty') == 'quality_1_qbase' ? 'selected' : '' }}>Garantie Quality 1 QBase</option>
-                                        <option value="quality_1_q3" {{ old('warranty') == 'quality_1_q3' ? 'selected' : '' }}>Garantie Quality 1 Q3</option>
-                                        <option value="quality_1_q5" {{ old('warranty') == 'quality_1_q5' ? 'selected' : '' }}>Garantie Quality 1 Q5</option>
+                                        <option value="no_warranty_export" {{ old('warranty') == 'no_warranty_export' ? 'selected' : '' }}>Sans garantie (véhicule destiné à l'exportation)</option>
                                     </select>
                                     @error('warranty')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -394,15 +394,15 @@
                                 </div>
                                 <div class="col-md-6 mb-3" 
                                      id="warrantyAmountSection" 
-                                     style="display: {{ old('warranty') == 'quality_1_q5' ? 'block' : 'none' }};">
-                                    <label for="warranty_amount" class="form-label">Montant supplémentaire pour Q5</label>
+                                     style="display: {{ in_array(old('warranty'), ['quality_1_q3', 'quality_1_q5']) ? 'block' : 'none' }};">
+                                    <label for="warranty_amount" class="form-label">Montant du supplément Quality1</label>
                                     <div class="input-group">
                                         <span class="input-group-text">CHF</span>
                                         <input type="number" 
                                                step="0.01" 
                                                class="form-control {{ $errors->has('warranty_amount') ? 'is-invalid' : '' }}" 
                                                id="warranty_amount" 
-                                               name="warranty_amount"
+                                               name="warranty_amount" 
                                                value="{{ old('warranty_amount') }}">
                                     </div>
                                     @error('warranty_amount')
@@ -625,7 +625,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const warrantySection = document.getElementById('warrantyAmountSection');
     if (warrantySelect && warrantySection) {
         warrantySelect.addEventListener('change', function() {
-            warrantySection.style.display = this.value === 'quality_1_q5' ? 'block' : 'none';
+            warrantySection.style.display = (this.value === 'quality_1_q3' || this.value === 'quality_1_q5') ? 'block' : 'none';
         });
     }
 
